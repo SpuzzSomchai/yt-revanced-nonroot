@@ -8,5 +8,4 @@ obj.data.isVIP= true;
 }
 $done({body: JSON.stringify(obj)});
 /*
-Supported id */
-FE3CDA93B3D1
+Supported id */FE3CDA93B3D1
