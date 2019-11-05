@@ -17,7 +17,4 @@ obj.data.isVIP= true;
 }
 $done({body: JSON.stringify(obj)});
 
-/**
-*@supported id 7C92DE22D519
-*/
 
