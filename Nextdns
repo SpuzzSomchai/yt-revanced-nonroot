@@ -1,6 +1,6 @@
 //Script event auto linked ipv4 nextdns: network-change
 
-$httpClient.get('https://link-ip.nextdns.io/3273e9/40bcbadb4693c2a5', function(error, response, data){
+$httpClient.get('https://link-ip.nextdns.io/3273e9/55c8808dea58a895', function(error, response, data){
   if (error) {
 console.log(error + '‼️');
   } else {
