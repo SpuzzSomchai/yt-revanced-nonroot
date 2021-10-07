@@ -1,5 +1,5 @@
 const $ = new API("wishlist", true);
-let apps = ["",];
+let apps = [""];
 if ($.read("apps") != "" && $.read("apps") != undefined) {
   apps = $.read("apps").split("，");
 }
