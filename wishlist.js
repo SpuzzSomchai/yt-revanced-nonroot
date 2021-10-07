@@ -1,4 +1,4 @@
-const $ = new API(" Wishlist", true);
+const $ = new API("wishlist", true);
 let apps = [];
 if ($.read("apps") != "" && $.read("apps") != undefined) {
   apps = $.read("apps").split("，");
