@@ -1,5 +1,6 @@
 readonly -A FILTERS=(
     ['spotify-proto.js']='https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-proto.js'
+    ['resource-parser.js']='https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/resource-parser.js'
     ['youtube.js']='https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/youtube.js'
 )
 function join_by { local IFS="$1"; shift; echo "$*"; }
