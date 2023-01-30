@@ -1,6 +1,6 @@
 readonly -A FILTERS=(
-    ['abpvn.txt']='https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn.txt'
-    ['ext.txt']='https://raw.githubusercontent.com/luxysiv/filters/main/ext.txt'
+    ['spotify-proto.js]='https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-proto.js'
+    ['youtube.js']='https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/youtube.js'
 )
 function join_by { local IFS="$1"; shift; echo "$*"; }
 for filter in "${!FILTERS[@]}"; do
