@@ -1,9 +1,9 @@
 declare -a patches
 declare -A artifacts
 
-artifacts["revanced-cli.jar"]="revanced/revanced-cli revanced-cli .jar"
-artifacts["revanced-integrations.apk"]="revanced/revanced-integrations revanced-integrations .apk"
-artifacts["revanced-patches.jar"]="revanced/revanced-patches revanced-patches .jar"
+artifacts["revanced-cli.jar"]="inotia00/revanced-cli revanced-cli .jar"
+artifacts["revanced-integrations.apk"]="inotia00/revanced-integrations revanced-integrations .apk"
+artifacts["revanced-patches.jar"]="inotia00/revanced-patches revanced-patches .jar"
 
 ## Functions
 get_artifact_download_url() {
