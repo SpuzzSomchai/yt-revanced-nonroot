@@ -1,51 +1,28 @@
 name: Build-ReVanced
-
 on:
-
   push:
-
     branches: [ "main" ]
-
   pull_request:
-
     branches: [ "main" ]
-
   workflow_dispatch:
-
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
 
       - uses: actions/checkout@v3
-
+      
       - name: build yt revanced no-root
-
-        run: bash build-rv.sh
-
-         
+        run: bash build-rv.sh         
 
       - name: Generate date 
-
-        run: echo "DATE=$(date +%F)" >> $GITHUB_ENV
-
-          
+        run: echo "DATE=$(date +%F)" >> $GITHUB_ENV          
 
       - name: Release Build
-
         uses: softprops/action-gh-release@v1
-
         with:
-
-          files: revanced*.apk 
-
+          files: revanced_signed.apk 
           name: Build ${{ env.DATE }}
-
           tag_name: ${{ env.DATE }}
-
         env:
-
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
