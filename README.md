@@ -5,7 +5,7 @@
 return-youtube-dislike premium-heading hide-my-mix hide-autoplay-button downloads debugging custom-video-speed custom-video-buffer
 ```
 
-# Download MicroG from inotia00 
+# Download MicroG from inotia00 source 
 Click [![Release](https://img.shields.io/github/v/release/inotia00/VancedMicroG.svg)](https://github.com/inotia00/VancedMicroG/releases/latest/download/microg.apk)
 to download MicroG
 
