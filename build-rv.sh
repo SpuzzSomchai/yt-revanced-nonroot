@@ -114,7 +114,7 @@ mv com.google.android.youtube.apk youtube.apk
 echo ""
 echo "Patching youtube apk..."
 echo ""
-java -jar revanced-cli.jar -a youtube.apk -b revanced-patches.jar -m revanced-integrations.apk -o revanced.apk -e hide-my-mix -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike -e premium-heading -e hide-autoplay-button -e downloads -e custom-branding -c 2>&1 | tee -a Patch.log
+java -jar revanced-cli.jar -a youtube.apk -b revanced-patches.jar -m revanced-integrations.apk -o revanced.apk -e hide-my-mix -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike -e premium-heading -e hide-autoplay-button -e downloads -c 2>&1 | tee -a Patch.log
 
 # Find and select apksigner binary
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
