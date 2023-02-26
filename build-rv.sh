@@ -1,49 +1,23 @@
-declare -a patches
-declare -A artifacts
+# Revanced-patches
+curl -s https://api.github.com/repos/revanced/revanced-patches/releases/latest \
+| grep "browser_download_url.*jar" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
 
-artifacts["revanced-cli.jar"]="revanced/revanced-cli revanced-cli .jar"
-artifacts["revanced-integrations.apk"]="revanced/revanced-integrations revanced-integrations .apk"
-artifacts["revanced-patches.jar"]="revanced/revanced-patches revanced-patches .jar"
+# Revanced CLI
+curl -s https://api.github.com/repos/revanced/revanced-cli/releases/latest \
+| grep "browser_download_url.*jar" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
 
-## Functions
-get_artifact_download_url() {
-
-    # Usage: get_download_url <repo_name> <artifact_name> <file_type>
-    local api_url result
-    api_url="https://api.github.com/repos/$1/releases/latest"
-
-    # shellcheck disable=SC2086
-    result=$(curl -s $api_url | jq ".assets[] | select(.name | contains(\"$2\") and contains(\"$3\") and (contains(\".sig\") | not)) | .browser_download_url")
-    echo "${result:1:-1}"
-}
-
-# Function for populating patches array, using a function here reduces redundancy & satisfies DRY principals
-populate_patches() {
-
-    # Note: <<< defines a 'here-string'. Meaning, it allows reading from variables just like from a file
-    while read -r patch; do
-        patches+=("$1 $patch")
-    done <<< "$2"
-}
-
-## Main
-# cleanup to fetch new revanced on next run
-if [[ "$1" == "clean" ]]; then
-    rm -f revanced-cli.jar revanced-integrations.apk revanced-patches.jar
-    exit
-fi
-if [[ "$1" == "experimental" ]]; then
-    EXPERIMENTAL="--experimental"
-fi
-
-# Fetch all the dependencies
-for artifact in "${!artifacts[@]}"; do
-    if [ ! -f "$artifact" ]; then
-        echo "Downloading $artifact"
-        # shellcheck disable=SC2086,SC2046
-        curl -sLo "$artifact" $(get_artifact_download_url ${artifacts[$artifact]})
-    fi
-done
+# ReVanced Integrations
+curl -s https://api.github.com/repos/revanced/revanced-integrations/releases/latest \
+| grep "browser_download_url.*apk" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
 
 # Repair
 declare -A apks
@@ -79,6 +53,7 @@ dl_apk() {
 	req "$url" "$output"
 }
 
+
 # Downloading youtube
 dl_yt() {
 	echo "Downloading YouTube"
@@ -97,7 +72,6 @@ dl_yt() {
 	fi
 }
 
-
 ## Main
 
 for apk in "${!apks[@]}"; do
@@ -108,16 +82,10 @@ for apk in "${!apks[@]}"; do
     fi
 done
 
-mv com.google.android.youtube.apk youtube.apk
-
-## Patch revanced
-echo ""
-echo "Patching youtube apk..."
-echo ""
-java -jar revanced-cli.jar -a youtube.apk -b revanced-patches.jar -m revanced-integrations.apk -o revanced.apk -e hide-my-mix -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike -e premium-heading -e hide-autoplay-button -e downloads -c 2>&1 | tee -a Patch.log
+# Patch revanced
+java -jar revanced-cli*.jar -a com.google.android.youtube.apk -b revanced-patches*.jar -m revanced-integrations*.apk -o revanced.apk -e hide-my-mix -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike -e premium-heading -e hide-autoplay-button -e downloads -c 2>&1 | tee -a Patch.log
 
 # Find and select apksigner binary
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 # Sign apks (https://github.com/tytydraco/public-keystore)
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./revanced.apk --out ./revanced_signed.apk
-
