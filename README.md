@@ -15,3 +15,6 @@ YouTube ReVanced
 
 # About
 This repository synthesizes code from many sources
+
+# Note
+Prefer [Revanced Extended](https://github.com/inotia00/revanced-patches) visit [yt-revanced-extended-nonroot](https://github.com/luxysiv/yt-revanced-extended-nonroot) 
