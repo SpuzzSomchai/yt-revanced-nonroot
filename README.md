@@ -1,4 +1,4 @@
-# Custom ReVanced no-root 
+# Build YouTube Revanced non-root version
 
 # Exclude Patches 
 ```
@@ -14,4 +14,4 @@ YouTube ReVanced
  [![Release](https://img.shields.io/github/v/release/luxysiv/yt-revanced-nonroot.svg)](https://github.com/luxysiv/yt-revanced-nonroot/releases/latest/download/revanced_signed.apk)
 
 # About
-This repository is mix [n0k0m3/revanced-build-template](https://github.com/n0k0m3/revanced-build-template) and [Sohil876/build-revanced](https://github.com/Sohil876/build-revanced) and some adding of me
+This repository synthesizes code from many sources
