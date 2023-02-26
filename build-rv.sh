@@ -1,3 +1,4 @@
+source patches.conf
 # Revanced-patches
 curl -s https://api.github.com/repos/revanced/revanced-patches/releases/latest \
 | grep "browser_download_url.*jar" \
@@ -83,7 +84,7 @@ for apk in "${!apks[@]}"; do
 done
 
 # Patch revanced
-java -jar revanced-cli*.jar -a *.youtube.apk -b revanced-patches*.jar -m revanced-integrations*.apk -o revanced.apk -e hide-my-mix -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike -e premium-heading -e hide-autoplay-button -e downloads -c 2>&1 | tee -a Patch.log
+java -jar revanced-cli*.jar -a *.youtube.apk -b revanced-patches*.jar -m revanced-integrations*.apk -o revanced.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
 
 # Find and select apksigner binary
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
