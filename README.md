@@ -1,9 +1,8 @@
 # Build YouTube Revanced non-root version
 
-# Exclude Patches 
-```
-return-youtube-dislike premium-heading hide-my-mix hide-autoplay-button downloads debugging custom-video-speed custom-video-buffer
-```
+# Patches 
+[Customize patches](patches.conf) and [change YouTube version](version.json)
+
 
 # Download MicroG from inotia00 source 
 Click [![Release](https://img.shields.io/github/v/release/inotia00/VancedMicroG.svg)](https://github.com/inotia00/VancedMicroG/releases/latest/download/microg.apk)
