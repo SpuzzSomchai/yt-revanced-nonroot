@@ -23,7 +23,7 @@ jobs:
       - name: Release Build
         uses: softprops/action-gh-release@v1
         with:
-          files: *revanced*_signed.apk 
+          files: yt-revanced*_signed.apk 
           name: Build ${{ env.DATE }}
           tag_name: ${{ env.DATE }}
         env:
