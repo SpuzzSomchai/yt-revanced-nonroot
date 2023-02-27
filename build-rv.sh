@@ -1,4 +1,7 @@
-source patches.conf
+#!/bin/bash
+# File containing all patches and YouTube version 
+source config.txt
+
 # Revanced-patches
 curl -s https://api.github.com/repos/revanced/revanced-patches/releases/latest \
 | grep "browser_download_url.*jar" \
@@ -78,7 +81,7 @@ dl_yt() {
 for apk in "${!apks[@]}"; do
     if [ ! -f $apk ]; then
         echo "Downloading $apk"
-        version=$(jq -r ".\"$apk\"" <version.json)
+        version=${VERSION}
         ${apks[$apk]}
     fi
 done
