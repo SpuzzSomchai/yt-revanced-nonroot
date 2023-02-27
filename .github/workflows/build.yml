@@ -30,8 +30,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: yt-revanced*.apk 
-          name: Build ${{ env.v${VERSION} }}
-          tag_name: ${{ env.v${VERSION} }}
+          name: Build ${{ env.DATE }}
+          tag_name: ${{ env.DATE }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
