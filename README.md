@@ -10,7 +10,7 @@ to download MicroG
 
 # Download latest build
 YouTube ReVanced
- [![Release](https://img.shields.io/github/v/release/luxysiv/yt-revanced-nonroot.svg)](https://github.com/luxysiv/yt-revanced-nonroot/releases/latest/download/yt-revanced*.apk)
+ [![Release](https://img.shields.io/github/v/release/luxysiv/yt-revanced-nonroot.svg)](https://github.com/luxysiv/yt-revanced-nonroot/releases/latest/download/yt-revanced_signed.apk)
 
 # About
 This repository synthesizes code from many sources
