@@ -3,21 +3,21 @@
 source config.txt
 
 # Revanced-patches
-curl -s https://api.github.com/repos/revanced/revanced-patches/releases/latest \
+curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
 | grep "browser_download_url.*jar" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
 
 # Revanced CLI
-curl -s https://api.github.com/repos/revanced/revanced-cli/releases/latest \
+curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest \
 | grep "browser_download_url.*jar" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
 
 # ReVanced Integrations
-curl -s https://api.github.com/repos/revanced/revanced-integrations/releases/latest \
+curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/latest \
 | grep "browser_download_url.*apk" \
 | cut -d : -f 2,3 \
 | tr -d \" \
@@ -92,4 +92,4 @@ java -jar revanced-cli*.jar -a *.youtube.apk -b revanced-patches*.jar -m revance
 # Find and select apksigner binary
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 # Sign apks (https://github.com/tytydraco/public-keystore)
-${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./revanced.apk --out ./yt-revanced_signed.apk
+${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./revanced.apk --out ./yt-revanced-${NAME}-${VERSION}.apk
