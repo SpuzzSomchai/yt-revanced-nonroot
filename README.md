@@ -1,7 +1,7 @@
 # Build YouTube Revanced non-root version
 
-# Patches 
-[Customize patches](patches.conf) and [change YouTube version](version.json)
+# Config build
+Edit patches and YouTube version supported in [config.txt](config.txt)
 
 
 # Download MicroG from inotia00 source 
