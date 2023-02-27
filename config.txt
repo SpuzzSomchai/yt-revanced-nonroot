@@ -1,3 +1,3 @@
 INCLUDE_PATCHES=""  # -i patch name
-EXCLUDE_PATCHES="-e hide-my-mix -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike -e downloads" # -e patch name
+EXCLUDE_PATCHES="-e hide-my-mix -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike -e downloads -e hide-autoplay-button -e premium-heading -e custom-branding" # -e patch name
 VERSION="18.03.36" # YouTube version supported
