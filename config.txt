@@ -1,3 +1,26 @@
+## User repository
+# Revanced
+USER="revanced"
+# Revanced Extended
+# USER="inotia00"
+
+## Patches
+# Revanced patches
 INCLUDE_PATCHES=""  # -i patch name
 EXCLUDE_PATCHES="-e hide-my-mix -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike -e downloads -e hide-autoplay-button -e premium-heading" # -e patch name
+# Revanced Extended patches
+# INCLUDE_PATCHES="-i custom-branding-icon-revancify"  # -i patch name
+# EXCLUDE_PATCHES="-e hide-my-mix -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike -e downloads" # -e patch name
+
+
+## YouTube version 
+# Revanced 
 VERSION="18.03.36" # YouTube version supported
+# Revanced Extended 
+# VERSION="18.07.35" # YouTube version supported
+
+## APK Name 
+# Revanced
+NAME="revanced"
+# Revanced Extended
+# Name="revanced-extended"
