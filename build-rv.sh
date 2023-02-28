@@ -3,9 +3,7 @@
 # source config-rv.txt
 # source config-rve.txt
 for var in config-rv.txt config-rve.txt
-
 do
-
 source $var
 # Revanced-patches
 curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
