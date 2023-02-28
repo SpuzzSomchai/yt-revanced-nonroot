@@ -5,7 +5,7 @@
 for var in config-rv.txt config-rve.txt 
 do
     source config-rv.txt
-while
+then
     source config-rve.txt
 
 
