@@ -1,13 +1,7 @@
 #!/bin/bash
 # File containing all patches and YouTube version 
-# source config-rv.txt
+source config-rv.txt
 # source config-rve.txt
-for var in config-rv.txt config-rve.txt 
-do
-    source config-rv.txt
-then
-    source config-rve.txt
-
 
 # Revanced-patches
 curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
@@ -100,6 +94,3 @@ java -jar revanced-cli*.jar -a *youtube.apk -b revanced-patches*.jar -m revanced
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 # Sign apks (https://github.com/tytydraco/public-keystore)
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./revanced.apk --out ./yt-${NAME}-v${VERSION}.apk
-
-
-done
