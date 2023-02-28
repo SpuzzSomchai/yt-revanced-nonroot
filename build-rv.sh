@@ -5,7 +5,7 @@
 for var in config-rv.txt config-rve.txt
 do
 source config-rv.txt
-while
+then
 source config-rve.txt
 
 
@@ -102,4 +102,4 @@ apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./revanced.apk --out ./yt-${NAME}-v${VERSION}.apk
 
 
-fi
+done
