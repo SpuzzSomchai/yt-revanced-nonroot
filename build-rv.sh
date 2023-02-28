@@ -3,7 +3,8 @@
 # source config-rv.txt
 # source config-rve.txt
 for var in config-rv.txt config-rve.txt do
-    source $var
+    source config-rv.txt
+    config-rve.txt
 
 
 # Revanced-patches
