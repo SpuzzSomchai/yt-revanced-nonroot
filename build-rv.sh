@@ -1,7 +1,7 @@
 #!/bin/bash
 # File containing all patches and YouTube version 
-source config-rv.txt
-# source config-rve.txt
+# source config-rv.txt
+source config-rve.txt
 
 # Revanced-patches
 curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
