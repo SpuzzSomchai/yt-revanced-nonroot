@@ -3,11 +3,9 @@
 # source config-rv.txt
 # source config-rve.txt
 for var in config-rv.txt config-rve.txt
+while $ config-rv.txt
 do
-source config-rv.txt
-while
-source config-rve.txt;
-
+   $config-rve.txt
 
 # Revanced-patches
 curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
@@ -102,3 +100,4 @@ apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./revanced.apk --out ./yt-${NAME}-v${VERSION}.apk
 
 
+done
