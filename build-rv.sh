@@ -2,7 +2,8 @@
 # File containing all patches and YouTube version 
 # source config-rv.txt
 # source config-rve.txt
-for var in config-rv.txt config-rve.txt do
+for var in config-rv.txt config-rve.txt 
+do
     source config-rv.txt
     config-rve.txt
 
