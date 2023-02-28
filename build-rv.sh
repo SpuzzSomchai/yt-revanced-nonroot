@@ -5,7 +5,8 @@
 for var in config-rv.txt config-rve.txt 
 do
     source config-rv.txt
-    config-rve.txt
+then   
+    source config-rve.txt
 
 
 # Revanced-patches
