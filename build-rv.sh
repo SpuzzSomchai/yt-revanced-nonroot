@@ -26,7 +26,7 @@ curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/late
 
 # Repair
 declare -A apks
-apks["YouTube Apk"]=dl_yt
+apks["youtube.apk"]=dl_yt
 
 ## Functions
 
