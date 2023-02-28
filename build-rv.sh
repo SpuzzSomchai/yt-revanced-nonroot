@@ -26,7 +26,7 @@ curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/late
 
 # Repair
 declare -A apks
-apks["youtube.apk"]=dl_yt
+apks["youtube-v${VERSION}.apk"]=dl_yt
 
 ## Functions
 
@@ -67,7 +67,7 @@ dl_yt() {
 	last_ver="${last_ver:-$(get_apk_vers "https://www.apkmirror.com/uploads/?appcategory=youtube" | get_largest_ver)}"
 
 	echo "Choosing version '${last_ver}'"
-	local base_apk="com.google.android.youtube.apk"
+	local base_apk="youtube-v${VERSION}.apk"
 	if [ ! -f "$base_apk" ]; then
 		declare -r dl_url=$(dl_apk "https://www.apkmirror.com/apk/google-inc/youtube/youtube-${last_ver//./-}-release/" \
 			"APK</span>[^@]*@\([^#]*\)" \
@@ -88,7 +88,7 @@ for apk in "${!apks[@]}"; do
 done
 
 # Patch revanced
-java -jar revanced-cli*.jar -a *youtube.apk -b revanced-patches*.jar -m revanced-integrations*.apk -o revanced.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
+java -jar revanced-cli*.jar -a youtube-v${VERSION}.apk -b revanced-patches*.jar -m revanced-integrations*.apk -o revanced.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
 
 # Find and select apksigner binary
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
