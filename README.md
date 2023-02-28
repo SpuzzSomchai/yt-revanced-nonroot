@@ -6,7 +6,7 @@ Revanced [config-rv.txt](config-rv.txt)
 Revanced Extended [confitxtg-rve.txt](config-rve.txt)
 
 # Note
-Only build once a time
+Only build once a time.
 Change source in [build-rv.sh](build-rv.sh) to build Revanced or Revanced Extended 
 
 # Download MicroG from inotia00 source 
