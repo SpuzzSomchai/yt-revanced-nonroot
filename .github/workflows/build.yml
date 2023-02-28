@@ -29,7 +29,7 @@ jobs:
       - name: Release Build
         uses: softprops/action-gh-release@v1
         with:
-          files: yt-revanced*.apk yt-revanced-extended*.apk
+          files: yt-revanced*.apk 
           name: Build ${{ env.DATE }}
           tag_name: ${{ env.DATE }}
         env:
