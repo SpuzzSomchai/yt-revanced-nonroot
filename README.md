@@ -1,7 +1,9 @@
-# Build YouTube Revanced non-root version
+# Build both YouTube Revanced and Revanced Extended non-root version
 
 # Config build
-Edit patches and YouTube version supported in [config.txt](config.txt)
+Edit patches and YouTube version supported 
+Revanced [config-rv.txt](config-rv.txt)
+Revanced Extended [confitxtg-rve.](config-rve.txt)
 
 
 # Download MicroG from inotia00 source 
