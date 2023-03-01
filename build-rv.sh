@@ -7,7 +7,7 @@ do
 source $var
 echo START 
 # Refresh patches cache
-# rm -f revanced-cli.jar revanced-integrations.apk revanced-patches.jar
+rm -f revanced-cli.jar revanced-integrations.apk revanced-patches.jar
 # Revanced-patches
 echo START
 curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
