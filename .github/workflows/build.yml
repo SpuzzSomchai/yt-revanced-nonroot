@@ -19,7 +19,7 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
       
-      - name: patch revanced & revanced extended no-root
+      - name: patch rv & rve non-root
         run: bash build-rv.sh         
 
       - name: Generate date 
