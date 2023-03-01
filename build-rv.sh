@@ -16,6 +16,7 @@ curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
+echo "Rename to ${NAME}-patches..."
 mv revanced-patches*.jar ${NAME}-patches.jar
 
 # Revanced CLI
@@ -25,6 +26,7 @@ curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
+echo "Rename to ${NAME}-cli..."
 mv revanced-cli*.jar ${NAME}-cli.jar
 
 # ReVanced Integrations
@@ -34,6 +36,7 @@ curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/late
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
+echo "Rename to ${NAME}-integrations..."
 mv revanced-integrations*.apk ${NAME}-integrations.apk
 
 # Repair
@@ -72,7 +75,7 @@ dl_apk() {
 
 # Downloading youtube
 dl_yt() {
-	echo "Downloading YouTube"
+	echo "Downloading YouTube..."
 	local last_ver
 	last_ver="$version"
 	last_ver="${last_ver:-$(get_apk_vers "https://www.apkmirror.com/uploads/?appcategory=youtube" | get_largest_ver)}"
@@ -106,5 +109,6 @@ java -jar ${NAME}-cli.jar -a youtube-v${VERSION}.apk -b ${NAME}-patches.jar -m $
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 
 # Sign apks (https://github.com/tytydraco/public-keystore)
+echo "Signing ${NAME}-v${VERSION}..."
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${VERSION}.apk
 done
