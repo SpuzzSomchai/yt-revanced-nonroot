@@ -1,4 +1,4 @@
-name: Build-ReVanced
+name: Patch Revanced & Revanced Extended 
 on:
   push:
     branches: [ "main" ]
@@ -8,7 +8,7 @@ on:
     - cron: "10 10 * * *"
   workflow_dispatch:
 jobs:
-  build:
+  patch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
