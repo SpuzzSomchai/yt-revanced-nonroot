@@ -1,29 +1,40 @@
 #!/bin/bash
-# File containing all patches and YouTube version 
-source config-rv.txt
+# File containing all patches and YouTube version
+# source config-rv.txt
 # source config-rve.txt
-
+for var in config-rv.txt config-rve.txt
+do
+source $var
+echo START 
+# Refresh patches cache
+# rm -f revanced-cli.jar revanced-integrations.apk revanced-patches.jar
 # Revanced-patches
+echo START
 curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
 | grep "browser_download_url.*jar" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
-
+mv revanced-patches*.jar ${NAME}-patches.jar
+echo DONE
 # Revanced CLI
+echo START
 curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest \
 | grep "browser_download_url.*jar" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
-
+mv revanced-cli*.jar ${NAME}-cli.jar
+echo DONE
 # ReVanced Integrations
+echo START
 curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/latest \
 | grep "browser_download_url.*apk" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
-
+mv revanced-integrations*.apk ${NAME}-integrations.apk
+echo DONE
 # Repair
 declare -A apks
 apks["${NAME}.youtube.apk"]=dl_yt
@@ -88,9 +99,11 @@ for apk in "${!apks[@]}"; do
 done
 
 # Patch revanced
-java -jar revanced-cli*.jar -a youtube-v${VERSION}.apk -b revanced-patches*.jar -m revanced-integrations*.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
+java -jar ${NAME}-cli.jar -a youtube-v${VERSION}.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
 
 # Find and select apksigner binary
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 # Sign apks (https://github.com/tytydraco/public-keystore)
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${VERSION}.apk
+echo DONE
+done
