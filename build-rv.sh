@@ -10,38 +10,35 @@ echo "Clean patches cache..."
 rm -f revanced-cli.jar revanced-integrations.apk revanced-patches.jar
 
 # Revanced-patches
-echo "Downloading ${NAME}-patches..."
+echo "Download & rename ${NAME}-patches..."
 curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
 | grep "browser_download_url.*jar" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
-echo "Rename to ${NAME}-patches..."
 mv revanced-patches*.jar ${NAME}-patches.jar
 
 # Revanced CLI
-echo "Downloading ${NAME}-cli..."
+echo "Download & rename ${NAME}-cli..."
 curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest \
 | grep "browser_download_url.*jar" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
-echo "Rename to ${NAME}-cli..."
 mv revanced-cli*.jar ${NAME}-cli.jar
 
 # ReVanced Integrations
-echo "Downloading ${NAME}-integrations..."
+echo "Download & rename ${NAME}-integrations..."
 curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/latest \
 | grep "browser_download_url.*apk" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
-echo "Rename to ${NAME}-integrations..."
 mv revanced-integrations*.apk ${NAME}-integrations.apk
 
 # Repair
 declare -A apks
-apks["${NAME}.youtube.apk"]=dl_yt
+apks["youtube.apk"]=dl_yt
 
 ## Functions
 # Wget user agent
