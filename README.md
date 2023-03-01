@@ -16,3 +16,4 @@ to download MicroG
 
 # About
 This repository synthesizes code from many sources
+Thanks for @[RoSino18k](https://github.com/RoSino18k)
