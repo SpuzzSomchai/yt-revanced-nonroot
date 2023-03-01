@@ -6,8 +6,10 @@ for var in config-rv.txt config-rve.txt
 do
 source $var
 echo START 
+
 # Refresh patches cache
 rm -f revanced-cli.jar revanced-integrations.apk revanced-patches.jar
+
 # Revanced-patches
 echo START
 curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
@@ -40,7 +42,6 @@ declare -A apks
 apks["${NAME}.youtube.apk"]=dl_yt
 
 ## Functions
-
 # Wget user agent
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
 
@@ -98,11 +99,13 @@ for apk in "${!apks[@]}"; do
     fi
 done
 
-# Patch revanced
+# Patch revanced and revanced extended 
+echo "Patching YouTube..."
 java -jar ${NAME}-cli.jar -a youtube-v${VERSION}.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
 
 # Find and select apksigner binary
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
+
 # Sign apks (https://github.com/tytydraco/public-keystore)
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${VERSION}.apk
 echo DONE
