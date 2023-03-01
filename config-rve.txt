@@ -6,7 +6,7 @@ INCLUDE_PATCHES="-i custom-branding-icon-revancify"  # -i patch name
 EXCLUDE_PATCHES="-e hide-my-mix -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike -e downloads" # -e patch name
 
 # YouTube version 
-VERSION="18.07.35" # YouTube version supported
+VERSION="18.08.36" # YouTube version supported
 
 # APK name
 NAME="revanced-extended"
