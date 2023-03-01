@@ -26,7 +26,7 @@ curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/late
 
 # Repair
 declare -A apks
-apks["youtube.apk"]=dl_yt
+apks["${NAME}.youtube.apk"]=dl_yt
 
 ## Functions
 
@@ -88,9 +88,9 @@ for apk in "${!apks[@]}"; do
 done
 
 # Patch revanced
-java -jar revanced-cli*.jar -a youtube-v${VERSION}.apk -b revanced-patches*.jar -m revanced-integrations*.apk -o revanced.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
+java -jar revanced-cli*.jar -a youtube-v${VERSION}.apk -b revanced-patches*.jar -m revanced-integrations*.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
 
 # Find and select apksigner binary
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 # Sign apks (https://github.com/tytydraco/public-keystore)
-${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./revanced.apk --out ./yt-${NAME}-v${VERSION}.apk
+${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${VERSION}.apk
