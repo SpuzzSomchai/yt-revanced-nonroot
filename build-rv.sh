@@ -5,38 +5,37 @@
 for var in config-rv.txt config-rve.txt
 do
 source $var
-echo START 
-
 # Refresh patches cache
+echo "Clean patches cache..."
 rm -f revanced-cli.jar revanced-integrations.apk revanced-patches.jar
 
 # Revanced-patches
-echo START
+echo "Downloading ${NAME}-patches..."
 curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
 | grep "browser_download_url.*jar" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
 mv revanced-patches*.jar ${NAME}-patches.jar
-echo DONE
+
 # Revanced CLI
-echo START
+echo "Downloading ${NAME}-cli..."
 curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest \
 | grep "browser_download_url.*jar" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
 mv revanced-cli*.jar ${NAME}-cli.jar
-echo DONE
+
 # ReVanced Integrations
-echo START
+echo "Downloading ${NAME}-integrations..."
 curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/latest \
 | grep "browser_download_url.*apk" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
 mv revanced-integrations*.apk ${NAME}-integrations.apk
-echo DONE
+
 # Repair
 declare -A apks
 apks["${NAME}.youtube.apk"]=dl_yt
@@ -108,5 +107,4 @@ apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head
 
 # Sign apks (https://github.com/tytydraco/public-keystore)
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${VERSION}.apk
-echo DONE
 done
