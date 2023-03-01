@@ -11,8 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-defaults:
-      run:
         working-directory: myfunctionname
       - uses: actions/checkout@v3
 
