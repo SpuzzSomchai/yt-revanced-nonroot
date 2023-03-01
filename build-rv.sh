@@ -72,7 +72,6 @@ dl_apk() {
 
 # Downloading youtube
 dl_yt() {
-	echo "Downloading YouTube..."
 	local last_ver
 	last_ver="$version"
 	last_ver="${last_ver:-$(get_apk_vers "https://www.apkmirror.com/uploads/?appcategory=youtube" | get_largest_ver)}"
