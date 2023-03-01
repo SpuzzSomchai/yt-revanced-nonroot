@@ -3,9 +3,9 @@
 # Config build
 Edit patches and YouTube version supported 
 
-Revanced [config-rv.txt](config-rv.txt)
+[Revanced](https://github.com/revanced/revanced-patches/releases)-> [config-rv.txt](config-rv.txt)
 
-Revanced Extended [config-rve.txt](config-rve.txt)
+[Revanced Extended]( [config-rve.txt](config-rve.txt)
 
 # Note
 Now can build both of Revanced and Revanced Extended at the same time.
