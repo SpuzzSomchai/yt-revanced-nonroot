@@ -7,10 +7,10 @@ do
 source $var
 
 # Begin
-echo "Starting patch ${NAME}..."
+echo "Starting patch ${NAME}🔴🟡🟢"
 
 # Get patches 
-echo "Prepairing ${NAME} patches..."
+echo "Prepairing ${NAME} patches🔴🟡🟢"
 
 # Revanced-patches
 curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
@@ -98,18 +98,18 @@ for apk in "${!apks[@]}"; do
 done
 
 # Patch revanced and revanced extended 
-echo "Patching YouTube..."
+echo "Patching YouTube🔴🟡🟢"
 java -jar ${NAME}-cli.jar -a youtube-v${VERSION}.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
 
 # Find and select apksigner binary
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 
 # Sign apks (https://github.com/tytydraco/public-keystore)
-echo "Signing ${NAME}-v${VERSION}..."
+echo "Signing ${NAME}-v${VERSION}🔴🟡🟢"
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${VERSION}.apk
 
 # Refresh patches cache
-echo "Clean patches cache..."
+echo "Clean patches cache🔴🟡🟢"
 rm -f *-cli.jar *-integrations.apk *-patches.jar
 
 done
