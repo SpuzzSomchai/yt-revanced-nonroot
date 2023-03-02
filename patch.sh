@@ -11,7 +11,6 @@ echo "🔴🟡🟢"
 # Begin
 echo
 echo "Starting patch ${NAME}..."
-echo
 # Get patches 
 echo "Prepairing ${NAME} patches..."
 
@@ -38,7 +37,7 @@ curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/late
 | tr -d \" \
 | wget -qi -
 mv revanced-integrations*.apk ${NAME}-integrations.apk
-
+echo
 # Repair
 declare -A apks
 apks["youtube.apk"]=dl_yt
@@ -103,7 +102,6 @@ done
 # Patch revanced and revanced extended
 echo 
 echo "Patching YouTube..."
-echo
 java -jar ${NAME}-cli.jar -a youtube-v${VERSION}.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
 
 # Find and select apksigner binary
@@ -116,7 +114,5 @@ ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --
 # Refresh patches cache
 echo
 echo "Clean patches cache..."
-echo
 rm -f *-cli.jar *-integrations.apk *-patches.jar
 done
-echo
