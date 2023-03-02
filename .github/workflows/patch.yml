@@ -20,7 +20,7 @@ jobs:
           java-version: '17'
       
       - name: patch rv & rve non-root
-        run: bash build.sh         
+        run: bash patch.sh         
 
       - name: generate date 
         run: echo "DATE=$(date +%F)" >> $GITHUB_ENV          
