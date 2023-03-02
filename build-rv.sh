@@ -7,8 +7,7 @@ do
 source $var
 # Refresh patches cache
 echo "Clean patches cache..."
-#rm -f *-cli.jar *-integrations.apk *-patches.jar
-rm -f revanced-cli*.jar revanced-integrations*.apk revanced-patches*.jar
+rm -f *-cli.jar *-integrations.apk *-patches.jar
 
 echo "Prepairing ${NAME} patches..."
 
@@ -18,7 +17,7 @@ curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
-# mv revanced-patches*.jar ${NAME}-patches.jar
+mv revanced-patches*.jar ${NAME}-patches.jar
 
 # Revanced CLI
 curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest \
@@ -26,7 +25,7 @@ curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
-# mv revanced-cli*.jar ${NAME}-cli.jar
+mv revanced-cli*.jar ${NAME}-cli.jar
 
 # ReVanced Integrations
 curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/latest \
@@ -34,7 +33,7 @@ curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/late
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
-# mv revanced-integrations*.apk ${NAME}-integrations.apk
+mv revanced-integrations*.apk ${NAME}-integrations.apk
 
 # Repair
 declare -A apks
@@ -99,8 +98,8 @@ done
 
 # Patch revanced and revanced extended 
 echo "Patching YouTube..."
-# java -jar ${NAME}-cli.jar -a youtube-v${VERSION}.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
-java -jar revanced-cli*.jar -a youtube*.apk -b revanced-patches*.jar -m revanced-integrations*.apk -o revanced.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
+java -jar ${NAME}-cli.jar -a youtube-v${VERSION}.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
+
 # Find and select apksigner binary
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 
