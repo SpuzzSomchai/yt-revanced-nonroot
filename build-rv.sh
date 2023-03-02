@@ -7,7 +7,9 @@ do
 source $var
 # Refresh patches cache
 echo "Clean patches cache..."
-rm -f *-cli.jar *-integrations.apk *-patches.jar
+#rm -f *-cli.jar *-integrations.apk *-patches.jar
+rm -f revanced-cli*.jar revanced-integrations*.apk revanced-patches*.jar
+
 echo "Prepairing ${NAME} patches..."
 
 # Revanced-patches
