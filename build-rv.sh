@@ -106,7 +106,7 @@ echo "Signing ${NAME}-v${VERSION}..."
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${VERSION}.apk
 
 # Refresh patches cache
-#echo "Clean patches cache..."
-#rm -f *-cli.jar *-integrations.apk *-patches.jar
+echo "Clean patches cache..."
+rm -f *-cli.jar *-integrations.apk *-patches.jar
 
 done
