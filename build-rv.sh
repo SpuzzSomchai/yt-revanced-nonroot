@@ -7,10 +7,10 @@ do
 source $var
 # Refresh patches cache
 echo "Clean patches cache..."
-rm -f revanced-cli.jar revanced-integrations.apk revanced-patches.jar
+rm -f *-cli.jar *-integrations.apk *-patches.jar
+echo "Prepairing ${NAME} patches..."
 
 # Revanced-patches
-echo "Download & rename to ${NAME}-patches..."
 curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
 | grep "browser_download_url.*jar" \
 | cut -d : -f 2,3 \
@@ -19,7 +19,6 @@ curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
 mv revanced-patches*.jar ${NAME}-patches.jar
 
 # Revanced CLI
-echo "Download & rename to ${NAME}-cli..."
 curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest \
 | grep "browser_download_url.*jar" \
 | cut -d : -f 2,3 \
@@ -28,7 +27,6 @@ curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest \
 mv revanced-cli*.jar ${NAME}-cli.jar
 
 # ReVanced Integrations
-echo "Download & rename to ${NAME}-integrations..."
 curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/latest \
 | grep "browser_download_url.*apk" \
 | cut -d : -f 2,3 \
