@@ -6,6 +6,9 @@ for var in config-rv.txt config-rve.txt
 do
 source $var
 
+# Begin
+echo "Starting patch ${NAME}..."
+
 # Get patches 
 echo "Prepairing ${NAME} patches..."
 
