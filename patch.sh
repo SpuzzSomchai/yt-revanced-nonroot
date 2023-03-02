@@ -9,8 +9,9 @@ source $var
 echo "🔴🟡🟢"
 
 # Begin
+echo
 echo "Starting patch ${NAME}..."
-
+echo
 # Get patches 
 echo "Prepairing ${NAME} patches..."
 
@@ -99,8 +100,10 @@ for apk in "${!apks[@]}"; do
     fi
 done
 
-# Patch revanced and revanced extended 
+# Patch revanced and revanced extended
+echo 
 echo "Patching YouTube..."
+echo
 java -jar ${NAME}-cli.jar -a youtube-v${VERSION}.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a Patch.log
 
 # Find and select apksigner binary
@@ -111,7 +114,9 @@ echo "Signing ${NAME}-v${VERSION}..."
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${VERSION}.apk
 
 # Refresh patches cache
+echo
 echo "Clean patches cache..."
+echo
 rm -f *-cli.jar *-integrations.apk *-patches.jar
-
 done
+echo
