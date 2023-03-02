@@ -5,10 +5,8 @@
 for var in config-rv.txt config-rve.txt
 do
 source $var
-# Refresh patches cache
-echo "Clean patches cache..."
-rm -f *-cli.jar *-integrations.apk *-patches.jar
 
+# Get patches 
 echo "Prepairing ${NAME} patches..."
 
 # Revanced-patches
@@ -106,4 +104,9 @@ apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head
 # Sign apks (https://github.com/tytydraco/public-keystore)
 echo "Signing ${NAME}-v${VERSION}..."
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${VERSION}.apk
+
+# Refresh patches cache
+echo "Clean patches cache..."
+rm -f *-cli.jar *-integrations.apk *-patches.jar
+
 done
