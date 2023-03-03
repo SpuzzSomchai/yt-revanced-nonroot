@@ -8,9 +8,7 @@ Edit patches and YouTube version supported
 [Revanced Extended](https://github.com/inotia00/revanced-patches/releases) 👉 [config-rve.txt](https://github.com/luxysiv/yt-revanced-nonroot/edit/main/config-rve.txt)
 
 # Note
-Now can build both of Revanced and Revanced Extended at the same time.
-
-See [patches log]
+Now can build Revanced and Revanced Extended at the same time.
 
 # Download MicroG from inotia00 source 
 [![Release](https://img.shields.io/github/v/release/inotia00/VancedMicroG.svg)](https://github.com/inotia00/VancedMicroG/releases/latest/download/microg.apk)
