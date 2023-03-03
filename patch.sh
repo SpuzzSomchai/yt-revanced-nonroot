@@ -7,7 +7,7 @@ do
 source $var
 
 # Begin
-echo "⏭️ STARTING PATCH ${NAME}..."
+echo "🎊 STARTING PATCH ${NAME}..."
 
 # Get patches 
 echo "⏭️ Prepairing ${NAME} patches..."
