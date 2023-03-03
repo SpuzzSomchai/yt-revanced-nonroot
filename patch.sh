@@ -38,7 +38,7 @@ mv revanced-integrations*.apk ${NAME}-integrations.apk
 
 # Repair
 declare -A apks
-apks["youtube.apk"]=dl_yt
+apks["youtube-mirror.apk"]=dl_yt
 
 ## Functions
 # Wget user agent
@@ -81,8 +81,6 @@ dl_yt() {
 		declare -r dl_url=$(dl_apk "https://www.apkmirror.com/apk/google-inc/youtube/youtube-${last_ver//./-}-release/" \
 			"APK</span>[^@]*@\([^#]*\)" \
 			"$base_apk")
-#		echo "⏭️ YouTube version: ${last_ver}"
-#		echo "⏭️ Downloaded from: [APKMirror - YouTube]($dl_url)"
 	fi
 }
 
