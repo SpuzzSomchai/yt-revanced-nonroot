@@ -9,7 +9,6 @@ source $var
 echo "🔴🟡🟢"
 
 # Begin
-echo
 echo "⏭️ Starting patch ${NAME}..."
 # Get patches 
 echo "⏭️ Prepairing ${NAME} patches..."
