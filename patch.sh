@@ -5,11 +5,11 @@
 for var in config-rv.txt config-rve.txt
 do
 source $var
-
-echo "🔴🟡🟢"
+echo
 
 # Begin
 echo "⏭️ Starting patch ${NAME}..."
+
 # Get patches 
 echo "⏭️ Prepairing ${NAME} patches..."
 
@@ -36,6 +36,7 @@ curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/late
 | tr -d \" \
 | wget -qi -
 mv revanced-integrations*.apk ${NAME}-integrations.apk
+
 # Repair
 declare -A apks
 apks["youtube.apk"]=dl_yt
@@ -69,7 +70,6 @@ dl_apk() {
 	req "$url" "$output"
 }
 
-
 # Downloading youtube
 dl_yt() {
 	local last_ver
@@ -88,7 +88,6 @@ dl_yt() {
 }
 
 ## Main
-
 for apk in "${!apks[@]}"; do
     if [ ! -f $apk ]; then
         echo "⏭️ Downloading $apk"
@@ -102,13 +101,15 @@ echo "⏭️ Patching YouTube..."
 java -jar ${NAME}-cli.jar -a youtube-v${VERSION}.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a patchlog.txt
 
 # Find and select apksigner binary
+echo "⏭️ Signing ${NAME}-v${VERSION}..."
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 
 # Sign apks (https://github.com/tytydraco/public-keystore)
-echo "⏭️ Signing ${NAME}-v${VERSION}..."
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${VERSION}.apk
 
 # Refresh patches cache
 echo "⏭️ Clean patches cache..."
 rm -f *-cli.jar *-integrations.apk *-patches.jar
+
+# Finish
 done
