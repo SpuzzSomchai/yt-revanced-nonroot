@@ -13,19 +13,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: set up jdk
+      - name: Set up jdk
         uses: actions/setup-java@v3.10.0
         with:
           distribution: 'zulu'
           java-version: '17'
       
-      - name: patch rv & rve non-root
+      - name: Patch rv & rve non-root
         run: bash patch.sh                 
 
       - name: Generate Changelog        
         run: echo "Revanced & Revanced Extended" > ${{ github.workspace }}-CHANGELOG.txt
           
-      - name: release
+      - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: yt-revanced*.apk 
@@ -36,7 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
           
-      - name: delete workflow runs
+      - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@v2
         with:
           token: ${{ github.token }}
