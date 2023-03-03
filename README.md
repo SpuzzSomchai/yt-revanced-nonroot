@@ -9,6 +9,7 @@ Edit patches and YouTube version supported
 
 # Note
 Now can build both of Revanced and Revanced Extended at the same time.
+
 See [patches log]
 
 # Download MicroG from inotia00 source 
