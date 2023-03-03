@@ -28,6 +28,13 @@ jobs:
       - name: Generate Changelog        
         run: echo "Revanced & Revanced Extended release $(date +%F)" > ${{ github.workspace }}-CHANGELOG.txt
 
+      - name: up patchlog  
+        uses: EndBug/add-and-commit@v9.1.1   
+        with:     
+          add: patchlog.txt 
+          default_author: github_actor    
+          message: 'Update patchlog: ${{ env.DATE }}'       
+          push: true
       - name: release
         uses: softprops/action-gh-release@v1
         with:
