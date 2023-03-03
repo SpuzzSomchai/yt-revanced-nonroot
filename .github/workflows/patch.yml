@@ -26,14 +26,14 @@ jobs:
         run: echo "DATE=$(date +%F)" >> $GITHUB_ENV
 
       - name: Generate Changelog        
-        run: echo "𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 & 𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 𝘌𝘹𝘵𝘦𝘯𝘥𝘦𝘥" > ${{ github.workspace }}-CHANGELOG.txt
+        run: echo "𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 🐬 𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 𝘌𝘹𝘵𝘦𝘯𝘥𝘦𝘥" > ${{ github.workspace }}-CHANGELOG.txt
           
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: yt-revanced*.apk 
-          name: Build ${{ env.DATE }}
-          tag_name: ${{ env.DATE }}
+          name: Build 🚗 ${{ env.DATE }}
+          tag_name: 📌${{ env.DATE }}
           body_path: ${{ github.workspace }}-CHANGELOG.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
