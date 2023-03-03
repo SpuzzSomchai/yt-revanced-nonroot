@@ -10,9 +10,9 @@ echo "🔴🟡🟢"
 
 # Begin
 echo
-echo "Starting patch ${NAME}..."
+echo "⏭️ Starting patch ${NAME}..."
 # Get patches 
-echo "Prepairing ${NAME} patches..."
+echo "⏭️ Prepairing ${NAME} patches..."
 
 # Revanced-patches
 curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
@@ -78,14 +78,14 @@ dl_yt() {
 	last_ver="$version"
 	last_ver="${last_ver:-$(get_apk_vers "https://www.apkmirror.com/uploads/?appcategory=youtube" | get_largest_ver)}"
 
-	echo "Choosing version '${last_ver}'"
+	echo "⏭️ Choosing version '${last_ver}'"
 	local base_apk="youtube-v${VERSION}.apk"
 	if [ ! -f "$base_apk" ]; then
 		declare -r dl_url=$(dl_apk "https://www.apkmirror.com/apk/google-inc/youtube/youtube-${last_ver//./-}-release/" \
 			"APK</span>[^@]*@\([^#]*\)" \
 			"$base_apk")
-		echo "YouTube version: ${last_ver}"
-		echo "downloaded from: [APKMirror - YouTube]($dl_url)"
+		echo "⏭️ YouTube version: ${last_ver}"
+		echo "⏭️ downloaded from: [APKMirror - YouTube]($dl_url)"
 	fi
 }
 
@@ -93,26 +93,24 @@ dl_yt() {
 
 for apk in "${!apks[@]}"; do
     if [ ! -f $apk ]; then
-        echo "Downloading $apk"
+        echo "⏭️ Downloading $apk"
         version=${VERSION}
         ${apks[$apk]}
     fi
 done
 
 # Patch revanced and revanced extended
-echo 
-echo "Patching YouTube..."
+echo "⏭️ Patching YouTube..."
 java -jar ${NAME}-cli.jar -a youtube-v${VERSION}.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a patchlog.txt
 
 # Find and select apksigner binary
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 
 # Sign apks (https://github.com/tytydraco/public-keystore)
-echo "Signing ${NAME}-v${VERSION}..."
+echo "⏭️ Signing ${NAME}-v${VERSION}..."
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${VERSION}.apk
 
 # Refresh patches cache
-echo
-echo "Clean patches cache..."
+echo "⏭️ Clean patches cache..."
 rm -f *-cli.jar *-integrations.apk *-patches.jar
 done
