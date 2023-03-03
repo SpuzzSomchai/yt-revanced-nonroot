@@ -3,12 +3,13 @@
 # Config build
 Edit patches and YouTube version supported 
 
-[Revanced](https://github.com/revanced/revanced-patches/releases) 👉 [config-rv.txt](config-rv.txt)
+[Revanced](https://github.com/revanced/revanced-patches/releases) 👉 [config-rv.txt](https://github.com/luxysiv/yt-revanced-nonroot/edit/main/config-rv.txt)
 
-[Revanced Extended](https://github.com/inotia00/revanced-patches/releases) 👉 [config-rve.txt](config-rve.txt)
+[Revanced Extended](https://github.com/inotia00/revanced-patches/releases) 👉 [config-rve.txt](https://github.com/luxysiv/yt-revanced-nonroot/edit/main/config-rve.txt)
 
 # Note
 Now can build both of Revanced and Revanced Extended at the same time.
+See [patches log]
 
 # Download MicroG from inotia00 source 
 [![Release](https://img.shields.io/github/v/release/inotia00/VancedMicroG.svg)](https://github.com/inotia00/VancedMicroG/releases/latest/download/microg.apk)
