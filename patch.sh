@@ -36,7 +36,6 @@ curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/late
 | tr -d \" \
 | wget -qi -
 mv revanced-integrations*.apk ${NAME}-integrations.apk
-echo
 # Repair
 declare -A apks
 apks["youtube.apk"]=dl_yt
@@ -84,7 +83,7 @@ dl_yt() {
 			"APK</span>[^@]*@\([^#]*\)" \
 			"$base_apk")
 		echo "⏭️ YouTube version: ${last_ver}"
-		echo "⏭️ downloaded from: [APKMirror - YouTube]($dl_url)"
+		echo "⏭️ Downloaded from: [APKMirror - YouTube]($dl_url)"
 	fi
 }
 
