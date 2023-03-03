@@ -20,28 +20,16 @@ jobs:
           java-version: '17'
       
       - name: patch rv & rve non-root
-        run: bash patch.sh         
-
-      - name: generate date
-        run: echo "DATE=$(date +%F)" >> $GITHUB_ENV          
+        run: bash patch.sh                 
 
       - name: Generate Changelog        
-        run: echo "Revanced & Revanced Extended release $(date +%F)" > ${{ github.workspace }}-CHANGELOG.txt
-
-      - name: up patchlog  
-        uses: EndBug/add-and-commit@v9.1.1   
-        with:     
-          add: patchlog.txt 
-          default_author: github_actor    
-          message: 'Update patchlog: ${{ env.DATE }}'       
-          push: true
+        run: echo "Revanced & Revanced Extended" > ${{ github.workspace }}-CHANGELOG.txt
           
       - name: release
         uses: softprops/action-gh-release@v1
         with:
           files: yt-revanced*.apk 
-          name: Build ${{ env.DATE }}
-          tag_name: ${{ env.DATE }}
+          name: Build $(date +%F)
           body_path: ${{ github.workspace }}-CHANGELOG.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
