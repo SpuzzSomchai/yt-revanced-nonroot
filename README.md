@@ -1,4 +1,4 @@
-# Build both YouTube Revanced and Revanced Extended non-root version
+# Build YouTube Revanced and Revanced Extended non-root version
 
 # Config build
 Edit patches and YouTube version supported 
