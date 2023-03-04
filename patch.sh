@@ -42,7 +42,7 @@ YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages
 rm -rf ${NAME}-patches.json
 
 # Download Youtube
-dl_yt $YTVERSION youtube-v$1.apk
+dl_yt $YTVERSION youtube-v${YTVERSION}.apk
 
 # Get patches 
 echo "⏭️ Prepairing ${NAME} patches..."
@@ -73,7 +73,7 @@ mv revanced-integrations*.apk ${NAME}-integrations.apk
 
 # Patch revanced and revanced extended
 echo "⏭️ Patching YouTube..."
-java -jar ${NAME}-cli.jar -a youtube-v$1.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a patchlog.txt
+java -jar ${NAME}-cli.jar -a youtube-v${YTVERSION}.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a patchlog.txt
 
 # Find and select apksigner binary
 echo "⏭️ Signing ${NAME}-v${YTVERSION}..."
