@@ -6,4 +6,4 @@ USER="inotia00"
 
 # Patches
 INCLUDE_PATCHES="-i custom-branding-icon-revancify"  # -i patch name
-EXCLUDE_PATCHES="-e hide-my-mix -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike" # -e patch name
+EXCLUDE_PATCHES="-e hide-mix-playlists -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike" # -e patch name
