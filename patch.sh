@@ -24,7 +24,7 @@ get_latestytversion() {
 
 dl_yt() {
     rm -rf $2
-    echo "🚘 Downloading YouTube $1"
+    echo "🚘 Downloading YouTube v$1"
     url="https://www.apkmirror.com/apk/google-inc/youtube/youtube-${1//./-}-release/"
     url="$url$(req "$url" - | grep Variant -A50 | grep ">APK<" -A2 | grep android-apk-download | sed "s#.*-release/##g;s#/\#.*##g")"
     url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
@@ -76,15 +76,15 @@ echo "⏭️ Patching YouTube..."
 java -jar ${NAME}-cli.jar -a youtube-v$1.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a patchlog.txt
 
 # Find and select apksigner binary
-echo "⏭️ Signing ${NAME}-v${YTVERSION}..."
+echo "⏭️ Signing ${NAME}-v$1..."
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 
 # Sign apks (https://github.com/tytydraco/public-keystore)
-${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${YTVERSION}.apk
+${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v$1.apk
 
 # Refresh patches cache
 echo "⏭️ Clean patches cache..."
-rm -f *-cli.jar *-integrations.apk *-patches.jar youtube-patch.apk
+rm -f *-cli.jar *-integrations.apk *-patches.jar youtube-v$1.apk
 
 # Finish
 done
