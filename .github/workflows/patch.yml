@@ -1,6 +1,5 @@
 name: Patch Revanced & Revanced Extended 
 on:
-  push:
   schedule:
     - cron: "17 10 * * MON"
   workflow_dispatch:
