@@ -80,7 +80,7 @@ echo "⏭️ Signing ${NAME}-v${YTVERSION}..."
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 
 # Sign apks (https://github.com/tytydraco/public-keystore)
-${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v$1.apk
+${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./${NAME}.apk --out ./yt-${NAME}-v${YTVERSION}.apk
 
 # Refresh patches cache
 echo "⏭️ Clean patches cache..."
