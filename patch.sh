@@ -76,7 +76,7 @@ echo "⏭️ Patching YouTube..."
 java -jar ${NAME}-cli.jar -a youtube-v$1.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a patchlog.txt
 
 # Find and select apksigner binary
-echo "⏭️ Signing ${NAME}-v$1..."
+echo "⏭️ Signing ${NAME}-v${YTVERSION}..."
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 
 # Sign apks (https://github.com/tytydraco/public-keystore)
