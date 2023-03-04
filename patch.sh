@@ -84,7 +84,7 @@ ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --
 
 # Refresh patches cache
 echo "⏭️ Clean patches cache..."
-rm -f *-cli.jar *-integrations.apk *-patches.jar youtube-v$1.apk
+rm -f *-cli.jar *-integrations.apk *-patches.jar 
 
 # Finish
 done
