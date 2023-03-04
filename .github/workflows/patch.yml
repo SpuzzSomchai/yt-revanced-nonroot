@@ -18,9 +18,11 @@ jobs:
       - name: Patch rv & rve non-root
         run: bash patch.sh   
         
-      - name: Generate info
-        run: echo "DATE=$(date +%F)" >> $GITHUB_ENV       
-          echo "𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 🐬 𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 𝘌𝘹𝘵𝘦𝘯𝘥𝘦𝘥" > ${{ github.workspace }}-CHANGELOG.txt
+      - name: Generate date
+        run: echo "DATE=$(date +%F)" >> $GITHUB_ENV   
+        
+      - name: Generate Changelog 
+        run: echo "𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 🐬 𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 𝘌𝘹𝘵𝘦𝘯𝘥𝘦𝘥" > ${{ github.workspace }}-CHANGELOG.txt
           
       - name: Release
         uses: softprops/action-gh-release@v1
