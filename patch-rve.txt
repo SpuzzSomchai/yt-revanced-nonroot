@@ -1,9 +1,3 @@
-# APK name
 NAME="revanced-extended"
-
-# Source Repository 
 USER="inotia00"
-
-# Patches
-INCLUDE_PATCHES="-i custom-branding-icon-revancify"  # -i patch name
-EXCLUDE_PATCHES="-e hide-mix-playlists -e custom-video-buffer -e debugging -e custom-video-speed -e return-youtube-dislike" # -e patch name
+PATCH="rve-patch.txt"
