@@ -2,9 +2,36 @@
 # File containing all patches and YouTube version
 # source config-rv.txt
 # source config-rve.txt
-for var in config-rv.txt config-rve.txt
+for var in build-rv.txt build-rve.txt
 do
 source $var
+patch_file=${PATCH}
+# Get line numbers where included & excluded patches start from. 
+# We rely on the hardcoded messages to get the line numbers using grep
+excluded_start="$(grep -n -m1 'EXCLUDE PATCHES' "$patch_file" | cut -d':' -f1)"
+included_start="$(grep -n -m1 'INCLUDE PATCHES' "$patch_file" | cut -d':' -f1)"
+
+# Get everything but hashes from between the EXCLUDE PATCH & INCLUDE PATCH line
+# Note: '^[^#[:blank:]]' ignores starting hashes and/or blank characters i.e, whitespace & tab excluding newline
+excluded_patches="$(tail -n +$excluded_start $patch_file | head -n "$(( included_start - excluded_start ))" | grep '^[^#[:blank:]]')"
+
+# Get everything but hashes starting from INCLUDE PATCH line until EOF
+included_patches="$(tail -n +$included_start $patch_file | grep '^[^#[:blank:]]')"
+
+# Array for storing patches
+declare -a patches
+
+# Function for populating patches array, using a function here reduces redundancy & satisfies DRY principals
+populate_patches() {
+    # Note: <<< defines a 'here-string'. Meaning, it allows reading from variables just like from a file
+    while read -r patch; do
+        patches+=("$1 $patch")
+    done <<< "$2"
+}
+
+# If the variables are NOT empty, call populate_patches with proper arguments
+[[ ! -z "$excluded_patches" ]] && populate_patches "-e" "$excluded_patches"
+[[ ! -z "$included_patches" ]] && populate_patches "-i" "$included_patches"
 
 # Begin
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
@@ -73,7 +100,9 @@ mv revanced-integrations*.apk ${NAME}-integrations.apk
 
 # Patch revanced and revanced extended
 echo "⏭️ Patching YouTube..."
-java -jar ${NAME}-cli.jar -a youtube-v${YTVERSION}.apk -b ${NAME}-patches.jar -m ${NAME}-integrations.apk -o ${NAME}.apk ${INCLUDE_PATCHES} ${EXCLUDE_PATCHES} -c 2>&1 | tee -a patchlog.txt
+java -jar ${NAME}-cli.jar -m ${NAME}-integrations.apk -b ${NAME}-patches.jar \
+   ${patches[@]} \
+    -a youtube-v${YTVERSION}.apk -o ${NAME}.apk
 
 # Find and select apksigner binary
 echo "⏭️ Signing ${NAME}-v${YTVERSION}..."
