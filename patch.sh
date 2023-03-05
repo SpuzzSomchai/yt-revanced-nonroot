@@ -2,7 +2,7 @@
 # File containing all patches and YouTube version
 # source config-rv.txt
 # source config-rve.txt
-for var in build-rv.txt build-rve.txt
+for var in patch-rv.txt patch-rve.txt
 do
 source $var
 patch_file=${PATCH}
