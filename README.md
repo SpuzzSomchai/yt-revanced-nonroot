@@ -13,6 +13,8 @@ Edit patches and YouTube version supported
 
 👆 to download MicroG
 
+Necessary for non-root user. Install first
+
 # About
 This repository synthesizes code from many sources
 
