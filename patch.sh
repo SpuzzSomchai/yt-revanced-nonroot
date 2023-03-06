@@ -72,25 +72,13 @@ dl_yt $YTVERSION youtube-v${YTVERSION}.apk
 echo -e "⏭️ Prepairing ${NAME} patches..."
 
 # Revanced-patches
-curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
-| grep "browser_download_url.*jar" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
+curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 
 # Revanced CLI
-curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest \
-| grep "browser_download_url.*jar" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
+curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 
 # ReVanced Integrations
-curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/latest \
-| grep "browser_download_url.*apk" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
+curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/latest | grep "browser_download_url.*apk" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 
 # Patch APK
 echo -e "⏭️ Patching YouTube..."
