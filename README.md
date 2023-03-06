@@ -3,9 +3,9 @@
 # Config build
 Edit patches and YouTube version supported 
 
-[Revanced](https://github.com/revanced/revanced-patches/releases) 👉 [config-rv.txt](https://github.com/luxysiv/yt-revanced-nonroot/edit/main/config-rv.txt)
+[Revanced](https://github.com/revanced/revanced-patches/releases) 👉 [rv-patch.txt](https://github.com/luxysiv/yt-revanced-nonroot/edit/main/rv-patch.txt)
 
-[Revanced Extended](https://github.com/inotia00/revanced-patches/releases) 👉 [config-rve.txt](https://github.com/luxysiv/yt-revanced-nonroot/edit/main/config-rve.txt)
+[Revanced Extended](https://github.com/inotia00/revanced-patches/releases) 👉 [rve-patch.txt](https://github.com/luxysiv/yt-revanced-nonroot/edit/main/rve-patch.txt)
 
 # Note
 Now can build Revanced and Revanced Extended at the same time.
