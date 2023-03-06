@@ -62,11 +62,7 @@ dl_yt() {
     req "$url" "$2"
 }
 # Fetch latest supported YT versions
-curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest \
-| grep "browser_download_url.*json" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
+curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest | grep "browser_download_url.*json" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
 
 # Download Youtube
