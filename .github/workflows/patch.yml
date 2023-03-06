@@ -26,7 +26,7 @@ jobs:
         run: echo "𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 🐬 𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 𝘌𝘹𝘵𝘦𝘯𝘥𝘦𝘥" > ${{ github.workspace }}-CHANGELOG.txt
           
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v0.1.15
         with:
           files: yt-revanced*.apk 
           name: Build 🚗 ${{ env.DATE }}
