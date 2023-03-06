@@ -1,6 +1,7 @@
 #!/bin/bash
-# File containing all patches and YouTube version
-for var in patch-rv.txt patch-rve.txt 
+# Config to patch Revanced and Revanced Extended 
+# Use only keywords.rv/keywords.rve to build Revanced/Revanced Extended
+for var in keywords.rv keywords.rve
 do
 source $var
 
