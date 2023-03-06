@@ -1,8 +1,8 @@
 #!/bin/bash
-# Config to patch Revanced and Revanced Extended 
-# Use only keywords.rv/keywords.rve to build Revanced/Revanced Extended
-# Config below is both
-for var in keywords.rv keywords.rve
+# Config to patch Revanced and Revanced Extended
+# for var in keywords.rv # Revanced
+for var in keywords.rve # Revanced Extended 
+# for var in keywords.rv keywords.rve # Both
 do
 source $var
 
