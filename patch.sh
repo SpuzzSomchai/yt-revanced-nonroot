@@ -82,9 +82,7 @@ curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/late
 
 # Patch APK
 echo -e "⏭️ Patching YouTube..."
-java -jar revanced-cli*.jar -m revanced-integrations*.apk -b revanced-patches*.jar \
-   ${patches[@]} \
-    -a youtube-v${YTVERSION}.apk -o ${NAME}.apk
+java -jar revanced-cli*.jar -m revanced-integrations*.apk -b revanced-patches*.jar ${patches[@]} -a youtube-v${YTVERSION}.apk -o ${NAME}.apk
 
 # Find and select apksigner binary
 echo -e "⏭️ Signing ${NAME}-v${YTVERSION}..."
