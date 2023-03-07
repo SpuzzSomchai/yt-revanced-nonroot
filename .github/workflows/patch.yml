@@ -28,7 +28,7 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           files: yt-revanced*.apk 
-          name: Build 🚗 ${{ env.DATE }}
+          name: Release { env.DATE }}
           tag_name: ${{ env.DATE }}
           body_path: ${{ github.workspace }}-CHANGELOG.txt
         env:
