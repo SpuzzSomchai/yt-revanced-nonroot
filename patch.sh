@@ -1,9 +1,9 @@
 #!/bin/bash
 # Config to patch Revanced and Revanced Extended
 
-# for var in keywords.rv # Revanced
+for var in keywords.rv # Revanced
 # for var in keywords.rve # Revanced Extended 
-for var in keywords.rv keywords.rve # Both
+# for var in keywords.rv keywords.rve # Both
 do
 source $var
 
@@ -70,7 +70,7 @@ dl_yt $YTVERSION youtube-v${YTVERSION}.apk
 echo -e "⏭️ Prepairing ${NAME} patches..."
 
 # Revanced-patches
-curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 
 # Revanced CLI
 curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
