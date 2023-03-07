@@ -1,4 +1,4 @@
-# Build YouTube Revanced and Revanced Extended non-root version
+# Build Revanced and Revanced Extended non-root version
 
 # How to use
 ✅Fork this repo
@@ -26,6 +26,6 @@
 Necessary for non-root user. Install first
 
 # About
-This repository synthesizes code from many sources
+♻️This repository synthesizes code from many sources
 
-Thanks @[RoSino18k](https://github.com/RoSino18k) for his suggestions 
+🤝Thanks @[RoSino18k](https://github.com/RoSino18k) for his suggestions 
