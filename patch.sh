@@ -63,34 +63,34 @@ dl_yt() {
     req "$url" "$2"
 }
 # Fetch latest supported YT versions
-curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest | grep "browser_download_url.*json" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | grep "browser_download_url.*json" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
 
 # Download Youtube
-dl_yt $YTVERSION youtube-v${YTVERSION}.apk
+dl_yt $YTVERSION youtube-v$YTVERSION.apk
 
 # Get patches 
-echo -e "⏭️ Prepairing ${NAME} patches..."
+echo -e "⏭️ Prepairing $NAME patches..."
 
 # Revanced-patches
-curl -s https://api.github.com/repos/${USER}/revanced-patches/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 
 # Revanced CLI
-curl -s https://api.github.com/repos/${USER}/revanced-cli/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 
 # ReVanced Integrations
-curl -s https://api.github.com/repos/${USER}/revanced-integrations/releases/latest | grep "browser_download_url.*apk" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest | grep "browser_download_url.*apk" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 
 # Patch APK
 echo -e "⏭️ Patching YouTube..."
-java -jar revanced-cli*.jar -m revanced-integrations*.apk -b revanced-patches*.jar ${patches[@]} -a youtube-v${YTVERSION}.apk -o ${NAME}.apk
+java -jar revanced-cli*.jar -m revanced-integrations*.apk -b revanced-patches*.jar ${patches[@]} -a youtube-v$YTVERSION.apk -o $NAME.apk
 
 # Find and select apksigner binary
-echo -e "⏭️ Signing ${NAME}-v${YTVERSION}..."
+echo -e "⏭️ Signing $NAME-v$YTVERSION..."
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 
 # Sign apks (https://github.com/tytydraco/public-keystore)
-${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ${NAME}.apk --out yt-${NAME}-v${YTVERSION}.apk
+${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in $NAME.apk --out yt-$NAME-v$YTVERSION.apk
 
 # Refresh patches cache
 echo -e "⏭️ Clean patches cache..."
