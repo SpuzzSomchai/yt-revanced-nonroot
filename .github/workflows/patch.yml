@@ -1,7 +1,7 @@
 name: Patch Revanced & Revanced Extended 
 on:
   schedule:
-    - cron: "17 10 * * MON"
+    - cron: "0 10 * * *"
   workflow_dispatch:
 jobs:
   patch:
@@ -39,7 +39,7 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          retain_days: 1
+          retain_days: 0
           keep_minimum_runs: 1
 permissions: 
    contents: write
