@@ -1,7 +1,7 @@
 # How to use
-✅ Fork this repo
+✅ Fork this repository 
 
-✅ Enable github action
+✅ Enable github actions
 
 ✅ Config your patches
 
