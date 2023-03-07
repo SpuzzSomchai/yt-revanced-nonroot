@@ -1,7 +1,7 @@
 # Build Revanced and Revanced Extended non-root version
 
 # How to use
-✅Fork this repo
+✅Fork this repository 
 
 ✅Enable github action
 
