@@ -22,7 +22,7 @@ jobs:
         run: echo "DATE=$(date +%F)" >> $GITHUB_ENV   
         
       - name: Generate Changelog 
-        run: echo "𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 🐬 𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 𝘌𝘹𝘵𝘦𝘯𝘥𝘦𝘥" > ${{ github.workspace }}-CHANGELOG.txt
+        run: echo "𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 & 𝘙𝘦𝘷𝘢𝘯𝘤𝘦𝘥 𝘌𝘹𝘵𝘦𝘯𝘥𝘦𝘥" > ${{ github.workspace }}-CHANGELOG.txt
           
       - name: Release
         uses: softprops/action-gh-release@v0.1.15
