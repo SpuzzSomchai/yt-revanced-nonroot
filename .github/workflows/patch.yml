@@ -16,8 +16,19 @@ jobs:
           java-version: '17'
       
       - name: Patch rv & rve non-root
-        run: bash patch.sh   
+        run: bash patch.sh  
         
+      - uses: stefanzweifel/git-auto-commit-action@v4
+
+        with:
+
+          branch: update
+
+          skip_checkout: true
+
+          file_pattern: *txt
+
+          commit_message: Build ${{ DATE }}    
       - name: Generate date
         run: echo "DATE=$(date +%F)" >> $GITHUB_ENV   
         
