@@ -33,14 +33,7 @@ jobs:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
-          
-      - name: Update Build log
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          branch: update
-          skip_checkout: true
-          file_pattern: file.txt
-          commit_message: Build ${DATE}
+
 
 
 permissions: 
