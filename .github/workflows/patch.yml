@@ -40,7 +40,7 @@ jobs:
           branch: update
           skip_checkout: true
           file_pattern: file.txt
-          commit_message: Build ${{ DATE }} 
+          commit_message: Build $DATE
 
 
 permissions: 
