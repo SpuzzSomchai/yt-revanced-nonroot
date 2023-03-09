@@ -39,7 +39,7 @@ jobs:
         with:
           branch: update
           skip_checkout: true
-          file_pattern: *txt
+          file_pattern: file.txt
           commit_message: Build ${{ DATE }} 
 
 
