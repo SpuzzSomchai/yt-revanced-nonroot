@@ -90,6 +90,8 @@ apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head
 # Sign apks (https://github.com/tytydraco/public-keystore)
 ${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in $NAME.apk --out yt-$NAME-v$YTVERSION.apk
 
+ls >> file.txt
+
 # Refresh patches cache
 echo -e "⏭️ Clean patches cache..."
 rm -f revanced-cli*.jar revanced-integrations*.apk revanced-patches*.jar patches.json
