@@ -7,13 +7,13 @@ NAME="revanced"
 USER="revanced"
 PATCH="patches.rv"
 EOF
+
 # Revanced Extended 
 cat > keywords.rve << EOF
 NAME="revanced-extended"
 USER="inotia00"
 PATCH="patches.rve"
 EOF
-
 
 # for var in keywords.rv # Revanced
 # for var in keywords.rve # Revanced Extended 
