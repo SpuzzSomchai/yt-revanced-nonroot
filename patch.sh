@@ -1,11 +1,25 @@
 #!/bin/bash
 # Config to patch Revanced and Revanced Extended
 
+# Revanced 
+cat > keywords.rv << EOF
+NAME="revanced"
+USER="revanced"
+PATCH="patches.rv"
+EOF
+# Revanced Extended 
+cat > keywords.rve << EOF
+NAME="revanced-extended"
+USER="inotia00"
+PATCH="patches.rve"
+EOF
+
+
 # for var in keywords.rv # Revanced
 # for var in keywords.rve # Revanced Extended 
 for var in keywords.rv keywords.rve # Both
 do
-source $var
+source  $var
 
 # Prepair patches keywords
 patch_file=$PATCH
