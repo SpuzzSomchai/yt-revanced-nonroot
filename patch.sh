@@ -22,7 +22,7 @@ do
 source  $var
 
 # Prepair patches keywords
-patch_file=$
+patch_file=$file
 
 # Get line numbers where included & excluded patches start from. 
 # We rely on the hardcoded messages to get the line numbers using grep
