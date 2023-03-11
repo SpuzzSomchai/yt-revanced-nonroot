@@ -3,16 +3,16 @@
 
 # Revanced 
 cat > keywords.rv << EOF
-name="revanced"
-author="revanced"
-file="patches.rv"
+NAME="revanced"
+USER="revanced"
+PATCH="patches.rv"
 EOF
 
 # Revanced Extended 
 cat > keywords.rve << EOF
-name="revanced-extended"
-author="inotia00"
-file="patches.rve"
+NAME="revanced-extended"
+USER="inotia00"
+PATCH="patches.rve"
 EOF
 
 # for var in keywords.rv # Revanced
@@ -22,7 +22,7 @@ do
 source  $var
 
 # Prepair patches keywords
-patch_file=$file
+patch_file=$PATCH
 
 # Get line numbers where included & excluded patches start from. 
 # We rely on the hardcoded messages to get the line numbers using grep
@@ -61,8 +61,8 @@ req() {
 
 get_latestytversion() {
     url="https://www.apkmirror.com/apk/google-inc/youtube/"
-    ytversion=$(req "$url" - | grep "All version" -A200 | grep app_release | sed 's:.*/youtube-::g;s:-release/.*::g;s:-:.:g' | sort -r | head -1)
-    echo "Latest Youtube Version: $ytversion"
+    YTVERSION=$(req "$url" - | grep "All version" -A200 | grep app_release | sed 's:.*/youtube-::g;s:-release/.*::g;s:-:.:g' | sort -r | head -1)
+    echo "Latest Youtube Version: $YTVERSION"
 }
 
 dl_yt() {
@@ -75,34 +75,34 @@ dl_yt() {
     req "$url" "$2"
 }
 # Fetch latest supported YT versions
-curl -s https://api.github.com/repos/$author/revanced-patches/releases/latest | grep "browser_download_url.*json" | cut -d : -f 2,3 | tr -d \" | wget -qi -
-ytversion=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
+curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | grep "browser_download_url.*json" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
 
 # Download Youtube
-dl_yt $ytversion youtube-v$ytversion.apk
+dl_yt $YTVERSION youtube-v$YTVERSION.apk
 
 # Get patches 
-echo -e "⏭️ Prepairing $name patches..."
+echo -e "⏭️ Prepairing $NAME patches..."
 
 # Revanced-patches
-curl -s https://api.github.com/repos/$author/revanced-patches/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 
 # Revanced CLI
-curl -s https://api.github.com/repos/$author/revanced-cli/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 
 # ReVanced Integrations
-curl -s https://api.github.com/repos/$author/revanced-integrations/releases/latest | grep "browser_download_url.*apk" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest | grep "browser_download_url.*apk" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 
 # Patch APK
 echo -e "⏭️ Patching YouTube..."
-java -jar revanced-cli*.jar -m revanced-integrations*.apk -b revanced-patches*.jar ${patches[@]} -a youtube-v$ytversion.apk -o $name.apk
+java -jar revanced-cli*.jar -m revanced-integrations*.apk -b revanced-patches*.jar ${patches[@]} -a youtube-v$YTVERSION.apk -o $NAME.apk
 
 # Find and select apksigner binary
-echo -e "⏭️ Signing $name-v$ytversion..."
+echo -e "⏭️ Signing $NAME-v$YTVERSION..."
 apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
 
 # Sign apks (https://github.com/tytydraco/public-keystore)
-${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in $name.apk --out yt-$name-v$ytversion.apk
+${apksigner} sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in $NAME.apk --out yt-$NAME-v$YTVERSION.apk
 
 
 # Refresh patches cache
