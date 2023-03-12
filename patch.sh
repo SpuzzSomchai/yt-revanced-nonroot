@@ -111,3 +111,4 @@ rm -f revanced-cli*.jar revanced-integrations*.apk revanced-patches*.jar patches
 
 # Finish
 done
+done
