@@ -6,7 +6,7 @@ keywordsrv(){
 NAME="revanced"
 USER="revanced"
 PATCH="patches.rv"}
-declare -a keywordsrv
+declare -A keywordsrv
 
 
 # Revanced Extended 
@@ -14,7 +14,7 @@ keywordsrve(){
 NAME="revanced-extended"
 USER="inotia00"
 PATCH="patches.rve"}
-declare -a keywordsrve
+declare -A keywordsrve
 
 # for var in keywords.rv # Revanced w w
 # for var in keywords.rve # Revanced Extended 
@@ -110,3 +110,4 @@ echo -e "⏭️ Clean patches cache..."
 rm -f revanced-cli*.jar revanced-integrations*.apk revanced-patches*.jar patches.json
 
 # Finish
+done
