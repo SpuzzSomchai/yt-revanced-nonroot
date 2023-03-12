@@ -19,6 +19,7 @@ declare -f keywordsrve
 # for var in keywords.rv # Revanced w w
 # for var in keywords.rve # Revanced Extended 
 for val in keywordsrv keywordsrve # Both
+while read $val
 do
 
 # Prepair patches keywords
