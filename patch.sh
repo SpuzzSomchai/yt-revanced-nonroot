@@ -6,7 +6,7 @@ keywordsrv(){
 NAME="revanced"
 USER="revanced"
 PATCH="patches.rv"}
-declare -A keywordsrv
+declare -f keywordsrv
 
 
 # Revanced Extended 
@@ -14,7 +14,7 @@ keywordsrve(){
 NAME="revanced-extended"
 USER="inotia00"
 PATCH="patches.rve"}
-declare -A keywordsrve
+declare -f keywordsrve
 
 # for var in keywords.rv # Revanced w w
 # for var in keywords.rve # Revanced Extended 
