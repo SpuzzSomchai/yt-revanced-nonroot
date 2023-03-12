@@ -2,26 +2,24 @@
 # Config to patch Revanced and Revanced Extended
 
 # Revanced 
-keywordsrv(){
+cat > keywords.rv << EOF
 NAME="revanced"
 USER="revanced"
-PATCH="patches.rv"}
-declare -f keywordsrv
-
+PATCH="patches.rv"
+EOF
 
 # Revanced Extended 
-keywordsrve(){
+cat > keywords.rve << EOF
 NAME="revanced-extended"
 USER="inotia00"
-PATCH="patches.rve"}
-declare -f keywordsrve
+PATCH="patches.rve"
+EOF
 
-# for var in keywords.rv # Revanced w w
+# for var in keywords.rv # Revanced
 # for var in keywords.rve # Revanced Extended 
-for val in keywordsrv keywordsrve # Both
-while read $val
-
+for var in keywords.rv keywords.rve # Both
 do
+source  $var
 
 # Prepair patches keywords
 patch_file=$PATCH
@@ -112,5 +110,4 @@ echo -e "⏭️ Clean patches cache..."
 rm -f revanced-cli*.jar revanced-integrations*.apk revanced-patches*.jar patches.json
 
 # Finish
-then
 done
