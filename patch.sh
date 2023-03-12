@@ -20,7 +20,7 @@ declare -a keywordsrve
 # for var in keywords.rve # Revanced Extended 
 for val in keywordsrv keywordsrve # Both
 do
-source  $var
+source  $val
 
 # Prepair patches keywords
 patch_file=$PATCH
