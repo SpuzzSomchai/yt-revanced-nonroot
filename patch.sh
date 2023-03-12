@@ -16,12 +16,10 @@ USER="inotia00"
 PATCH="patches.rve"}
 declare -a keywordsrve
 
-# for var in keywords.rv # Revanced
+# for var in keywords.rv # Revanced w w
 # for var in keywords.rve # Revanced Extended 
 for val in keywordsrv keywordsrve # Both
-read -p keywordrv keywordsrve
-do
-source  $val
+do $val
 
 # Prepair patches keywords
 patch_file=$PATCH
