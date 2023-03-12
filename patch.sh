@@ -19,6 +19,7 @@ declare -a keywordsrve
 # for var in keywords.rv # Revanced
 # for var in keywords.rve # Revanced Extended 
 for val in keywordsrv keywordsrve # Both
+read -p keywordrv keywordsrve
 do
 source  $val
 
