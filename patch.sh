@@ -2,22 +2,23 @@
 # Config to patch Revanced and Revanced Extended
 
 # Revanced 
-cat > keywords.rv << EOF
+keywordsrv(){
 NAME="revanced"
 USER="revanced"
-PATCH="patches.rv"
-EOF
+PATCH="patches.rv"}
+declare -a keywordsrv
+
 
 # Revanced Extended 
-cat > keywords.rve << EOF
+keywordsrve(){
 NAME="revanced-extended"
 USER="inotia00"
-PATCH="patches.rve"
-EOF
+PATCH="patches.rve"}
+declare -a keywordsrve
 
 # for var in keywords.rv # Revanced
 # for var in keywords.rve # Revanced Extended 
-for var in keywords.rv keywords.rve # Both
+for val in keywordsrv keywordsrve # Both
 do
 source  $var
 
