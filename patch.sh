@@ -19,7 +19,7 @@ declare -f keywordsrve
 # for var in keywords.rv # Revanced w w
 # for var in keywords.rve # Revanced Extended 
 for val in keywordsrv keywordsrve # Both
-do $val
+do
 
 # Prepair patches keywords
 patch_file=$PATCH
@@ -110,5 +110,4 @@ echo -e "⏭️ Clean patches cache..."
 rm -f revanced-cli*.jar revanced-integrations*.apk revanced-patches*.jar patches.json
 
 # Finish
-done
 done
