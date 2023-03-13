@@ -9,7 +9,7 @@
 
 [Revanced Extended](https://github.com/inotia00/revanced-patches/releases) 👉 [patches.rve](patches.rve)
 
-✅ Edit `#for var` in [patch.sh](patch.sh) to build Revanced, Revanced Extended or both. Default is both
+✅ Edit `# for var` in [patch.sh](patch.sh) to build Revanced, Revanced Extended or both. Default is both
 
 ✅ Run github actions and wait 2 minutes if build 1 and 4 minutes if both
 
