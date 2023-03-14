@@ -95,7 +95,13 @@ curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest
 
 # Patch APK
 echo -e "⏭️ Patching YouTube..."
-java -jar revanced-cli*.jar -m revanced-integrations*.apk -b revanced-patches*.jar -a youtube-v$YTVERSION.apk ${patches[@]} --keystore=ks.keystore -o yt-$NAME-v$YTVERSION.apk
+java -jar revanced-cli*.jar 
+     -m revanced-integrations*.apk
+     -b revanced-patches*.jar
+     -a youtube-v$YTVERSION.apk 
+     ${patches[@]} 
+     --keystore=ks.keystore 
+     -o yt-$NAME-v$YTVERSION.apk
 
 # Refresh patches cache
 echo -e "⏭️ Clean patches cache..."
