@@ -26,15 +26,20 @@ patch_file=$PATCH
 
 # Get line numbers where included & excluded patches start from. 
 # We rely on the hardcoded messages to get the line numbers using grep
-excluded_start="$(grep -n -m1 'EXCLUDE PATCHES' "$patch_file" | cut -d':' -f1)"
-included_start="$(grep -n -m1 'INCLUDE PATCHES' "$patch_file" | cut -d':' -f1)"
+excluded_start="$(grep -n -m1 'EXCLUDE PATCHES' "$patch_file" \
+| cut -d':' -f1)"
+included_start="$(grep -n -m1 'INCLUDE PATCHES' "$patch_file" \
+| cut -d':' -f1)"
 
 # Get everything but hashes from between the EXCLUDE PATCH & INCLUDE PATCH line
 # Note: '^[^#[:blank:]]' ignores starting hashes and/or blank characters i.e, whitespace & tab excluding newline
-excluded_patches="$(tail -n +$excluded_start $patch_file | head -n "$(( included_start - excluded_start ))" | grep '^[^#[:blank:]]')"
+excluded_patches="$(tail -n +$excluded_start $patch_file \
+| head -n "$(( included_start - excluded_start ))" \
+| grep '^[^#[:blank:]]')"
 
 # Get everything but hashes starting from INCLUDE PATCH line until EOF
-included_patches="$(tail -n +$included_start $patch_file | grep '^[^#[:blank:]]')"
+included_patches="$(tail -n +$included_start $patch_file \
+| grep '^[^#[:blank:]]')"
 
 # Array for storing patches
 declare -a patches
@@ -61,7 +66,11 @@ req() {
 
 get_latestytversion() {
     url="https://www.apkmirror.com/apk/google-inc/youtube/"
-    YTVERSION=$(req "$url" - | grep "All version" -A200 | grep app_release | sed 's:.*/youtube-::g;s:-release/.*::g;s:-:.:g' | sort -r | head -1)
+    YTVERSION=$(req "$url" - /! \
+    | grep "All version" -A200 \
+    | grep app_release \
+    | sed 's:.*/youtube-::g;s:-release/.*::g;s:-:.:g' \
+    | sort -r | head -1)
     echo "Latest Youtube Version: $YTVERSION"
 }
 
@@ -69,14 +78,29 @@ dl_yt() {
     rm -rf $2
     echo -e "🚘 Downloading YouTube v$1..."
     url="https://www.apkmirror.com/apk/google-inc/youtube/youtube-${1//./-}-release/"
-    url="$url$(req "$url" - | grep Variant -A50 | grep ">APK<" -A2 | grep android-apk-download | sed "s#.*-release/##g;s#/\#.*##g")"
-    url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
-    url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
+    url="$url$(req "$url" - \
+    | grep Variant -A50 | grep ">APK<" -A2 \
+    | grep android-apk-download \
+    | sed "s#.*-release/##g;s#/\#.*##g")"
+    url="https://www.apkmirror.com$(req "$url" - \
+    | tr '\n' ' ' \
+    | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
+    url="https://www.apkmirror.com$(req "$url" - \
+    | tr '\n' ' ' \
+    | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
     req "$url" "$2"
 }
 # Fetch latest supported YT versions
-curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | grep "browser_download_url.*json" | cut -d : -f 2,3 | tr -d \" | wget -qi -
-YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
+curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest \
+| grep "browser_download_url.*json" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
+YTVERSION=$(jq -r '.[] \
+| select(.name == "microg-support") \
+| .compatiblePackages[] \
+| select(.name == "com.google.android.youtube") \
+| .versions[-1]' patches.json)
 
 # Download Youtube
 dl_yt $YTVERSION youtube-v$YTVERSION.apk
@@ -85,27 +109,38 @@ dl_yt $YTVERSION youtube-v$YTVERSION.apk
 echo -e "⏭️ Prepairing $NAME patches..."
 
 # Revanced-patches
-curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest \
+| grep "browser_download_url.*jar" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
 
 # Revanced CLI
-curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest \
+| grep "browser_download_url.*jar" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
 
 # ReVanced Integrations
 curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest | grep "browser_download_url.*apk" | cut -d : -f 2,3 | tr -d \" | wget -qi -
 
 # Patch APK
 echo -e "⏭️ Patching YouTube..."
-java -jar revanced-cli*.jar 
-     -m revanced-integrations*.apk
-     -b revanced-patches*.jar
-     -a youtube-v$YTVERSION.apk 
-     ${patches[@]} 
-     --keystore=ks.keystore 
+java -jar revanced-cli*.jar \
+     -m revanced-integrations*.apk \
+     -b revanced-patches*.jar \
+     -a youtube-v$YTVERSION.apk \
+     ${patches[@]} \
+     --keystore=ks.keystore \
      -o yt-$NAME-v$YTVERSION.apk
 
 # Refresh patches cache
 echo -e "⏭️ Clean patches cache..."
-rm -f revanced-cli*.jar revanced-integrations*.apk revanced-patches*.jar patches.json
+rm -f revanced-cli*.jar \
+      revanced-integrations*.apk \
+      revanced-patches*.jar \
+      patches.json
 
 # Finish
 done
