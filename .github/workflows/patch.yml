@@ -1,8 +1,8 @@
-name: Patch Revanced & Revanced Extended 
+name: Patch
 on:
 #  push:
   schedule:
-    - cron: "0 10 * * MON"
+    - cron: "0 10 * * *"
   workflow_dispatch:
 jobs:
   patch:
@@ -16,7 +16,7 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
       
-      - name: Patch rv & rve non-root
+      - name: Patch
         run: bash patch.sh  
         
       - name: Generate date
