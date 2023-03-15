@@ -96,11 +96,7 @@ curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
-YTVERSION=$(jq -r '.[] \
-| select(.name == "microg-support") \
-| .compatiblePackages[] \
-| select(.name == "com.google.android.youtube") \
-| .versions[-1]' patches.json)
+YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
 
 # Download Youtube
 dl_yt $YTVERSION youtube-v$YTVERSION.apk
