@@ -1,4 +1,4 @@
-name: Patch YouTube 
+name: Patch YouTube APK
 on:
 #  push:
   schedule:
@@ -16,7 +16,7 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
       
-      - name: Patch
+      - name: Patch apk
         run: bash patch.sh  
         
       - name: Generate date
