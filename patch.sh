@@ -129,7 +129,7 @@ java -jar revanced-cli*.jar \
      -b revanced-patches*.jar \
      -a youtube-v$YTVERSION.apk \
      ${patches[@]} \
-     --keystore=rv.keystore -p=revanced \
+     --keystore=r.keystore -p=revanced \
      -o yt-$NAME-v$YTVERSION.apk
 
 # Refresh patches cache
