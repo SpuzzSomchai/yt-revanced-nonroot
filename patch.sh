@@ -79,7 +79,8 @@ dl_yt() {
     echo -e "🚘 Downloading YouTube v$1..."
     url="https://www.apkmirror.com/apk/google-inc/youtube/youtube-${1//./-}-release/"
     url="$url$(req "$url" - \
-    | grep Variant -A50 | grep ">APK<" -A2 \
+    | grep Variant -A50 \
+    | grep ">APK<" -A2 \
     | grep android-apk-download \
     | sed "s#.*-release/##g;s#/\#.*##g")"
     url="https://www.apkmirror.com$(req "$url" - \
@@ -128,7 +129,7 @@ java -jar revanced-cli*.jar \
      -b revanced-patches*.jar \
      -a youtube-v$YTVERSION.apk \
      ${patches[@]} \
-     --keystore=ks.keystore \
+#     --keystore=ks.keystore \
      -o yt-$NAME-v$YTVERSION.apk
 
 # Refresh patches cache
