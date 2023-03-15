@@ -1,5 +1,5 @@
 # How to use
-✅ Fork this repository 
+✅ Generate this repository 
 
 ✅ Enable github actions
 
