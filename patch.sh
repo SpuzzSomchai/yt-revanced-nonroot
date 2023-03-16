@@ -60,29 +60,33 @@ populate_patches() {
 # Download resources
 echo -e "⏭️ Prepairing $NAME resources..."
 
-
+# Patches and json
 IFS=$' \t\r\n'
 assets=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | jq -r '.assets[].browser_download_url')
+for asset in $assets; do
+    curl -s -OL $asset
+done
+
+# Cli
+IFS=$' \t\r\n'
+assets=$(curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest | jq -r '.assets[].browser_download_url')
+for asset in $assets; do
+    curl -s -OL $asset
+done
+
+# Integrations
+IFS=$' \t\r\n'
+assets=$(curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest | jq -r '.assets[].browser_download_url')
 
 for asset in $assets; do
     curl -s -OL $asset
 done
 
-curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest \
-| grep "browser_download_url.*jar" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
-
-curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest \
-| grep "browser_download_url.*apk" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
+# Fetch latest supported YT versions
+YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
 
 # Download latest APK supported
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
-
 
 req() {
     wget -q -O "$2" --header="$WGET_HEADER" "$1"
@@ -105,8 +109,6 @@ dl_yt() {
     | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
     req "$url" "$2"
 }
-# Fetch latest supported YT versions
-YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
 
 # Download Youtube
 dl_yt $YTVERSION youtube-v$YTVERSION.apk
