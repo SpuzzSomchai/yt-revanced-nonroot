@@ -62,7 +62,7 @@ echo -e "⏭️ Prepairing $NAME resources..."
 
 
 IFS=$' \t\r\n'
-assets=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | jq -r '[0].assets[].browser_download_url')
+assets=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | jq -r '.assets[].browser_download_url')
 
 for asset in $assets; do
     curl -s -OL $asset
