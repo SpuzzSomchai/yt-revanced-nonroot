@@ -126,7 +126,9 @@ echo -e "⏭️ Clean patches cache..."
 rm -f revanced-cli*.jar \
       revanced-integrations*.apk \
       revanced-patches*.jar \
-      patches.json
+      patches.json \
+      options.toml \
+      youtube*.apk
 
 # Finish
 done
