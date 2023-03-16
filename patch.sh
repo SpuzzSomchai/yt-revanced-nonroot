@@ -120,7 +120,11 @@ curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest \
 | wget -qi -
 
 # ReVanced Integrations
-curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest | grep "browser_download_url.*apk" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest \
+| grep "browser_download_url.*apk" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
 
 # Patch APK
 echo -e "⏭️ Patching YouTube..."
