@@ -58,10 +58,10 @@ populate_patches() {
 
 # Download patches
 IFS=$' \t\r\n'
-patches=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | jq -r '.assets[].browser_download_url')
+patch=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | jq -r '.assets[].browser_download_url')
 
-for asset in $patches; do
-    curl -s -OL $patches
+for asset in $patch; do
+    curl -s -OL $patch
 done
 # Revanced CLI
 IFS=$' \t\r\n'
@@ -73,10 +73,10 @@ done
 
 # ReVanced Integrations
 IFS=$' \t\r\n'
-integrations=$(curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest | jq -r '.assets[].browser_download_url')
+integration=$(curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest | jq -r '.assets[].browser_download_url')
 
-for asset in $integrations; do
-    curl -s -OL $integrations
+for asset in $integration; do
+    curl -s -OL $integration
 done
 
 # Download latest APK supported
