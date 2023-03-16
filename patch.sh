@@ -56,22 +56,36 @@ populate_patches() {
 [[ ! -z "$excluded_patches" ]] && populate_patches "-e" "$excluded_patches"
 [[ ! -z "$included_patches" ]] && populate_patches "-i" "$included_patches"
 
+
+# Download resources
+echo -e "⏭️ Prepairing $NAME resources..."
+
+
+IFS=$' \t\r\n'
+assets=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | jq -r '.assets[].browser_download_url')
+
+for asset in $assets; do
+    curl -s -OL $asset
+done
+
+curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest \
+| grep "browser_download_url.*jar" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
+
+curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest \
+| grep "browser_download_url.*apk" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
+
 # Download latest APK supported
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
 
 
 req() {
     wget -q -O "$2" --header="$WGET_HEADER" "$1"
-}
-
-get_latestytversion() {
-    url="https://www.apkmirror.com/apk/google-inc/youtube/"
-    YTVERSION=$(req "$url" - /! \
-    | grep "All version" -A200 \
-    | grep app_release \
-    | sed 's:.*/youtube-::g;s:-release/.*::g;s:-:.:g' \
-    | sort -r | head -1)
-    echo "Latest Youtube Version: $YTVERSION"
 }
 
 dl_yt() {
@@ -92,39 +106,10 @@ dl_yt() {
     req "$url" "$2"
 }
 # Fetch latest supported YT versions
-curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest \
-| grep "browser_download_url.*json" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
 YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
 
 # Download Youtube
 dl_yt $YTVERSION youtube-v$YTVERSION.apk
-
-# Get patches 
-echo -e "⏭️ Prepairing $NAME patches..."
-
-# Revanced-patches
-curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest \
-| grep "browser_download_url.*jar" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
-
-# Revanced CLI
-curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest \
-| grep "browser_download_url.*jar" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
-
-# ReVanced Integrations
-curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest \
-| grep "browser_download_url.*apk" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
 
 # Patch APK
 echo -e "⏭️ Patching YouTube..."
