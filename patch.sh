@@ -62,7 +62,7 @@ echo -e "⏭️ Prepairing $NAME resources..."
 
 IFS=$' \t\r\n'
 
-# Patches & jon
+# Patches & json
 latest_patches=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | jq -r '.assets[].browser_download_url') 
 
 # Cli
