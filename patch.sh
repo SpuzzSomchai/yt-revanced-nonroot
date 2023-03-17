@@ -88,7 +88,7 @@ req() {
 
 dl_yt() {
     rm -rf $2
-    echo -e "🚘 Downloading YouTube v$1..."
+    echo -e "<i class="fas fa-arrow-alt-circle-down"></i> Downloading YouTube v$1..."
     url="https://www.apkmirror.com/apk/google-inc/youtube/youtube-${1//./-}-release/"
     url="$url$(req "$url" - \
     | grep Variant -A50 \
