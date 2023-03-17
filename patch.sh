@@ -63,13 +63,16 @@ echo -e "⏬ Prepairing $NAME resources..."
 IFS=$' \t\r\n'
 
 # Patches & json
-latest_patches=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | jq -r '.assets[].browser_download_url') 
+latest_patches=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest \
+| jq -r '.assets[].browser_download_url') 
 
 # Cli
-latest_cli=$(curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest | jq -r '.assets[].browser_download_url') 
+latest_cli=$(curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest \
+| jq -r '.assets[].browser_download_url') 
 
 # Integrations
-latest_integrations=$(curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest | jq -r '.assets[].browser_download_url')
+latest_integrations=$(curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest \
+| jq -r '.assets[].browser_download_url')
 
 # Download all resources
 for asset in $latest_patches $latest_cli $latest_integrations ; do
