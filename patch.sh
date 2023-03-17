@@ -57,30 +57,17 @@ populate_patches() {
 [[ ! -z "$included_patches" ]] && populate_patches "-i" "$included_patches"
 
 
-# Download resources
+# Download resources necessary
 echo -e "⏭️ Prepairing $NAME resources..."
 
-# Patches and json
 IFS=$' \t\r\n'
-assets=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | jq -r '.assets[].browser_download_url')
-for asset in $assets; do
-    curl -s -OL $asset
+latest_patches=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest | jq -r '.assets[].browser_download_url') 
+latest_cli=$(curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest | jq -r '.assets[].browser_download_url') 
+latest_integrations=$(curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest | jq -r '.assets[].browser_download_url')
+for asset in $latest_patches $latest_cli $latest_integrations ; do
+      curl -s -OL $asset
 done
 
-# Cli
-IFS=$' \t\r\n'
-assets=$(curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest | jq -r '.assets[].browser_download_url')
-for asset in $assets; do
-    curl -s -OL $asset
-done
-
-# Integrations
-IFS=$' \t\r\n'
-assets=$(curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest | jq -r '.assets[].browser_download_url')
-
-for asset in $assets; do
-    curl -s -OL $asset
-done
 
 # Fetch latest supported YT versions
 YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
