@@ -5,14 +5,14 @@
 cat > keywords.rv << EOF
 NAME="revanced"
 ORG="revanced"
-PATCH="patches-rv.txt"
+PATCH="patches.rv"
 EOF
 
 # Revanced Extended 
 cat > keywords.rve << EOF
 NAME="revanced-extended"
 ORG="inotia00"
-PATCH="patches-rve.txt"
+PATCH="patches.rve"
 EOF
 
 # for var in keywords.rv # Revanced
