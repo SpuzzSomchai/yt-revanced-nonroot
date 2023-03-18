@@ -45,16 +45,16 @@ included_patches="$(tail -n +$included_start $patch_file \
 declare -a patches
 
 # Function for populating patches array, using a function here reduces redundancy & satisfies DRY principals
-populate_patches() {
+#populate_patches() {
     # Note: <<< defines a 'here-string'. Meaning, it allows reading from variables just like from a file
-    while read -r patch; do
-        patches+=("$1 $patch")
-    done <<< "$2"
-}
+#    while read -r patch; do
+#        patches+=("$1 $patch")
+#    done <<< "$2"
+#}
 
 # If the variables are NOT empty, call populate_patches with proper arguments
-[[ ! -z "$excluded_patches" ]] && populate_patches "-e" "$excluded_patches"
-[[ ! -z "$included_patches" ]] && populate_patches "-i" "$included_patches"
+#[[ ! -z "$excluded_patches" ]] && populate_patches "-e" "$excluded_patches"
+#[[ ! -z "$included_patches" ]] && populate_patches "-i" "$included_patches"
 
 
 # Download resources necessary
