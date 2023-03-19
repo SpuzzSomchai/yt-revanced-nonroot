@@ -4,14 +4,14 @@
 # Revanced 
 cat > keywords.rv << EOF
 NAME="revanced"
-ORG="revanced"
+USER="revanced"
 PATCH="patches.rv"
 EOF
 
 # Revanced Extended 
 cat > keywords.rve << EOF
 NAME="revanced-extended"
-ORG="inotia00"
+USER="inotia00"
 PATCH="patches.rve"
 EOF
 
@@ -63,15 +63,15 @@ echo -e "⏬ Prepairing $NAME resources..."
 IFS=$' \t\r\n'
 
 # Patches & json
-latest_patches=$(curl -s https://api.github.com/repos/$ORG/revanced-patches/releases/latest \
+latest_patches=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest \
 | jq -r '.assets[].browser_download_url') 
 
 # Cli
-latest_cli=$(curl -s https://api.github.com/repos/$ORG/revanced-cli/releases/latest \
+latest_cli=$(curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest \
 | jq -r '.assets[].browser_download_url') 
 
 # Integrations
-latest_integrations=$(curl -s https://api.github.com/repos/$ORG/revanced-integrations/releases/latest \
+latest_integrations=$(curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest \
 | jq -r '.assets[].browser_download_url')
 
 # Download all resources
