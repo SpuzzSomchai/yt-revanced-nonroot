@@ -42,7 +42,7 @@ included_patches="$(tail -n +$included_start $patch_file \
 | grep '^[^#[:blank:]]')"
 
 # Array for storing patches
-declare -a $NAME_patches
+declare -a patches
 
 # Function for populating patches array, using a function here reduces redundancy & satisfies DRY principals
 populate_patches() {
@@ -116,7 +116,7 @@ java -jar revanced-cli*.jar \
      -m revanced-integrations*.apk \
      -b revanced-patches*.jar \
      -a youtube-v$YTVERSION.apk \
-     ${$NAME_patches[@]} \
+     ${patches[@]} \
      --keystore=ks.keystore \
      -o yt-$NAME-v$YTVERSION.apk
 
@@ -128,7 +128,7 @@ rm -f revanced-cli*.jar \
       patches.json \
       options.toml \
       youtube*.apk \
-      {patches[@]}
-
+      
+unset patches
 # Finish
 done
