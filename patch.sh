@@ -130,5 +130,6 @@ rm -f revanced-cli*.jar \
       youtube*.apk \
       
 unset patches
+
 # Finish
 done
