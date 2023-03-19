@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   patch:
-  name: Patch YouTube 
+    name: Patch YouTube 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
