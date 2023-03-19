@@ -127,9 +127,8 @@ rm -f revanced-cli*.jar \
       revanced-patches*.jar \
       patches.json \
       options.toml \
-      youtube*.apk \
-      
-unset patches
+      youtube*.apk \ 
+unset patches      
 
 # Finish
 done
