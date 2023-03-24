@@ -1,14 +1,13 @@
 #!/bin/bash
 # Config to patch Revanced and Revanced Extended
-# Edit # before YTVERSION to select specific or auto select YouTube version supported 
+# Input YTVERSION number version or blank to select specific or auto select YouTube version supported 
 
 # Revanced 
 cat > keywords.rv << EOF
 NAME="revanced"
 USER="revanced"
 PATCH="patches.rv"
-#YTVERSION="18.03.36"
-YTVERSION=""
+YTVERSION="18.03.36"
 EOF
 
 # Revanced Extended 
@@ -16,8 +15,7 @@ cat > keywords.rve << EOF
 NAME="revanced-extended"
 USER="inotia00"
 PATCH="patches.rve"
-#YTVERSION="18.07.35"
-YTVERSION=""
+YTVERSION="18.07.35"
 EOF
 
 #for var in keywords.rv # Revanced
