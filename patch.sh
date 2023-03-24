@@ -17,9 +17,9 @@ PATCH="patches.rve"
 YTVERSION="18.07.35"
 EOF
 
-for var in keywords.rv # Revanced
+#for var in keywords.rv # Revanced
 #for var in keywords.rve # Revanced Extended 
-#for var in keywords.rv keywords.rve # Both
+for var in keywords.rv keywords.rve # Both
 do
 source  $var
 
