@@ -1,5 +1,6 @@
 #!/bin/bash
 # Config to patch Revanced and Revanced Extended
+# Edit # before YTVERSION to select specific or auto select YouTube version supported 
 
 # Revanced 
 cat > keywords.rv << EOF
