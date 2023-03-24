@@ -6,6 +6,7 @@ cat > keywords.rv << EOF
 NAME="revanced"
 USER="revanced"
 PATCH="patches.rv"
+YTVERSION="18.03.36"
 EOF
 
 # Revanced Extended 
@@ -15,9 +16,9 @@ USER="inotia00"
 PATCH="patches.rve"
 EOF
 
-# for var in keywords.rv # Revanced
-# for var in keywords.rve # Revanced Extended 
-for var in keywords.rv keywords.rve # Both
+for var in keywords.rv # Revanced
+#for var in keywords.rve # Revanced Extended 
+#for var in keywords.rv keywords.rve # Both
 do
 source  $var
 
@@ -79,9 +80,6 @@ for asset in $latest_patches $latest_cli $latest_integrations ; do
       curl -s -OL $asset
 done
 
-# Fetch latest supported YT versions
-YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
-
 # Download latest APK supported
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
 
@@ -108,8 +106,10 @@ dl_yt() {
 }
 
 # Download Youtube
+if [ $YTVERSION ] ; then dl_yt $YTVERSION youtube-v$YTVERSION.apk
+else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
 dl_yt $YTVERSION youtube-v$YTVERSION.apk
-
+fi
 # Patch APK
 echo -e "⚙️ Patching YouTube..."
 java -jar revanced-cli*.jar \
