@@ -84,7 +84,7 @@ for asset in $latest_patches $latest_cli $latest_integrations ; do
       curl -s -OL $asset
 done
 
-# Download latest APK supported
+# Download YouTube APK supported
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
 
 req() {
@@ -109,7 +109,7 @@ dl_yt() {
     req "$url" "$2"
 }
 
-# Download Youtube
+# Download specific or auto choose Youtube version
 if [ $YTVERSION ] ; then dl_yt $YTVERSION youtube-v$YTVERSION.apk
 else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
 dl_yt $YTVERSION youtube-v$YTVERSION.apk
