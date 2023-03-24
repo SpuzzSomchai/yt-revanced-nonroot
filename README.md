@@ -1,5 +1,5 @@
 # How to use
-✅ Generate this repository 
+✅ Generate or fork this repository 
 
 ✅ Enable github actions
 
@@ -10,6 +10,8 @@
 [Revanced Extended](https://github.com/inotia00/revanced-patches/releases) 👉 [patches.rve](patches.rve)
 
 ✅ Edit `# for var` in [patch.sh](patch.sh) to build Revanced, Revanced Extended or both. Default is both
+
+✅ Edit `# YTVERSION`in [patch.sh](patch.sh) to set specific or auto choose YouTube version supported 
 
 ✅ Run github actions and wait 2 minutes if build 1 and 4 minutes if both
 
