@@ -9,9 +9,11 @@
 
 [Revanced Extended](https://github.com/inotia00/revanced-patches/releases) 👉 [patches.rve](patches.rve)
 
-✅ Edit `# for var` in [patch.sh](patch.sh) to build Revanced, Revanced Extended or both. Default is both
+✅ In [patch.sh](patch.sh)
 
-✅ Edit `# YTVERSION`in [patch.sh](patch.sh) to set specific or auto choose YouTube version supported 
+ ✒️ Edit `# for var` to build Revanced, Revanced Extended or both. Default is both
+
+✒️  Edit `# YTVERSION`to set specific or auto choose YouTube version supported.Number of version or blank
 
 ✅ Run github actions and wait 2 minutes if build 1 and 4 minutes if both
 
