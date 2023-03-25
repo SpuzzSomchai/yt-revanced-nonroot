@@ -83,7 +83,7 @@ for asset in $latest_patches $latest_cli $latest_integrations ; do
 done
 
 # Download YouTube APK supported
-WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0"
 
 req() {
     wget -q -O "$2" --header="$WGET_HEADER" "$1"
