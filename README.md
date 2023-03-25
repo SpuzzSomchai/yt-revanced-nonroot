@@ -11,11 +11,11 @@
 
 ✅ In [patch.sh](patch.sh)
 
- ✒️ Edit `# for var` to build Revanced, Revanced Extended or both. Default is both
+ ✒️ Edit `# for var` to build Revanced, Revanced Extended or both. Default is Both
 
 ✒️  Edit `# YTVERSION` to set specific or auto choose YouTube version supported. Number of version or blank
 
-✅ Run github actions and wait 2 minutes if build 1 and 4 minutes if both
+✅ Run github actions and wait 2 minutes if build 1 and 4 minutes if Both
 
 ✅ Take apk in releases
 
