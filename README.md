@@ -13,7 +13,7 @@
 
  ✒️ Edit `# for var` to build Revanced, Revanced Extended or Both.
 
-✒️  Edit `# YTVERSION` to set specific or auto choose YouTube version supported. Number of version or blank
+✒️  Edit `YTVERSION` to set specific or auto choose YouTube version supported. Number of version/blank or add # before YTVERSION
 
 ✅ Run github actions and wait 2 minutes if build 1 and 4 minutes if Both
 
