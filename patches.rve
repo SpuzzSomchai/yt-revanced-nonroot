@@ -1,5 +1,6 @@
 # EXCLUDE PATCHES FROM BELOW
 custom-branding-icon-afn-red
+custom-branding-name
 custom-video-buffer
 custom-video-speed
 debugging
