@@ -7,6 +7,7 @@ on:
 jobs:
   patch:
     name: Patch YouTube 
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -48,4 +49,4 @@ jobs:
           retain_days: 0
           keep_minimum_runs: 1
           
-permissions: write-all
+
