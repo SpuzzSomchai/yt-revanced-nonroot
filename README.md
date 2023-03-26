@@ -11,7 +11,7 @@
 
 ✅ In [patch.sh](patch.sh)
 
- ✒️ Edit `# for var` to build Revanced, Revanced Extended or Both. Default is Both
+ ✒️ Edit `# for var` to build Revanced, Revanced Extended or Both.
 
 ✒️  Edit `# YTVERSION` to set specific or auto choose YouTube version supported. Number of version or blank
 
