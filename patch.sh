@@ -61,7 +61,7 @@ populate_patches() {
 
 
 # Download resources necessary
-echo "⏬ necessary resources..."
+echo "Download latest resources..."
 IFS=$' \t\r\n'
 
 # Patches & json
@@ -78,10 +78,10 @@ latest_integrations=$(curl -s https://api.github.com/repos/$USER/revanced-integr
 
 # Download all resources
 for asset in $latest_patches $latest_cli $latest_integrations ; do
-      echo -e "Download link:$asset"
+      echo -e "Download URL:$asset"
       curl -s -OL $asset
 done
-echo "⏬ resources complete!"
+echo "Download resources complete!"
 # Download YouTube APK supported
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0"
 
@@ -91,7 +91,7 @@ req() {
 
 dl_yt() {
     rm -rf $2
-    echo "⏬ YouTube"
+    echo "Download YouTube..."
     url="https://www.apkmirror.com/apk/google-inc/youtube/youtube-${1//./-}-release/"
 
     url="$url$(req "$url" - \
@@ -115,12 +115,14 @@ dl_yt() {
 if [ $YTVERSION ] ;
   then
     dl_yt $YTVERSION youtube-v$YTVERSION.apk
-    echo "✅ Specific YouTube version $YTVERSION"
+    echo "Specific YouTube
+
+ version $YTVERSION"
     else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
   dl_yt $YTVERSION youtube-v$YTVERSION.apk
-  echo "✅ Auto choose YouTube version $YTVERSION"
+  echo "Auto choose => YouTube version $YTVERSION"
 fi
-echo "⏬ YouTube version $YTVERSION complete!"
+echo "Download YouTube version $YTVERSION complete!"
 # Patch APK
 echo -e "⚙️ YouTube..."
 java -jar revanced-cli*.jar \
