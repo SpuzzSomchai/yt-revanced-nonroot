@@ -85,12 +85,12 @@ done
 # Download YouTube APK supported
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0"
 
-req() {
-    wget -q -O "$2" --header="$WGET_HEADER" "$1"
-}
+#req() {
+#    wget -q -O "$2" --header="$WGET_HEADER" "$1"
+#}
 
 dl_yt() {
-    rm -rf $2
+   # rm -rf $2
     echo -e "⏬ Downloading YouTube v$1..."
     url="https://www.apkmirror.com/apk/google-inc/youtube/youtube-${1//./-}-release/"
     url="$url$(req "$url" - \
