@@ -108,7 +108,7 @@ dl_yt() {
     | tr '\n' ' ' \
     | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
     req "$url" "$2"
-    echo "Download link:$URL"
+    echo "Download link:$url"
 }
 
 # Download specific or auto choose Youtube version
