@@ -115,12 +115,12 @@ dl_yt() {
 if [ $YTVERSION ] ;
   then
     dl_yt $YTVERSION youtube-v$YTVERSION.apk
-    echo -e "✅Specific YouTube version $YTVERSION"
+    echo "✅ Specific YouTube version $YTVERSION"
     else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
   dl_yt $YTVERSION youtube-v$YTVERSION.apk
-  echo -e "✅Auto choose YouTube version $YTVERSION"
+  echo "✅ Auto choose YouTube version $YTVERSION"
 fi
-echo -e "⏬ YouTube version $YTVERSION complete!"
+echo "⏬ YouTube version $YTVERSION complete!"
 # Patch APK
 echo -e "⚙️ YouTube..."
 java -jar revanced-cli*.jar \
@@ -132,7 +132,7 @@ java -jar revanced-cli*.jar \
      -o yt-$NAME-v$YTVERSION.apk
 
 # Refresh patches cache
-echo -e "🧹 cache..."
+echo "🧹 cache..."
 rm -f revanced-cli*.jar \
       revanced-integrations*.apk \
       revanced-patches*.jar \
