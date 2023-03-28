@@ -92,7 +92,7 @@ req() {
 
 dl_yt() {
     rm -rf $2
-    echo -e "⏬ Downloading YouTube v$1..."
+    echo -e "⏬ Downloading YouTube "
     url="https://www.apkmirror.com/apk/google-inc/youtube/youtube-${1//./-}-release/"
     echo -e "URL:$url"
     url="$url$(req "$url" - \
@@ -116,10 +116,12 @@ dl_yt() {
 if [ $YTVERSION ] ;
   then
     dl_yt $YTVERSION youtube-v$YTVERSION.apk
+    echo -e"YouTube Version = $YTVERSION"
     else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
   dl_yt $YTVERSION youtube-v$YTVERSION.apk
+  echo -e"YouTube Version = $YTVERSION"
 fi
-
+echo -e"Download YouTube v-$YTVERSION complete"
 # Patch APK
 echo -e "⚙️ Patching YouTube..."
 java -jar revanced-cli*.jar \
