@@ -79,7 +79,7 @@ latest_integrations=$(curl -s https://api.github.com/repos/$USER/revanced-integr
 
 # Download all resources
 for asset in $latest_patches $latest_cli $latest_integrations ; do
-      echo -e "$asset"
+      echo -e "Download URL:$asset"
       curl -s -OL $asset
 done
 
@@ -94,22 +94,22 @@ dl_yt() {
     rm -rf $2
     echo -e "⏬ Downloading YouTube v$1..."
     url="https://www.apkmirror.com/apk/google-inc/youtube/youtube-${1//./-}-release/"
-    echo -e "$url"
+    echo -e "URL:$url"
     url="$url$(req "$url" - \
     | grep Variant -A50 \
     | grep ">APK<" -A2 \
     | grep android-apk-download \
     | sed "s#.*-release/##g;s#/\#.*##g")"
-    echo -e "$url"
+    echo -e "URL:$url"
     url="https://www.apkmirror.com$(req "$url" - \
     | tr '\n' ' ' \
     | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
-    echo -e "$url"
+    echo -e "URL:$url"
     url="https://www.apkmirror.com$(req "$url" - \
     | tr '\n' ' ' \
     | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
     req "$url" "$2"
-    echo -e "$url"
+    echo -e "URL:$url"
 }
 
 # Download specific or auto choose Youtube version
