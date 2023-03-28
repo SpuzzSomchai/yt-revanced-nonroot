@@ -79,6 +79,7 @@ latest_integrations=$(curl -s https://api.github.com/repos/$USER/revanced-integr
 
 # Download all resources
 for asset in $latest_patches $latest_cli $latest_integrations ; do
+      echo -e "$asset"
       curl -s -OL $asset
 done
 
