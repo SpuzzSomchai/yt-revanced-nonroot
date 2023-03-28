@@ -115,9 +115,7 @@ dl_yt() {
 if [ $YTVERSION ] ;
   then
     dl_yt $YTVERSION youtube-v$YTVERSION.apk
-    echo "Specific YouTube
-
- version $YTVERSION"
+    echo "#ffffff YouTube version $YTVERSION"
     else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
   dl_yt $YTVERSION youtube-v$YTVERSION.apk
   echo "Auto choose => YouTube version $YTVERSION"
