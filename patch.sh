@@ -94,18 +94,22 @@ dl_yt() {
     rm -rf $2
     echo -e "⏬ Downloading YouTube v$1..."
     url="https://www.apkmirror.com/apk/google-inc/youtube/youtube-${1//./-}-release/"
+    echo -e "$url"
     url="$url$(req "$url" - \
     | grep Variant -A50 \
     | grep ">APK<" -A2 \
     | grep android-apk-download \
     | sed "s#.*-release/##g;s#/\#.*##g")"
+    echo -e "$url"
     url="https://www.apkmirror.com$(req "$url" - \
     | tr '\n' ' ' \
     | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
+    echo -e "$url"
     url="https://www.apkmirror.com$(req "$url" - \
     | tr '\n' ' ' \
     | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
     req "$url" "$2"
+    echo -e "$url"
 }
 
 # Download specific or auto choose Youtube version
