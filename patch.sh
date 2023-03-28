@@ -61,7 +61,6 @@ populate_patches() {
 
 
 # Download resources necessary
-echo -e "⏬ Prepairing $NAME resources..."
 
 IFS=$' \t\r\n'
 
@@ -79,7 +78,7 @@ latest_integrations=$(curl -s https://api.github.com/repos/$USER/revanced-integr
 
 # Download all resources
 for asset in $latest_patches $latest_cli $latest_integrations ; do
-      echo -e "Download URL:$asset"
+      echo -e "⏬ $asset..."
       curl -s -OL $asset
 done
 
@@ -92,38 +91,38 @@ req() {
 
 dl_yt() {
     rm -rf $2
-    echo -e "⏬ Downloading YouTube "
+    echo -e "⏬ YouTube "
     url="https://www.apkmirror.com/apk/google-inc/youtube/youtube-${1//./-}-release/"
-    echo -e "URL:$url"
+
     url="$url$(req "$url" - \
     | grep Variant -A50 \
     | grep ">APK<" -A2 \
     | grep android-apk-download \
     | sed "s#.*-release/##g;s#/\#.*##g")"
-    echo -e "URL:$url"
+    
     url="https://www.apkmirror.com$(req "$url" - \
     | tr '\n' ' ' \
     | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
-    echo -e "URL:$url"
+    
     url="https://www.apkmirror.com$(req "$url" - \
     | tr '\n' ' ' \
     | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
     req "$url" "$2"
-    echo -e "URL:$url"
+
 }
 
 # Download specific or auto choose Youtube version
 if [ $YTVERSION ] ;
   then
     dl_yt $YTVERSION youtube-v$YTVERSION.apk
-    echo -e"YouTube Version = $YTVERSION"
+    echo -e "Specific YouTube version = $YTVERSION"
     else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
   dl_yt $YTVERSION youtube-v$YTVERSION.apk
-  echo -e"YouTube Version = $YTVERSION"
+  echo -e "Auto choose YouTube version = $YTVERSION"
 fi
-echo -e"Download YouTube v-$YTVERSION complete"
+echo -e "⏬ YouTube version $YTVERSION complete"
 # Patch APK
-echo -e "⚙️ Patching YouTube..."
+echo -e "⚙️ YouTube..."
 java -jar revanced-cli*.jar \
      -m revanced-integrations*.apk \
      -b revanced-patches*.jar \
@@ -133,7 +132,7 @@ java -jar revanced-cli*.jar \
      -o yt-$NAME-v$YTVERSION.apk
 
 # Refresh patches cache
-echo -e "🧹 Clean patches cache..."
+echo -e "🧹 cache..."
 rm -f revanced-cli*.jar \
       revanced-integrations*.apk \
       revanced-patches*.jar \
