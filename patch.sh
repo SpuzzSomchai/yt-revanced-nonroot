@@ -15,7 +15,7 @@ cat > keywords.rve << EOF
 NAME="revanced-extended"
 USER="inotia00"
 PATCH="patches.rve"
-YTVERSION="18.07.35"
+#YTVERSION="18.07.35"
 EOF
 
 #for var in keywords.rv # Revanced
