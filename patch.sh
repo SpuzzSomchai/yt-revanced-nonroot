@@ -15,7 +15,7 @@ cat > keywords.rve << EOF
 NAME="revanced-extended"
 USER="inotia00"
 PATCH="patches.rve"
-#YTVERSION="18.07.35"
+#YTVERSION="auto"
 EOF
 
 #for var in keywords.rv # Revanced
@@ -108,11 +108,10 @@ dl_yt() {
 }
 
 # Download specific or auto choose Youtube version
-if [ $YTVERSION ] ;
-  then
-    dl_yt $YTVERSION youtube-v$YTVERSION.apk
-    else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
-  dl_yt $YTVERSION youtube-v$YTVERSION.apk
+if [ YTVERSION="auto" ] ;
+  then YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json)
+  dl_yt $YTVERSION youtube-v$YTVERSION.apk 
+  else dl_yt $YTVERSION youtube-v$YTVERSION.apk
 fi
 
 # Patch APK
