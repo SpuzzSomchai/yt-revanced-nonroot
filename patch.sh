@@ -59,8 +59,8 @@ populate_patches() {
 [[ ! -z "$excluded_patches" ]] && populate_patches "-e" "$excluded_patches"
 [[ ! -z "$included_patches" ]] && populate_patches "-i" "$included_patches"
 
-# Download resources necessary
-echo -e "⏬ Downloading 
+# Download resources 
+echo -e "⏬ Downloading $NAME resources..."
 get_latest_patches() {
 curl -s "https://api.github.com/repos/$USER/revanced-patches/releases/latest" \
 | jq -r '.assets[].browser_download_url'  
@@ -80,7 +80,7 @@ req() {
 
 dl_yt() {
     rm -rf $2
-    echo -e "⏬ Downloading YouTube v$1..."
+    echo "⏬ Downloading YouTube v$1..."
     url="https://www.apkmirror.com/apk/google-inc/youtube/youtube-${1//./-}-release/"
     url="$url$(req "$url" - \
     | grep Variant -A50 \
@@ -104,7 +104,7 @@ else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePac
 fi
 
 # Patch APK
-echo -e "⚙️ Patching YouTube..."
+echo "⚙️ Patching YouTube..."
 java -jar revanced-cli*.jar \
      -m revanced-integrations*.apk \
      -b revanced-patches*.jar \
@@ -114,7 +114,7 @@ java -jar revanced-cli*.jar \
      -o yt-$NAME-v$YTVERSION.apk
 
 # Refresh patches cache
-echo -e "🧹 Clean patches cache..."
+echo "🧹 Clean patches cache..."
 rm -f revanced-cli*.jar \
       revanced-integrations*.apk \
       revanced-patches*.jar \
