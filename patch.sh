@@ -59,7 +59,6 @@ populate_patches() {
 [[ ! -z "$excluded_patches" ]] && populate_patches "-e" "$excluded_patches"
 [[ ! -z "$included_patches" ]] && populate_patches "-i" "$included_patches"
 
-
 # Download resources necessary
 echo -e "⏬ Downloading 
 get_latest_patches() {
