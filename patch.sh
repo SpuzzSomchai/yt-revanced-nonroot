@@ -61,29 +61,23 @@ populate_patches() {
 
 
 # Download resources necessary
-echo -e "⏬ Prepairing $NAME resources..."
+get_latest_patches() {
 
-IFS=$' \t\r\n'
+curl -s "https://api.github.com/repos/$USER/revanced-patches/releases/latest" \
 
-# Patches & json
-latest_patches=$(curl -s https://api.github.com/repos/$USER/revanced-patches/releases/latest \
-| jq -r '.assets[].browser_download_url') 
+| jq -r '.assets[].browser_download_url'  
 
-# Cli
-latest_cli=$(curl -s https://api.github.com/repos/$USER/revanced-cli/releases/latest \
-| jq -r '.assets[].browser_download_url') 
+curl -s "https://api.github.com/repos/$USER/revanced-cli/releases/latest" \
 
-# Integrations
-latest_integrations=$(curl -s https://api.github.com/repos/$USER/revanced-integrations/releases/latest \
-| jq -r '.assets[].browser_download_url')
+| jq -r '.assets[].browser_download_url'  
 
-# Download all resources
-for asset 
-    in $latest_patches $latest_cli $latest_integrations ; 
-do
-     curl -s -OL $asset
-done
+curl -s "https://api.github.com/repos/$USER/revanced-integrations/releases/latest" \
 
+| jq -r '.assets[].browser_download_url'  
+
+}
+
+get_latest_patches | wget -qi -
 # Download YouTube APK supported
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0"
 
