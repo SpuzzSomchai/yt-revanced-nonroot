@@ -7,7 +7,7 @@ cat > keywords.rv << EOF
 NAME="revanced"
 USER="revanced"
 PATCH="patches.rv"
-YTVERSION="18.03.36"
+#YTVERSION="18.03.36"
 EOF
 
 # Revanced Extended 
@@ -19,8 +19,8 @@ PATCH="patches.rve"
 EOF
 
 #for var in keywords.rv # Revanced
-for var in keywords.rve # Revanced Extended 
-#for var in keywords.rv keywords.rve # Both
+#for var in keywords.rve # Revanced Extended 
+for var in keywords.rv keywords.rve # Both
 do
 source  $var
 
