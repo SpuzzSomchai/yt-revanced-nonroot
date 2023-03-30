@@ -61,7 +61,7 @@ populate_patches() {
 
 
 # Download resources necessary
-
+echo -e "⏬ Downloading 
 get_latest_patches() {
 curl -s "https://api.github.com/repos/$USER/revanced-patches/releases/latest" \
 | jq -r '.assets[].browser_download_url'  
