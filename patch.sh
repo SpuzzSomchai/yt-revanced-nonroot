@@ -22,7 +22,7 @@ EOF
 #for var in keywords.rve # Revanced Extended 
 for var in keywords.rv keywords.rve # Both
 do
-source  $var
+source $var
 
 # Prepair patches keywords
 patch_file=$PATCH
@@ -78,8 +78,10 @@ latest_integrations=$(curl -s https://api.github.com/repos/$USER/revanced-integr
 | jq -r '.assets[].browser_download_url')
 
 # Download all resources
-for asset in $latest_patches $latest_cli $latest_integrations ; do
-      curl -s -OL $asset
+for asset 
+    in $latest_patches $latest_cli $latest_integrations ; 
+do
+     curl -s -OL $asset
 done
 
 # Download YouTube APK supported
