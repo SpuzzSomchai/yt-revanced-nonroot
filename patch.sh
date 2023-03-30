@@ -110,7 +110,8 @@ dl_yt() {
 # Download specific or auto choose Youtube version
 if [ $YTVERSION ] ;
   then dl_yt $YTVERSION youtube-v$YTVERSION.apk 
-  else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json) dl_yt $YTVERSION youtube-v$YTVERSION.apk
+    else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json) 
+  dl_yt $YTVERSION youtube-v$YTVERSION.apk
 fi
 
 # Patch APK
