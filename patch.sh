@@ -61,7 +61,7 @@ populate_patches() {
 
 # Download resources 
 echo -e "⏬ Downloading $NAME resources..."
-get_latest_patches() {
+urls_res() {
 curl -s "https://api.github.com/repos/$USER/revanced-patches/releases/latest" \
 | jq -r '.assets[].browser_download_url'  
 curl -s "https://api.github.com/repos/$USER/revanced-cli/releases/latest" \
@@ -69,7 +69,7 @@ curl -s "https://api.github.com/repos/$USER/revanced-cli/releases/latest" \
 curl -s "https://api.github.com/repos/$USER/revanced-integrations/releases/latest" \
 | jq -r '.assets[].browser_download_url'  
 }
-get_latest_patches | wget -qi -
+urls_res | wget -qi -
 
 # Download YouTube APK supported
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0"
