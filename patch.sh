@@ -122,7 +122,8 @@ rm -f revanced-cli*.jar \
       options.toml \
       youtube*.apk \ 
       
-unset patches      
+unset patches \    
+      YTVERSION
 
 # Finish
 done
