@@ -7,7 +7,7 @@ cat > keywords.rv << EOF
 NAME="revanced"
 USER="revanced"
 PATCH="patches.rv"
-#YTVERSION="18.03.36"
+YTVERSION="18.03.36"
 EOF
 
 # Revanced Extended 
