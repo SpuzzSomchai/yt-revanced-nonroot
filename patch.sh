@@ -7,7 +7,7 @@ cat > keywords.rv << EOF
 NAME="revanced"
 USER="revanced"
 PATCH="patches.rv"
-YTVERSION="18.03.36"
+#YTVERSION="18.03.36"
 EOF
 
 # Revanced Extended 
@@ -15,7 +15,7 @@ cat > keywords.rve << EOF
 NAME="revanced-extended"
 USER="inotia00"
 PATCH="patches.rve"
-YTVERSION="18.07.35"
+#YTVERSION="18.07.35"
 EOF
 
 #for var in keywords.rv # Revanced
@@ -113,8 +113,8 @@ java -jar revanced-cli*.jar \
      --keystore=ks.keystore \
      -o yt-$NAME-v$YTVERSION.apk
 
-# Refresh patches cache
-echo "🧹 Clean patches cache..."
+# Refresh caches
+echo "🧹 Clean caches..."
 rm -f revanced-cli*.jar \
       revanced-integrations*.apk \
       revanced-patches*.jar \
