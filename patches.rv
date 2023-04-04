@@ -1,4 +1,5 @@
 # EXCLUDE PATCHES FROM BELOW
+custom-branding
 custom-video-buffer
 custom-video-speed
 debugging
