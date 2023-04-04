@@ -60,7 +60,7 @@ populate_patches() {
 [[ ! -z "$included_patches" ]] && populate_patches "-i" "$included_patches"
 
 # Download resources 
-echo -e "⏬ Downloading $NAME resources..."
+echo "⏬ Downloading $NAME resources..."
 urls_res() {
 wget -q -O - "https://api.github.com/repos/$USER/revanced-patches/releases/latest" \
 | jq -r '.assets[].browser_download_url'  
