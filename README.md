@@ -1,5 +1,6 @@
 # How to use
-✅ Generate or fork this repository 
+
+✅ Fork this repository 
 
 ✅ Enable github actions
 
@@ -19,6 +20,8 @@
 
 ✅ Take apk in releases
 
+# Patch
+This repository patch Revanced and Revanced Extended with YouTube name and logo
 
 # Download MicroG from inotia00 source 
 [![Release](https://img.shields.io/github/v/release/inotia00/vancedmicrog?label=MicroG)](https://github.com/inotia00/VancedMicroG/releases/latest/download/microg.apk)
