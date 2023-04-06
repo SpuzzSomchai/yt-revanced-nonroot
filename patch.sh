@@ -3,26 +3,24 @@
 # Input YTVERSION number of version/blank to select specific/auto select YouTube version supported 
 
 # Revanced 
-cat > keywords.rv << EOF
+keywords_rv() {
 NAME="revanced"
 USER="revanced"
 PATCH="patches.rv"
 #YTVERSION="18.03.36"
-EOF
-
+}
 # Revanced Extended 
-cat > keywords.rve << EOF
+keywords_rve() {
 NAME="revanced-extended"
 USER="inotia00"
 PATCH="patches.rve"
 #YTVERSION="18.07.35"
-EOF
+}
 
-#for var in keywords.rv # Revanced
-#for var in keywords.rve # Revanced Extended 
-for var in keywords.rv keywords.rve # Both
-do
-source $var
+#for line in keywords_rv # Revanced
+#for line in keywords_rve # Revanced Extended 
+for line in keywords_rv keywords_rve # Both
+do $line
 
 # Prepair patches keywords
 patch_file=$PATCH
