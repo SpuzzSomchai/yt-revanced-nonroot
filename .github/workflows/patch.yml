@@ -24,7 +24,7 @@ jobs:
       - name: Generate releases info
         run: | 
           echo "DATE=$(date +%F)" >> $GITHUB_ENV   
-          echo "Original icon&logo" >> ${{ github.workspace }}-CHANGELOG.txt
+          echo "Download :arrow_down_small" >> ${{ github.workspace }}-CHANGELOG.txt
              
       - name: Release
         uses: softprops/action-gh-release@v0.1.15
