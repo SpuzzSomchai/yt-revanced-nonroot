@@ -29,5 +29,5 @@
 Necessary for non-root user. Install first
 
 # About
-♻️ This repository patch Revanced and Revanced Extended with YouTube name and lôg
+♻️ This repository patch Revanced and Revanced Extended with YouTube name and logo
 
