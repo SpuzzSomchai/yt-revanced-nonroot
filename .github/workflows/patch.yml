@@ -21,7 +21,7 @@ jobs:
       - name: Patch apk
         run: bash patch.sh  
         
-      - name: Generate releases info
+      - name: Generate release info
         run: | 
           echo "DATE=$(date +%F)" >> $GITHUB_ENV   
           echo "Download :arrow_down_small:" >> ${{ github.workspace }}-CHANGELOG.txt
