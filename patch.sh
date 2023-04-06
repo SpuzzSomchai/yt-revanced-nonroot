@@ -9,6 +9,7 @@ USER="revanced"
 PATCH="patches.rv"
 #YTVERSION="18.03.36"
 }
+
 # Revanced Extended 
 keywords_rve() {
 NAME="revanced-extended"
