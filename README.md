@@ -20,8 +20,6 @@
 
 ✅ Take apk in releases
 
-# Patch
-This repository patch Revanced and Revanced Extended with YouTube name and logo
 
 # Download MicroG from inotia00 source 
 [![Release](https://img.shields.io/github/v/release/inotia00/vancedmicrog?label=MicroG)](https://github.com/inotia00/VancedMicroG/releases/latest/download/microg.apk)
@@ -31,6 +29,5 @@ This repository patch Revanced and Revanced Extended with YouTube name and logo
 Necessary for non-root user. Install first
 
 # About
-♻️ This repository synthesizes code from many sources
+♻️ This repository patch Revanced and Revanced Extended with YouTube name and lôg
 
-🤝 Thanks @[RoSino18k](https://github.com/RoSino18k) for his suggestions 
