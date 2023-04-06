@@ -18,10 +18,10 @@ PATCH="patches.rve"
 #YTVERSION="18.07.35"
 }
 
-#for val in keywords_rv # Revanced
-#for val in keywords_rve # Revanced Extended 
-for val in keywords_rv keywords_rve # Both
-do $val
+#for line in keywords_rv # Revanced
+#for line in keywords_rve # Revanced Extended 
+for line in keywords_rv keywords_rve # Both
+do $line
 
 # Prepair patches keywords
 patch_file=$PATCH
