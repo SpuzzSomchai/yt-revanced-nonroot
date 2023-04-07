@@ -7,7 +7,7 @@ keywords_rv() {
 NAME="revanced"
 USER="revanced"
 PATCH="patches.rv"
-YTVERSION="18.03.36"
+#YTVERSION="18.03.36"
 }
 
 # Revanced Extended 
@@ -15,7 +15,7 @@ keywords_rve() {
 NAME="revanced-extended"
 USER="inotia00"
 PATCH="patches.rve"
-YTVERSION="18.07.35"
+#YTVERSION="18.07.35"
 }
 
 #for var in keywords_rv # Revanced
