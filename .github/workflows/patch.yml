@@ -23,8 +23,7 @@ jobs:
         
       - name: Generate release info
         run: | 
-          echo "DATE=$(date +%F)" >> $GITHUB_ENV   
-          echo "Download :arrow_down_small:" >> ${{ github.workspace }}-CHANGELOG.txt
+          echo "DATE=$(date +%F)" >> $GITHUB_ENV  
              
       - name: Release
         uses: softprops/action-gh-release@v0.1.15
@@ -32,7 +31,7 @@ jobs:
           files: yt-revanced*.apk 
           name: Release ${{ env.DATE }}
           tag_name: ${{ env.DATE }}
-          body_path: ${{ github.workspace }}-CHANGELOG.txt
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
 
