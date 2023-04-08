@@ -12,9 +12,9 @@
 
 ✅ In [patch.sh](patch.sh)
 
- ✒️ Edit `# for var` to build Revanced, Revanced Extended or Both.
+ ✒️ Edit `for name` to build Revanced, Revanced Extended or Both.
 
-✒️  Edit `YTVERSION` to set specific or auto choose YouTube version supported. Number for specific version,blank or # before YTVERSION for auto choose version
+✒️  Edit `*ytversion` to set specific or auto choose YouTube version supported. Number for specific version,blank or # before *ytversion for auto choose version
 
 ✅ Run github actions and wait 2 minutes if build 1 and 4 minutes if Both
 
