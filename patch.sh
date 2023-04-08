@@ -47,8 +47,7 @@ patch_file=$PATCH
     fi
 declare -a patches 
 
-# Download resources 
-echo "⏬ Downloading $NAME resources..."
+# Function Download latest github releases 
 urls_res() {
 wget -q -O - "https://api.github.com/repos/$USER/revanced-patches/releases/latest" \
 | jq -r '.assets[].browser_download_url'  
@@ -57,9 +56,11 @@ wget -q -O - "https://api.github.com/repos/$USER/revanced-cli/releases/latest" \
 wget -q -O - "https://api.github.com/repos/$USER/revanced-integrations/releases/latest" \
 | jq -r '.assets[].browser_download_url'  
 }
+# Download resources
+echo "⏬ Downloading $NAME resources..."
 urls_res | xargs wget -q -i
 
-# Download YouTube APK supported
+# Function download YouTube
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0"
 
 req() {
@@ -91,8 +92,8 @@ else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePac
   dl_yt $YTVERSION youtube-v$YTVERSION.apk
 fi
 
-# Patch APK
-echo "⚙️ Patching YouTube..."
+# Function Patch APK
+patch_apk() {
 java -jar revanced-cli*.jar \
      -m revanced-integrations*.apk \
      -b revanced-patches*.jar \
@@ -100,18 +101,21 @@ java -jar revanced-cli*.jar \
      ${patches[@]} \
      --keystore=ks.keystore \
      -o yt-$NAME-v$YTVERSION.apk
-
-# Refresh caches
-echo "🧹 Clean caches..."
+}
+# Function clean caches to new build
+clean_cache() {
 rm -f revanced-cli*.jar \
       revanced-integrations*.apk \
       revanced-patches*.jar \
       patches.json \
       options.toml \
       youtube*.apk \ 
-      
 unset patches 
 unset YTVERSION
-
+}
+echo "⚙️ Patching YouTube..."
+patch_apk
+echo "🧹 Clean caches..."
+clean_cache
 # Finish
 done
