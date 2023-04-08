@@ -23,12 +23,17 @@ PATCH="patches.rve"
 for keyword in keywords_rv keywords_rve # Both
 do $keyword
 
-# Prepair patches keywords
+# Get patches keywords
     patch_file=$PATCH
-    excluded_start=$(grep -n -m1 'EXCLUDE PATCHES' "$patch_file" | cut -d':' -f1)
-    included_start=$(grep -n -m1 'INCLUDE PATCHES' "$patch_file" | cut -d':' -f1)
-    excluded_patches=$(tail -n +$excluded_start $patch_file | head -n "$(( included_start - excluded_start ))" | grep '^[^#[:blank:]]')
-    included_patches=$(tail -n +$included_start $patch_file | grep '^[^#[:blank:]]')
+    excluded_start=$(grep -n -m1 'EXCLUDE PATCHES' "$patch_file" \
+    | cut -d':' -f1)
+    included_start=$(grep -n -m1 'INCLUDE PATCHES' "$patch_file" \
+    | cut -d':' -f1)
+    excluded_patches=$(tail -n +$excluded_start $patch_file \
+    | head -n "$(( included_start - excluded_start ))" \
+    | grep '^[^#[:blank:]]')
+    included_patches=$(tail -n +$included_start $patch_file \
+    | grep '^[^#[:blank:]]')
     patches=()
     if [ -n "$excluded_patches" ]; then
         while read -r patch; do
