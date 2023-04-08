@@ -19,7 +19,7 @@ PATCH="patches.rve"
 }
 
 #for keyword in keywords_rv # Revanced
-#for keyword in keywords_rve # Revanced Extended 
+#for keyword in keywords_rve # Revanced Extended
 for keyword in keywords_rv keywords_rve # Both
 do $keyword
 
