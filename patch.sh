@@ -3,13 +3,13 @@
 revanced_name="revanced"
 revanced_user="revanced"
 revanced_patch="patches.rv"
-#revanced_yt_version="18.03.36"
+#revanced_ytversion="18.03.36"
 
 # Set variables for Revanced Extended
 revanced_extended_name="revanced-extended"
 revanced_extended_user="inotia00"
 revanced_extended_patch="patches.rve"
-#revanced_extended_yt_version="18.07.35"
+#revanced_extended_ytversion="18.07.35"
 
 # Function Get patches keywords
 get_patch() {
@@ -92,11 +92,11 @@ for name in $revanced_name $revanced_extended_name ; do
     if [ "$name" = "$revanced_name" ]; then
         user="$revanced_user"
         patch_file="$revanced_patch"
-        ytversion="$revanced_yt_version"
+        ytversion="$revanced_ytversion"
     else
         user="$revanced_extended_user"
         patch_file="$revanced_extended_patch"
-        ytversion="$revanced_extended_yt_version"
+        ytversion="$revanced_extended_ytversion"
     fi
 get_patch
 echo "⏬ Downloading $name resources..."
