@@ -24,35 +24,23 @@ for keyword in keywords_rv keywords_rve # Both
 do $keyword
 
 # Prepair patches keywords
-patch_file=$PATCH
-
-# Get line numbers where included & excluded patches start from. 
-# We rely on the hardcoded messages to get the line numbers using grep
-excluded_start="$(grep -n -m1 'EXCLUDE PATCHES' "$patch_file" \
-| cut -d':' -f1)"
-included_start="$(grep -n -m1 'INCLUDE PATCHES' "$patch_file" \
-| cut -d':' -f1)"
-
-# Get everything but hashes from between the EXCLUDE PATCH & INCLUDE PATCH line
-# Note: '^[^#[:blank:]]' ignores starting hashes and/or blank characters i.e, whitespace & tab excluding newline
-excluded_patches="$(tail -n +$excluded_start $patch_file \
-| head -n "$(( included_start - excluded_start ))" \
-| grep '^[^#[:blank:]]')"
-
-# Get everything but hashes starting from INCLUDE PATCH line until EOF
-included_patches="$(tail -n +$included_start $patch_file \
-| grep '^[^#[:blank:]]')"
-
-# Array for storing patches
-declare -a patches
-
-# Function for populating patches array, using a function here reduces redundancy & satisfies DRY principals
-populate_patches() {
-    # Note: <<< defines a 'here-string'. Meaning, it allows reading from variables just like from a file
-    while read -r patch; do
-        patches+=("$1 $patch")
-    done <<< "$2"
-}
+    patch_file=$PATCH
+    excluded_start=$(grep -n -m1 'EXCLUDE PATCHES' "$patch_file" | cut -d':' -f1)
+    included_start=$(grep -n -m1 'INCLUDE PATCHES' "$patch_file" | cut -d':' -f1)
+    excluded_patches=$(tail -n +$excluded_start $patch_file | head -n "$(( included_start - excluded_start ))" | grep '^[^#[:blank:]]')
+    included_patches=$(tail -n +$included_start $patch_file | grep '^[^#[:blank:]]')
+    patches=()
+    if [ -n "$excluded_patches" ]; then
+        while read -r patch; do
+            patches+=("-e $patch")
+        done <<< "$excluded_patches"
+    fi
+    if [ -n "$included_patches" ]; then
+        while read -r patch; do
+            patches+=("-i $patch")
+        done <<< "$included_patches"
+    fi
+declare -a patches 
 
 # If the variables are NOT empty, call populate_patches with proper arguments
 [[ ! -z "$excluded_patches" ]] && populate_patches "-e" "$excluded_patches"
