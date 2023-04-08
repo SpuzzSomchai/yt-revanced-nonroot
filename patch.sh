@@ -1,4 +1,6 @@
 #!/bin/bash
+# Input *ytversion number/blank(or # before) to set specific/auto choose YouTube version
+
 # Set variables for Revanced
 revanced_name="revanced"
 revanced_user="revanced"
@@ -11,7 +13,7 @@ revanced_extended_user="inotia00"
 revanced_extended_patch="patches.rve"
 #revanced_extended_ytversion="18.07.35"
 
-# Function Get patches keywords
+# Function prepare patches keywords
 get_patch() {
     excluded_start=$(grep -n -m1 'EXCLUDE PATCHES' "$patch_file" \
     | cut -d':' -f1)
@@ -35,7 +37,7 @@ get_patch() {
     fi
 declare -a patches 
 }
-# Function Download latest github releases 
+# Function download latest github releases 
 urls_res() {
 wget -q -O - "https://api.github.com/repos/$user/revanced-patches/releases/latest" \
 | jq -r '.assets[].browser_download_url'  
@@ -45,7 +47,7 @@ wget -q -O - "https://api.github.com/repos/$user/revanced-integrations/releases/
 | jq -r '.assets[].browser_download_url'  
 }
 
-# Function download YouTube
+# Function download YouTube apk from APKmirror
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0"
 
 req() {
@@ -87,6 +89,7 @@ rm -f revanced-cli*.jar \
       options.toml \
       youtube*.apk \ 
 }
+# Function patch Revanced, Revanced Extended 
 for name in $revanced_name $revanced_extended_name ; do
     # Select variables based on name
     if [ "$name" = "$revanced_name" ]; then
