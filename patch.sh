@@ -1,30 +1,18 @@
 #!/bin/bash
-# Config to patch Revanced and Revanced Extended
-# Input YTVERSION number/blank to select specific/auto select YouTube version supported 
+# Set variables for Revanced
+revanced_name="revanced"
+revanced_user="revanced"
+revanced_patch="patches.rv"
+#revanced_yt_version="18.03.36"
 
-# Revanced 
-keywords_rv() {
-NAME="revanced"
-USER="revanced"
-PATCH="patches.rv"
-#YTVERSION="18.03.36"
-}
+# Set variables for Revanced Extended
+revanced_extended_name="revanced-extended"
+revanced_extended_user="inotia00"
+revanced_extended_patch="patches.rve"
+#revanced_extended_yt_version="18.07.35"
 
-# Revanced Extended 
-keywords_rve() {
-NAME="revanced-extended"
-USER="inotia00"
-PATCH="patches.rve"
-#YTVERSION="18.07.35"
-}
-
-#for keyword in keywords_rv # Revanced
-#for keyword in keywords_rve # Revanced Extended
-for keyword in keywords_rv keywords_rve # Both
-do $keyword
-
-# Get patches keywords
-patch_file=$PATCH
+# Function Get patches keywords
+get_patch() {
     excluded_start=$(grep -n -m1 'EXCLUDE PATCHES' "$patch_file" \
     | cut -d':' -f1)
     included_start=$(grep -n -m1 'INCLUDE PATCHES' "$patch_file" \
@@ -46,19 +34,16 @@ patch_file=$PATCH
         done <<< "$included_patches"
     fi
 declare -a patches 
-
+}
 # Function Download latest github releases 
 urls_res() {
-wget -q -O - "https://api.github.com/repos/$USER/revanced-patches/releases/latest" \
+wget -q -O - "https://api.github.com/repos/$user/revanced-patches/releases/latest" \
 | jq -r '.assets[].browser_download_url'  
-wget -q -O - "https://api.github.com/repos/$USER/revanced-cli/releases/latest" \
+wget -q -O - "https://api.github.com/repos/$user/revanced-cli/releases/latest" \
 | jq -r '.assets[].browser_download_url'  
-wget -q -O - "https://api.github.com/repos/$USER/revanced-integrations/releases/latest" \
+wget -q -O - "https://api.github.com/repos/$user/revanced-integrations/releases/latest" \
 | jq -r '.assets[].browser_download_url'  
 }
-# Download resources
-echo "⏬ Downloading $NAME resources..."
-urls_res | xargs wget -q -i
 
 # Function download YouTube
 WGET_HEADER="User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0"
@@ -69,7 +54,6 @@ req() {
 
 dl_yt() {
     rm -rf $2
-    echo "⏬ Downloading YouTube v$1..."
     url="https://www.apkmirror.com/apk/google-inc/youtube/youtube-${1//./-}-release/"
     url="$url$(req "$url" - \
     | grep Variant -A50 \
@@ -84,23 +68,15 @@ dl_yt() {
     | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
     req "$url" "$2"
 }
-
-# Download specific or auto choose Youtube version
-if [ $YTVERSION ] ;
-  then dl_yt $YTVERSION youtube-v$YTVERSION.apk 
-else YTVERSION=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json) 
-  dl_yt $YTVERSION youtube-v$YTVERSION.apk
-fi
-
 # Function Patch APK
 patch_apk() {
 java -jar revanced-cli*.jar \
      -m revanced-integrations*.apk \
      -b revanced-patches*.jar \
-     -a youtube-v$YTVERSION.apk \
+     -a youtube-v$ytversion.apk \
      ${patches[@]} \
      --keystore=ks.keystore \
-     -o yt-$NAME-v$YTVERSION.apk
+     -o yt-$name-v$ytversion.apk
 }
 # Function clean caches to new build
 clean_cache() {
@@ -110,9 +86,28 @@ rm -f revanced-cli*.jar \
       patches.json \
       options.toml \
       youtube*.apk \ 
-unset patches 
-unset YTVERSION
 }
+for name in $revanced_name $revanced_extended_name ; do
+    # Select variables based on name
+    if [ "$name" = "$revanced_name" ]; then
+        user="$revanced_user"
+        patch_file="$revanced_patch"
+        ytversion="$revanced_yt_version"
+    else
+        user="$revanced_extended_user"
+        patch_file="$revanced_extended_patch"
+        ytversion="$revanced_extended_yt_version"
+    fi
+get_patch
+echo "⏬ Downloading $name resources..."
+urls_res | xargs wget -q -i
+if [ $ytversion ] ;
+  then dl_yt $ytversion youtube-v$ytversion.apk 
+  echo "⏬ Downloading YouTube v$ytversion.."
+else ytversion=$(jq -r '.[] | select(.name == "microg-support") | .compatiblePackages[] | select(.name == "com.google.android.youtube") | .versions[-1]' patches.json) 
+  dl_yt $ytversion youtube-v$ytversion.apk
+  echo "⏬ Downloading YouTube v$ytversion..."
+fi
 echo "⚙️ Patching YouTube..."
 patch_apk
 echo "🧹 Clean caches..."
