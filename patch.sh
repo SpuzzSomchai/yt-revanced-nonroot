@@ -24,7 +24,8 @@ for keyword in keywords_rv keywords_rve # Both
 do $keyword
 
 # Get patches keywords
-    patch_file=$PATCH
+patch_file=$PATCH
+
     excluded_start=$(grep -n -m1 'EXCLUDE PATCHES' "$patch_file" \
     | cut -d':' -f1)
     included_start=$(grep -n -m1 'INCLUDE PATCHES' "$patch_file" \
