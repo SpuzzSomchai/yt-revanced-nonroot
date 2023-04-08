@@ -25,7 +25,6 @@ do $keyword
 
 # Get patches keywords
 patch_file=$PATCH
-
     excluded_start=$(grep -n -m1 'EXCLUDE PATCHES' "$patch_file" \
     | cut -d':' -f1)
     included_start=$(grep -n -m1 'INCLUDE PATCHES' "$patch_file" \
@@ -47,10 +46,6 @@ patch_file=$PATCH
         done <<< "$included_patches"
     fi
 declare -a patches 
-
-# If the variables are NOT empty, call populate_patches with proper arguments
-[[ ! -z "$excluded_patches" ]] && populate_patches "-e" "$excluded_patches"
-[[ ! -z "$included_patches" ]] && populate_patches "-i" "$included_patches"
 
 # Download resources 
 echo "⏬ Downloading $NAME resources..."
