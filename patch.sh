@@ -89,7 +89,7 @@ rm -f revanced-cli*.jar \
       options.toml \
       youtube*.apk \ 
 }
-# Function patch Revanced, Revanced Extended 
+# Loop over Revanced & Revanced Extended 
 for name in $revanced_name $revanced_extended_name ; do
     # Select variables based on name
     if [ "$name" = "$revanced_name" ]; then
