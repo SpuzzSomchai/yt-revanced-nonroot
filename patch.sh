@@ -11,7 +11,7 @@ revanced_ytversion="" # Input version supported. Ex: 18.03.36
 revanced_extended_name="revanced-extended"
 revanced_extended_user="inotia00"
 revanced_extended_patch="patches.rve"
-#revanced_extended_ytversion="" # Input version supported. Ex: 18.07.35
+revanced_extended_ytversion="" # Input version supported. Ex: 18.07.35
 
 # Function prepare patches keywords
 get_patch() {
