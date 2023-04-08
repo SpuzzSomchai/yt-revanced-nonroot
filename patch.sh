@@ -117,5 +117,4 @@ echo "⚙️ Patching YouTube..."
 patch_apk
 echo "🧹 Clean caches..."
 clean_cache
-# Finish
 done
