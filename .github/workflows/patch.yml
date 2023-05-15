@@ -20,6 +20,8 @@ jobs:
       
       - name: Patch apk
         run: bash ./src/build-rv.sh  
+        env:
+          repository: ${{ github.user }}
         
       - name: Generate release info
         run: | 
@@ -67,6 +69,8 @@ jobs:
       
       - name: Patch apk
         run: bash ./src/build-rve.sh  
+        env:
+          repository: ${{ github.user }}
         
       - name: Generate release info
         run: | 
