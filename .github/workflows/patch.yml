@@ -20,8 +20,6 @@ jobs:
       
       - name: Patch apk
         run: bash ./src/build-rv.sh  
-        env:
-          repository: ${{ github.repository }}
         
       - name: Generate release info
         run: | 
@@ -32,7 +30,6 @@ jobs:
           **IMPORTANT:** :point_down:
           mMicroG is necessary in order for YouTube to work. Install it first.
           "> ${{ github.workspace }}-CHANGELOG.txt
-         
           
       - name: Release
         uses: softprops/action-gh-release@v0.1.15
@@ -69,8 +66,6 @@ jobs:
       
       - name: Patch apk
         run: bash ./src/build-rve.sh  
-        env:
-          repository: ${{ github.repository }}
         
       - name: Generate release info
         run: | 
@@ -80,8 +75,7 @@ jobs:
           [Revanced Extended](https://github.com/inotia00/revanced-patches/releases/latest)
           **IMPORTANT:** :point_down:
           mMicroG is necessary in order for YouTube to work. Install it first.
-          "> ${{ github.workspace }}-CHANGELOG.txt
-         
+          "> ${{ github.workspace }}-CHANGELOG.txt 
           
       - name: Release
         uses: softprops/action-gh-release@v0.1.15
