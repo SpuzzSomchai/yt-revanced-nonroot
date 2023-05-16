@@ -6,8 +6,7 @@ asset=$(echo "$release" | jq -r '.assets[] | select(.name | test("revanced-patch
 curl -sL -O "$asset"
 ls revanced-patches*.jar >> new.txt
 rm -f revanced-patches*.jar
-repository=$(echo $GITHUB_REPOSITORY | cut -d / -f 2)
-release=$(curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest")
+release=$(curl -s "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest")
 asset=$(echo $release | jq -r '.assets[] | select(.name == "revanced-extended-version.txt") | .browser_download_url')
 curl -sL -O "$asset"
 if diff -q revanced-extended-version.txt new.txt >/dev/null ; then
