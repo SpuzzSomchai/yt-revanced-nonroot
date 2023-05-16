@@ -21,6 +21,14 @@ jobs:
       - name: Patch apk
         run: bash ./src/build-rv.sh  
         
+      - name: Commit file to new branch
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: rv
+          skip_cleanup: true
+          file_pattern: 'revanced-version.txt'
+          commit_message: 'Update Revanced Version'
+        
       - name: Generate release info
         run: | 
           echo "
@@ -34,9 +42,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v0.1.15
         with:
-          files: |
-            ./build/*
-            revanced-version.txt
+          files: ./build/*
           name: Revanced & Revanced Extended
           tag_name: all
           body_path: ${{ github.workspace }}-CHANGELOG.txt
@@ -67,6 +73,14 @@ jobs:
       - name: Patch apk
         run: bash ./src/build-rve.sh  
         
+      - name: Commit file to new branch
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: rve
+          skip_cleanup: true
+          file_pattern: 'revanced-extended-version.txt'
+          commit_message: 'Update Revanced Extended Version'
+        
       - name: Generate release info
         run: | 
           echo "
@@ -80,9 +94,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v0.1.15
         with:
-          files: |
-            ./build/*
-            revanced-extended-version.txt
+          files: ./build/*
           name: Revanced & Revanced Extended
           tag_name: all
           body_path: ${{ github.workspace }}-CHANGELOG.txt
