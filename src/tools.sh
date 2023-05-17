@@ -135,7 +135,7 @@ get_ver() {
 patch() {
     local apk_name=$1
     local apk_out=$2
-    if [ ! -f "$apk_name" ]; then
+    if [ ! -f "$apk_name.apk" ]; then
     local patches_jar=$(find -name "revanced-patches*.jar" -print -quit)
     local integrations_apk=$(find -name "revanced-integrations*.apk" -print -quit)
     local cli_jar=$(find -name "revanced-cli*.jar" -print -quit)
@@ -146,11 +146,11 @@ patch() {
     java -jar "$cli_jar" \
     -m "$integrations_apk" \
     -b "$patches_jar" \
-    -a "$apk_name" \
+    -a $apk_name.apk \
     ${exclude_patches[@]} \
     ${include_patches[@]} \
     --keystore=./src/ks.keystore \
-    -o "$build/$apk_out.apk"
+    -o "build/$apk_out.apk"
     unset version
     unset exclude_patches
     unset include_patches
