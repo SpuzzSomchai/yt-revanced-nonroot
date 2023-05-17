@@ -136,17 +136,21 @@ patch() {
     local apk_name=$1
     local apk_out=$2
     if [ ! -f "$apk_name.apk" ]; then
+        echo "Error: APK file not found"
+        exit 1
+    fi
     local patches_jar=$(find -name "revanced-patches*.jar" -print -quit)
-    local integrations_apk=$(find -name "revanced-integrations*.apk" -print -quit)
-    local cli_jar=$(find -name "revanced-cli*.jar" -print -quit)
-        if [ -z "$patches_jar" ] || [ -z "$integrations_apk" ] || [ -z "$cli_jar" ]; then
-          echo "Error: patches files not found"
-          exit 1
-        fi
+local integrations_apk=$(find -name "revanced-integrations*.apk" -print -quit)
+local cli_jar=$(find -name "revanced-cli*.jar" -print -quit)
+
+if [ -z "$patches_jar" ] || [ -z "$integrations_apk" ] || [ -z "$cli_jar" ]; then
+  echo "Error: patches files not found"
+  exit 1
+    fi
     java -jar "$cli_jar" \
     -m "$integrations_apk" \
     -b "$patches_jar" \
-    -a $apk_name.apk \
+    -a "$apk_name.apk" \
     ${exclude_patches[@]} \
     ${include_patches[@]} \
     --keystore=./src/ks.keystore \
@@ -154,8 +158,4 @@ patch() {
     unset version
     unset exclude_patches
     unset include_patches
-    else
-    echo "Error: APK file not found"
-        exit 1
-    fi
 }
