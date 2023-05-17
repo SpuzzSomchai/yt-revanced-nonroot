@@ -113,20 +113,16 @@ get_uptodown() {
     local uptwod_resp
     uptwod_resp=$(get_uptodown_resp "https://${link_name}.en.uptodown.com/android")
     local available_versions=($(get_uptodown_vers "$uptwod_resp"))
-    echo "Available versions: ${available_versions[*]}"
     if [[ " ${available_versions[@]} " =~ " ${version} " ]]; then
         echo "Downloading version $version"
         dl_uptodown "$uptwod_resp" "$version" "$out_name"
     else
-        echo "Couldn't find specified version $version, downloading latest version"
         version=${available_versions[0]}
         echo "Downloading version $version"
         uptwod_resp=$(get_uptodown_resp "https://${link_name}.en.uptodown.com/android")
         dl_uptodown "$uptwod_resp" "$version" "$out_name"
     fi
 }
-#version="2023.16.0"
-#get_uptodown "reddit" "reddit-official-app" (can't download twitter)
 get_ver() {
     version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
     .[]
