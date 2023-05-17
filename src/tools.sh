@@ -140,12 +140,11 @@ patch() {
         exit 1
     fi
     local patches_jar=$(find -name "revanced-patches*.jar" -print -quit)
-local integrations_apk=$(find -name "revanced-integrations*.apk" -print -quit)
-local cli_jar=$(find -name "revanced-cli*.jar" -print -quit)
-
-if [ -z "$patches_jar" ] || [ -z "$integrations_apk" ] || [ -z "$cli_jar" ]; then
-  echo "Error: patches files not found"
-  exit 1
+    local integrations_apk=$(find -name "revanced-integrations*.apk" -print -quit)
+    local cli_jar=$(find -name "revanced-cli*.jar" -print -quit)
+    if [ -z "$patches_jar" ] || [ -z "$integrations_apk" ] || [ -z "$cli_jar" ]; then
+       echo "Error: patches files not found"
+       exit 1
     fi
     java -jar "$cli_jar" \
     -m "$integrations_apk" \
