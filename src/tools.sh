@@ -3,6 +3,10 @@ dl_gh() {
     local user=$1
     local repos=$2
     local tag=$3
+    if [ -z "$user" ] || [ -z "$repos" ] || [ -z "$tag" ]; then 
+         echo "Usage: dl_gh user repo tag" 
+         return 1 
+     fi 
     for repo in $repos ; do
     asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/$tag" \
                  | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')
@@ -16,14 +20,21 @@ echo "All assets downloaded"
 }
 get_patches_key() {
     local folder=$1
-    EXCLUDE_PATCHES=()
-        for word in $(cat patches/$folder/exclude-patches) ; do
-            EXCLUDE_PATCHES+=("-e $word")
-        done
-    INCLUDE_PATCHES=()
-        for word in $(cat patches/$folder/include-patches) ; do
-            INCLUDE_PATCHES+=("-i $word")
-        done
+    local exclude_file="patches/${folder}/exclude-patches"
+    local include_file="patches/${folder}/include-patches"
+    export exclude_patches=()
+    export include_patches=()
+    if [[ ! -d "patches/${folder}" ]]; then
+        echo "Folder not found: patches/${folder}"
+        return 1
+    fi
+    for word in $(< "${exclude_file}"); do
+        exclude_patches+=("-e ${word}")
+    done
+    for word in $(< "${include_file}"); do
+        include_patches+=("-i ${word}")
+    done
+    return 0
 }
 req() { 
     wget -nv -O "$2" -U "Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0" "$1"
@@ -125,21 +136,29 @@ get_ver() {
     ' patches.json)
 }
 patch() {
-    local apk_in=$1
+    local apk_name=$1
     local apk_out=$2
-    if [ -f "$apk_in.apk" ]; then
-    java -jar revanced-cli*.jar \
-    -m revanced-integrations*.apk \
-    -b revanced-patches*.jar \
-    -a $apk_in.apk \
-    ${EXCLUDE_PATCHES[@]} \
-    ${INCLUDE_PATCHES[@]} \
-    --keystore=./src/ks.keystore \
-    -o ./build/$apk_out.apk
-    unset version
-    unset EXCLUDE_PATCHES
-    unset INCLUDE_PATCHES
-    else 
+    local patches_dir=${3:-"."}
+    if [ ! -f "$apk_name" ]; then
+        echo "Error: APK file not found"
         exit 1
     fi
+    local patches_jar=$(find "$patches_dir" -name "revanced-patches*.jar" -print -quit)
+    local integrations_apk=$(find "$patches_dir" -name "revanced-integrations*.apk" -print -quit)
+    local cli_jar=$(find "$patches_dir" -name "revanced-cli*.jar" -print -quit)
+    if [ -z "$patches_jar" ] || [ -z "$integrations_apk" ] || [ -z "$cli_jar" ]; then
+        echo "Error: patches files not found in $patches_dir"
+        exit 1
+    fi
+    java -jar "$cli_jar" \
+    -m "$integrations_apk" \
+    -b "$patches_jar" \
+    -a "$apk_name" \
+    ${exclude_patches[@]} \
+    ${include_patches[@]} \
+    --keystore=./src/ks.keystore \
+    -o "$build/$apk_out.apk"
+    unset version
+    unset exclude_patches
+    unset include_patches
 }
