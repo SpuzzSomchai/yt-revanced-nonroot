@@ -70,32 +70,23 @@ get_apkmirror() {
   echo "$app_name version: ${last_ver}"
   echo "downloaded from: [APKMirror - $app_name]($dl_url)"
 }
-
 get_apkmirror_arch() {
   local app_name=$1 
   local app_category=$2 
   local app_link_tail=$3 
-  local arch=${4:-arm64-v8a}
-  echo "Downloading $app_name ($arch)"
+  echo "Downloading $app_name (arm64-v8a)"
   local last_ver=$version
   if [[ -z $last_ver ]]; then
     last_ver=$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | sort -rV | head -n 1)
   fi
   echo "Choosing version '${last_ver}'"
   local base_apk="$app_name.apk"
-  if [ "$arch" = "arm64-v8a" ]; then
-    local url_regexp=$arch'</div>[^@]*@\([^"]*\)'
-  elif [ "$arch" = "armeabi-v7a" ]; then
-    local url_regexp=$arch'</div>[^@]*@\([^"]*\)'
-  else
-    echo "Unsupported architecture: $arch"
-    return 1
-  fi
+  local url_regexp='arm64-v8a</div>[^@]*@\([^"]*\)'
   local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${last_ver//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
-  echo "$app_name ($arch) version: ${last_ver}"
-  echo "downloaded from: [APKMirror - $app_name ($arch)]($dl_url)"
+  echo "$app_name (arm64-v8a) version: ${last_ver}"
+  echo "downloaded from: [APKMirror - $app_name (arm64-v8a)]($dl_url)"
 }
 get_uptodown_resp() {
     req "${1}/versions" -
