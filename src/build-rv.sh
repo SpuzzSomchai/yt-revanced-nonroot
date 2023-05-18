@@ -2,32 +2,19 @@
 # Revanced build
 source ./src/tools.sh
 release=$(curl -s "https://api.github.com/repos/revanced/revanced-patches/releases/latest")
-asset=$(echo $release | python -c '
-import json, sys
-data = json.load(sys.stdin)
-for asset in data["assets"]:
-    if asset["name"].startswith("revanced-patches") and asset["name"].endswith(".jar"):
-        print(asset["browser_download_url"])
-')
-curl -sLO $asset
+asset=$(echo "$release" | jq -r '.assets[] | select(.name | test("revanced-patches.*\\.jar$")) | .browser_download_url')
+curl -sL -O "$asset"
 ls revanced-patches*.jar >> new.txt
-rm -f ./revanced-patches*.jar
-
+rm -f revanced-patches*.jar
 release=$(curl -s "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest")
-asset=$(echo $release | python -c '
-import json, sys
-data = json.load(sys.stdin)
-for asset in data["assets"]:
-    if asset["name"] == "revanced-version.txt":
-        print(asset["browser_download_url"])
-')
+asset=$(echo $release | jq -r '.assets[] | select(.name == "revanced-version.txt") | .browser_download_url')
 curl -sL -O "$asset"
 if diff -q revanced-version.txt new.txt >/dev/null ; then
-rm -f ./*.txt
+rm -f *.txt
 echo "Old patch!!! Not build"
 exit 0
 else
-rm -f ./*.txt
+rm -f *.txt
 dl_gh "revanced" "revanced-patches revanced-cli revanced-integrations" "latest"
 # Messenger
 get_patches_key "messenger"
