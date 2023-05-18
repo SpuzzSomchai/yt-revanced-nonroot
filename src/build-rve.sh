@@ -19,7 +19,7 @@ for asset in data["assets"]:
 
 curl -sLO $asset
 
-echo "revanced-patches-*.jar" >> new.txt
+ls revanced-patches*.jar >> new.txt
 
 rm -f ./revanced-patches*.jar
 
