@@ -157,8 +157,8 @@ patch() {
     -m "$integrations_apk" \
     -b "$patches_jar" \
     -a "$apk_name.apk" \
-    "${exclude_patches[@]}" \
-    "${include_patches[@]}" \
+    ${exclude_patches[@]} \
+    ${include_patches[@]} \
     --keystore=./src/ks.keystore \
     -o "build/$apk_out.apk"
   echo "Patch $apk_out is finished!"
