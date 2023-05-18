@@ -157,6 +157,8 @@ patch() {
     -m "$integrations_apk" \
     -b "$patches_jar" \
     -a "$base_apk" \
+    --rip-lib x86_64 \
+    --rip-lib x86 \
     ${exclude_patches[@]} \
     ${include_patches[@]} \
     --keystore=./src/ks.keystore \
