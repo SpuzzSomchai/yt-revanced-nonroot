@@ -135,7 +135,8 @@ patch() {
   local apk_name=$1
   local apk_out=$2
   echo "Starting patch $apk_out..."
-  if [[ ! -f "$apk_name.apk" ]]; then
+  local base_apk=$(find -name "$apk_name.apk" -print -quit)
+  if [[ ! -f "$base_apk" ]]; then
     echo "Error: APK file not found"
     exit 1
   fi
@@ -151,11 +152,11 @@ patch() {
   echo "$cli_jar"
   echo "$integrations_apk"
   echo "$patches_jar"
-  echo "$apk_name.apk"
+  echo "$base_apk"
   java -jar "$cli_jar" \
     -m "$integrations_apk" \
     -b "$patches_jar" \
-    -a "$apk_name.apk" \
+    -a "$base_apk" \
     ${exclude_patches[@]} \
     ${include_patches[@]} \
     --keystore=./src/ks.keystore \
