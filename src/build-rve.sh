@@ -1,44 +1,25 @@
 #!/bin/bash
 # Revanced Extended build
-source ./src/tools.sh
 release=$(curl -s "https://api.github.com/repos/inotia00/revanced-patches/releases/latest")
-
 asset=$(echo $release | python -c '
-
 import json, sys
-
 data = json.load(sys.stdin)
-
 for asset in data["assets"]:
-
     if asset["name"].startswith("revanced-patches") and asset["name"].endswith(".jar"):
-
         print(asset["browser_download_url"])
-
 ')
-
 curl -sLO $asset
-
 ls revanced-patches*.jar >> new.txt
-
 rm -f ./revanced-patches*.jar
 
 release=$(curl -s "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest")
-
 asset=$(echo $release | python -c '
-
 import json, sys
-
 data = json.load(sys.stdin)
-
 for asset in data["assets"]:
-
     if asset["name"] == "revanced-extended-version.txt":
-
         print(asset["browser_download_url"])
-
 ')
-
 curl -sL -O "$asset"
 if diff -q revanced-extended-version.txt new.txt >/dev/null ; then
 rm -f ./*.txt
