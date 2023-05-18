@@ -4,19 +4,25 @@ dl_gh() {
     local repos=$2
     local tag=$3
     if [ -z "$user" ] || [ -z "$repos" ] || [ -z "$tag" ]; then 
-         echo "Usage: dl_gh user repo tag" 
-         return 1 
-     fi 
+        echo "Usage: dl_gh user repo tag" 
+        return 1 
+    fi 
     for repo in $repos ; do
-    asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/$tag" \
-                 | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')
+        response=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/$tag")
+        asset_urls=$(echo $response | python -c '
+import json, sys
+data = json.load(sys.stdin)
+assets = data["assets"]
+for asset in assets:
+    print(asset["browser_download_url"] + " " + asset["name"])
+        ')
         while read -r url names
         do
             echo "Downloading $names from $url"
             wget -q -O "$names" $url
         done <<< "$asset_urls"
     done
-echo "All assets downloaded"
+    echo "All assets downloaded"
 }
 get_patches_key() {
     local folder=$1
