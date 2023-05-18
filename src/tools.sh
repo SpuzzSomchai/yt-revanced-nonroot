@@ -1,4 +1,3 @@
-
 #!/bin/bash
 dl_gh() {
     local user=$1
