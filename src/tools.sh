@@ -135,10 +135,12 @@ get_ver() {
 patch() {
   local apk_name=$1
   local apk_out=$2
+  echo "Starting patch $apk_out..."
   if [[ ! -f "$apk_name.apk" ]]; then
     echo "Error: APK file not found"
     exit 1
   fi
+  echo "Searching for patch files..."
   local patches_jar=$(find -name "revanced-patches*.jar" -print -quit)
   local integrations_apk=$(find -name "revanced-integrations*.apk" -print -quit)
   local cli_jar=$(find -name "revanced-cli*.jar" -print -quit)
@@ -146,6 +148,11 @@ patch() {
     echo "Error: patches files not found"
     exit 1
   fi
+  echo "Running patch $apk_out with the following files:"
+  echo "$cli_jar"
+  echo "$integrations_apk"
+  echo "$patches_jar"
+  echo "$apk_name.apk"
   java -jar "$cli_jar" \
     -m "$integrations_apk" \
     -b "$patches_jar" \
@@ -154,6 +161,7 @@ patch() {
     "${include_patches[@]}" \
     --keystore=./src/ks.keystore \
     -o "build/$apk_out.apk"
+  echo "Patch $apk_out is finished!"
   vars_to_unset=(
     "version"
     "exclude_patches"
