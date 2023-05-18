@@ -10,7 +10,7 @@ for asset in data["assets"]:
         print(asset["browser_download_url"])
 ')
 curl -sLO $asset
-echo "revanced-patches-*.jar" >> new.txt
+ls revanced-patches*.jar >> new.txt
 rm -f ./revanced-patches*.jar
 
 release=$(curl -s "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest")
