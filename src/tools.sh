@@ -13,7 +13,7 @@ dl_gh() {
         while read -r url names
         do
             echo "Downloading $names from $url"
-            wget -q -O "$names" $url
+            wget -q -O "$names" "$url"
         done <<< "$asset_urls"
     done
 echo "All assets downloaded"
