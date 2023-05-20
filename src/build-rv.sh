@@ -8,7 +8,7 @@ ls revanced-patches*.jar >> new.txt
 rm -f revanced-patches*.jar
 release=$(curl -s "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest")
 asset=$(echo "$release" | jq -r '.assets[] | select(.name == "revanced-version.txt") | .browser_download_url')
-curl -sL -O "$asset"
+curl -sLO "$asset"
 if diff -q revanced-version.txt new.txt >/dev/null ; then
 rm -f ./*.txt
 echo "Old patch!!! Not build"
