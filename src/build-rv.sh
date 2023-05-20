@@ -1,20 +1,20 @@
 #!/bin/bash
 # Revanced build
 source ./src/tools.sh
-release=$(curl -s "https://api.github.com/repos/revanced/revanced-patches/releases/latest")
+release=$(curl -sL "https://api.github.com/repos/revanced/revanced-patches/releases/latest")
 asset=$(echo "$release" | jq -r '.assets[] | select(.name | test("revanced-patches.*\\.jar$")) | .browser_download_url')
-curl -sL -O "$asset"
+curl -sLO "$asset"
 ls revanced-patches*.jar >> new.txt
 rm -f revanced-patches*.jar
 release=$(curl -s "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest")
-asset=$(echo $release | jq -r '.assets[] | select(.name == "revanced-version.txt") | .browser_download_url')
+asset=$(echo "$release" | jq -r '.assets[] | select(.name == "revanced-version.txt") | .browser_download_url')
 curl -sL -O "$asset"
 if diff -q revanced-version.txt new.txt >/dev/null ; then
-rm -f *.txt
+rm -f ./*.txt
 echo "Old patch!!! Not build"
 exit 0
 else
-rm -f *.txt
+rm -f ./*.txt
 dl_gh "revanced" "revanced-patches revanced-cli revanced-integrations" "latest"
 # Messenger
 get_patches_key "messenger"
