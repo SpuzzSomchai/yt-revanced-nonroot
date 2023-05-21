@@ -66,7 +66,6 @@ get_apkmirror() {
   echo "Downloading $app_name"
   local last_ver=$version
   if [[ -z $last_ver ]]; then
-    # You need to add a $ before the parentheses to execute the command
     last_ver=${last_ver:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}
   fi
   echo "Choosing version '${last_ver}'"
