@@ -66,7 +66,7 @@ get_apkmirror() {
   echo "Downloading $app_name"
   local last_ver=$version
   if [[ -z $last_ver ]]; then
-    last_ver=${last_ver:-(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}"
+    last_ver=$"{last_ver:-(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}"
   fi
   echo "Choosing version '${last_ver}'"
   local base_apk="$app_name.apk"
@@ -83,7 +83,7 @@ get_apkmirror_arch() {
   echo "Downloading $app_name (arm64-v8a)"
   local last_ver=$version
   if [[ -z $last_ver ]]; then
-    last_ver=${last_ver:-(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}"
+    last_ver=$"{last_ver:-(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}"
   echo "Choosing version '${last_ver}'"
   local base_apk="$app_name.apk"
   local url_regexp='arm64-v8a</div>[^@]*@\([^"]*\)'
