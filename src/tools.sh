@@ -66,7 +66,8 @@ get_apkmirror() {
   echo "Downloading $app_name"
   local last_ver=$version
   if [[ -z $last_ver ]]; then
-    last_ver=$"{last_ver:-(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}"
+    # You need to add a $ before the parentheses to execute the command
+    last_ver=${last_ver:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}
   fi
   echo "Choosing version '${last_ver}'"
   local base_apk="$app_name.apk"
@@ -83,7 +84,8 @@ get_apkmirror_arch() {
   echo "Downloading $app_name (arm64-v8a)"
   local last_ver=$version
   if [[ -z $last_ver ]]; then
-    last_ver=$"{last_ver:-(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}"
+    last_ver=${last_ver:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}
+    fi
   echo "Choosing version '${last_ver}'"
   local base_apk="$app_name.apk"
   local url_regexp='arm64-v8a</div>[^@]*@\([^"]*\)'
@@ -96,7 +98,6 @@ get_apkmirror_arch() {
 get_uptodown_resp() {
     req "${1}/versions" -
 }
-
 get_uptodown_vers() {
     sed -n 's;.*version">\(.*\)</span>$;\1;p' <<< "$1"
 }
