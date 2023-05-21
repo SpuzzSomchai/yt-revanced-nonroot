@@ -43,7 +43,13 @@ req() {
 get_apkmirror_vers() { 
     req "$1" - | sed -n 's;.*Version:</span><span class="infoSlide-value">\(.*\) </span>.*;\1;p'
 }
-
+get_largest_ver() {
+  local max=0
+  while read -r v || [ -n "$v" ]; do   		
+	if [[ ${v//[!0-9]/} -gt ${max//[!0-9]/} ]]; then max=$v; fi
+	  done
+      	if [[ $max = 0 ]]; then echo ""; else echo "$max"; fi
+}
 dl_apkmirror() {
   local url=$1 regexp=$2 output=$3
   url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n "s/href=\"/@/g; s;.*${regexp}.*;\1;p")"
@@ -60,7 +66,7 @@ get_apkmirror() {
   echo "Downloading $app_name"
   local last_ver=$version
   if [[ -z $last_ver ]]; then
-    last_ver=$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | sort -rV | head -n 1)
+    last_ver=${last_ver:-(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}
   fi
   echo "Choosing version '${last_ver}'"
   local base_apk="$app_name.apk"
@@ -77,8 +83,7 @@ get_apkmirror_arch() {
   echo "Downloading $app_name (arm64-v8a)"
   local last_ver=$version
   if [[ -z $last_ver ]]; then
-    last_ver=$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | sort -rV | head -n 1)
-  fi
+    last_ver=${last_ver:-(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}
   echo "Choosing version '${last_ver}'"
   local base_apk="$app_name.apk"
   local url_regexp='arm64-v8a</div>[^@]*@\([^"]*\)'
