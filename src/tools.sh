@@ -81,7 +81,8 @@ get_apkmirror() {
   else
     echo "Architecture not exactly!!! Please check"
     exit 1
-  fi
+  fi 
+  local version=$version
   if [[ -z $version ]]; then
     version=${version:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}
   fi
