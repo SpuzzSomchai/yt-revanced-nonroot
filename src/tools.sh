@@ -81,43 +81,43 @@ get_apkmirror() {
   else
     echo "Architecture not exactly!!! Please check"
     exit 1
+  fi 
+  export version="$version"
+  if [[ -z $version ]]; then
+    version=${version:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}
   fi
-  local last_ver=$version
-  if [[ -z $last_ver ]]; then
-    last_ver=${last_ver:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}
-  fi
-  echo "Choosing version '${last_ver}'"
+  echo "Choosing version '${version}'"
   local base_apk="$app_name.apk"
   if [[ -z $arch ]]; then
-      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${last_ver//./-}-release/" \
+      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"APK</span>[^@]*@\([^#]*\)" \
 			"$base_apk")
-			echo "$app_name version: ${last_ver}"
+			echo "$app_name version: ${version}"
       echo "downloaded from: [APKMirror - $app_name]($dl_url)"
   elif [[ $arch == "arm64-v8a" ]]; then
-      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${last_ver//./-}-release/" \
+      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
-			echo "$app_name (arm64-v8a) version: ${last_ver}"
+			echo "$app_name (arm64-v8a) version: ${version}"
       echo "downloaded from: [APKMirror - $app_name (arm64-v8a)]($dl_url)"
   elif [[ $arch == "armeabi-v7a" ]]; then
-      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${last_ver//./-}-release/" \
+      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
-      echo "$app_name (armeabi-v7a) version: ${last_ver}"
+      echo "$app_name (armeabi-v7a) version: ${version}"
       echo "downloaded from: [APKMirror - $app_name (armeabi-v7a)]($dl_url)"
   elif [[ $arch == "x86" ]]; then
-      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${last_ver//./-}-release/" \
+       dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
-      echo "$app_name (x86) version: ${last_ver}"
+      echo "$app_name (x86) version: ${version}"
       echo "downloaded from: [APKMirror - $app_name (x86
       )]($dl_url)"
   elif [[ $arch == "x86_64" ]]; then
-      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${last_ver//./-}-release/" \
+      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
-      echo "$app_name (x86_64) version: ${last_ver}"
+      echo "$app_name (x86_64) version: ${version}"
       echo "downloaded from: [APKMirror - $app_name (x86_64)]($dl_url)"
   fi
 }
@@ -138,7 +138,7 @@ get_uptodown() {
     local apk_name="$1"
     local link_name="$2"
     echo "Downloading $apk_name"
-    local version="$version"
+    export version="$version"
     local out_name=$(echo "$apk_name" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
     local uptwod_resp
     uptwod_resp=$(get_uptodown_resp "https://${link_name}.en.uptodown.com/android")
@@ -154,7 +154,7 @@ get_uptodown() {
     fi
 }
 get_ver() {
-    version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
+   export version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
     .[]
     | select(.name == $patch_name)
     | .compatiblePackages[]
