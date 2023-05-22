@@ -6,10 +6,12 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 spinner=(
-    "${CYAN}[■${NC}"
-    "${CYAN}■${NC}"
-    "${CYAN}■${NC}]${NC}"
+  "|"
+  "/"
+  "-"
+  "\\"
 )
+i=0
 dl_gh() {
     local user=$1
     local repos=$2
