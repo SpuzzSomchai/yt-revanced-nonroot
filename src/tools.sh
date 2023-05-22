@@ -82,7 +82,7 @@ get_apkmirror() {
     echo "Architecture not exactly!!! Please check"
     exit 1
   fi 
-  local version="$version"
+  export version="$version"
   if [[ -z $version ]]; then
     version=${version:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}
   fi
@@ -107,7 +107,7 @@ get_apkmirror() {
       echo "$app_name (armeabi-v7a) version: ${version}"
       echo "downloaded from: [APKMirror - $app_name (armeabi-v7a)]($dl_url)"
   elif [[ $arch == "x86" ]]; then
-      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
+       dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
       echo "$app_name (x86) version: ${version}"
@@ -138,7 +138,7 @@ get_uptodown() {
     local apk_name="$1"
     local link_name="$2"
     echo "Downloading $apk_name"
-    local version="$version"
+    export version="$version"
     local out_name=$(echo "$apk_name" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
     local uptwod_resp
     uptwod_resp=$(get_uptodown_resp "https://${link_name}.en.uptodown.com/android")
@@ -154,7 +154,7 @@ get_uptodown() {
     fi
 }
 get_ver() {
-    version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
+   export version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
     .[]
     | select(.name == $patch_name)
     | .compatiblePackages[]
