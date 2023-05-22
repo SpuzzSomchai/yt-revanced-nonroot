@@ -153,7 +153,14 @@ dl_uptodown() {
     local url
     url=$(grep -F "${version}</span>" -B 2 <<< "$uptwod_resp" | head -1 | sed -n 's;.*data-url="\(.*\)".*;\1;p') || return 1
     url=$(req "$url" - | sed -n 's;.*data-url="\(.*\)".*;\1;p') || return 1
-    req "$url" "$output"
+    echo -e "${BLUE}Downloading ${CYAN}$output${BLUE} from ${CYAN}$url${NC}"
+  while ! req "$url" "$output"; do
+    printf "${spinner[i++]} "
+    ((i == 3)) && i=0
+    sleep 0.1
+    printf "\b\b\b"
+  done
+  printf "${GREEN}$output [DONE]\n${NC}" 
 }
 get_uptodown() {
     local apk_name="$1"
