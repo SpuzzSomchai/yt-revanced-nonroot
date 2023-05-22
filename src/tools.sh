@@ -79,8 +79,8 @@ get_apkmirror() {
     echo "Downloading $app_name (x86_64)"
     url_regexp='x86_64</div>[^@]*@\([^"]*\)'
   else
-  echo "Architecture not exactly!!! Please check"
-  exit 1
+    echo "Architecture not exactly!!! Please check"
+    exit 1
   fi
   local last_ver=$version
   if [[ -z $last_ver ]]; then
