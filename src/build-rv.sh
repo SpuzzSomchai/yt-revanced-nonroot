@@ -20,13 +20,12 @@ exit 0
 else
 rm -f ./*.txt
 
-#Download patches
+#Download Revanced patches
 dl_gh "revanced" "revanced-patches revanced-cli revanced-integrations" "latest"
 
 # Messenger
 get_patches_key "messenger"
-#get_apkmirror_arm64 "messenger" "messenger" "facebook-2/messenger/messenger"
-#get_apkmirror_armeabi "messenger" "messenger" "facebook-2/messenger/messenger"
+#get_apkmirror "messenger" "messenger" "facebook-2/messenger/messenger" "arm64-v8a"
 get_uptodown "messenger" "facebook-messenger"
 patch "messenger" "messenger-revanced"
 
@@ -54,8 +53,7 @@ patch "youtube" "youtube-revanced"
 # Patch YouTube Music 
 get_patches_key "youtube-music-revanced"
 get_ver "hide-get-premium" "com.google.android.apps.youtube.music"
-get_apkmirror_arm64 "youtube-music" "youtube-music" "google-inc/youtube-music/youtube-music"
-#get_apkmirror_armeabi "youtube-music" "youtube-music" "google-inc/youtube-music/youtube-music"
+get_apkmirror "youtube-music" "youtube-music" "google-inc/youtube-music/youtube-music" "arm64-v8a"
 #get_uptodown "youtube-music" "youtube-music" 
 patch "youtube-music" "youtube-music-revanced"
 
