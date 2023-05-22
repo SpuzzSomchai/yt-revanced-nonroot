@@ -25,8 +25,8 @@ dl_gh "revanced" "revanced-patches revanced-cli revanced-integrations" "latest"
 
 # Messenger
 get_patches_key "messenger"
-#get_apkmirror "messenger" "messenger" "facebook-2/messenger/messenger" "arm64-v8a"
-get_uptodown "messenger" "facebook-messenger"
+get_apkmirror "messenger" "messenger" "facebook-2/messenger/messenger" "arm64-v8a"
+#get_uptodown "messenger" "facebook-messenger"
 patch "messenger" "messenger-revanced"
 
 # Patch Twitch 
