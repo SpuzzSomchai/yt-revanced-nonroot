@@ -10,6 +10,7 @@ spinner=(
     "${CYAN}■${NC}"
     "${CYAN}■${NC}]${NC}"
 )
+i=0
 dl_gh() {
     local user=$1
     local repos=$2
@@ -18,12 +19,6 @@ if [ -z "$user" ] || [ -z "$repos" ] || [ -z "$tag" ]; then
     echo -e "${RED}Usage: dl_gh user repo tag${NC}"
     return 1
 fi
-spinner=(
-    "${CYAN}[■${NC}"
-    "${CYAN}■${NC}"
-    "${CYAN}■${NC}]${NC}"
-)
-i=0
 for repo in $repos; do
     echo -e "${YELLOW}Getting asset URLs for $repo...${NC}"
     asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/$tag" | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')
@@ -87,7 +82,6 @@ dl_apkmirror() {
   done
   printf "${GREEN}$output [DONE]\n${NC}" 
 }
-
 get_apkmirror() {
   local app_name=$1 
   local app_category=$2 
