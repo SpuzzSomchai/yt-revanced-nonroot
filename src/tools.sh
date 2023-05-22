@@ -10,7 +10,6 @@ spinner=(
     "${CYAN}■${NC}"
     "${CYAN}■${NC}]${NC}"
 )
-i=0
 dl_gh() {
     local user=$1
     local repos=$2
