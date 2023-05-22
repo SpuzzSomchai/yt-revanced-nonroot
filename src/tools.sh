@@ -1,22 +1,44 @@
 #!/bin/bash
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+spinner=(
+    "${CYAN}[■${NC}"
+    "${CYAN}■${NC}"
+    "${CYAN}■${NC}]${NC}"
+)
 dl_gh() {
     local user=$1
     local repos=$2
     local tag=$3
-    if [ -z "$user" ] || [ -z "$repos" ] || [ -z "$tag" ]; then 
-         echo "Usage: dl_gh user repo tag" 
-         return 1 
-    fi 
-    for repo in $repos ; do
-    asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/$tag" \
-                 | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')
-        while read -r url names
-        do
-            echo "Downloading $names from $url"
-            wget -q -O "$names" "$url"
-        done <<< "$asset_urls"
-    done
-    echo "All assets downloaded"
+if [ -z "$user" ] || [ -z "$repos" ] || [ -z "$tag" ]; then
+    echo -e "${RED}Usage: dl_gh user repo tag${NC}"
+    return 1
+fi
+spinner=(
+    "${CYAN}[■${NC}"
+    "${CYAN}■${NC}"
+    "${CYAN}■${NC}]${NC}"
+)
+i=0
+for repo in $repos; do
+    echo -e "${YELLOW}Getting asset URLs for $repo...${NC}"
+    asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/$tag" | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')
+    while read -r url names; do
+        echo -e "${BLUE}Downloading ${CYAN}$names${BLUE} from ${CYAN}$url${NC}"
+        while ! wget -q -O "$names" "$url"; do
+            printf "${spinner[i++]} "
+            ((i == 3)) && i=0
+            sleep 0.1
+            printf "\b\b\b"
+        done
+        printf "${GREEN}$names [DONE]\n${NC}" 
+    done <<<"$asset_urls"
+done
+echo -e "${GREEN}All assets downloaded${NC}"
 }
 get_patches_key() {
     local folder=$1
@@ -25,7 +47,7 @@ get_patches_key() {
     export exclude_patches=()
     export include_patches=()
     if [[ ! -d "patches/${folder}" ]]; then
-        echo "Folder not found: patches/${folder}"
+        echo -e "${RED}Folder not found: patches/${folder}${NC}"
         return 1
     fi
     for word in $(< "${exclude_file}"); do
@@ -56,7 +78,14 @@ dl_apkmirror() {
   echo "$url"
   url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
   url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
-  req "$url" "$output"
+  echo -e "${BLUE}Downloading ${CYAN}$output${BLUE} from ${CYAN}$url${NC}"
+  while ! req "$url" "$output"; do
+    printf "${spinner[i++]} "
+    ((i == 3)) && i=0
+    sleep 0.1
+    printf "\b\b\b"
+  done
+  printf "${GREEN}$output [DONE]\n${NC}" 
 }
 
 get_apkmirror() {
@@ -65,60 +94,59 @@ get_apkmirror() {
   local app_link_tail=$3
   local arch=$4
   if [[ -z $arch ]]; then
-    echo "Downloading $app_name"
+    echo -e "${YELLOW}Downloading $app_name${NC}"
   elif [[ $arch == "arm64-v8a" ]]; then
-    echo "Downloading $app_name (arm64-v8a)"
+    echo -e "${YELLOW}Downloading $app_name (arm64-v8a)${NC}"
     url_regexp='arm64-v8a</div>[^@]*@\([^"]*\)'
   elif [[ $arch == "armeabi-v7a" ]]; then
-    echo "Downloading $app_name (armeabi-v7a)"
+    echo -e "${YELLOW}Downloading $app_name (armeabi-v7a)${NC}"
     url_regexp='armeabi-v7a</div>[^@]*@\([^"]*\)'
   elif [[ $arch == "x86" ]]; then
-    echo "Downloading $app_name (x86)"
+    echo -e "${YELLOW}Downloading $app_name (x86)${NC}"
     url_regexp='x86</div>[^@]*@\([^"]*\)'
   elif [[ $arch == "x86_64" ]]; then
-    echo "Downloading $app_name (x86_64)"
+    echo -e "${YELLOW}Downloading $app_name (x86_64)${NC}"
     url_regexp='x86_64</div>[^@]*@\([^"]*\)'
   else
-    echo "Architecture not exactly!!! Please check"
-    exit 1
-  fi 
-  export version="$version"
+  echo -e "${RED}Architecture not exactly!!! Please check${NC}"
+  exit 1
+  fi
+  export version=$version
   if [[ -z $version ]]; then
     version=${version:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}
   fi
-  echo "Choosing version '${version}'"
+  echo -e "${YELLOW}Choosing version '${version}'${NC}"
   local base_apk="$app_name.apk"
   if [[ -z $arch ]]; then
       local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"APK</span>[^@]*@\([^#]*\)" \
 			"$base_apk")
-			echo "$app_name version: ${version}"
-      echo "downloaded from: [APKMirror - $app_name]($dl_url)"
+			echo -e "${GREEN}$app_name version: ${version}${NC}"
+      echo -e "${GREEN}downloaded from: [APKMirror - $app_name]($dl_url)${NC}"
   elif [[ $arch == "arm64-v8a" ]]; then
       local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
-			echo "$app_name (arm64-v8a) version: ${version}"
-      echo "downloaded from: [APKMirror - $app_name (arm64-v8a)]($dl_url)"
+			echo -e "${GREEN}$app_name (arm64-v8a) version: ${version}${NC}"
+      echo -e "${GREEN}downloaded from: [APKMirror - $app_name (arm64-v8a)]($dl_url)${NC}"
   elif [[ $arch == "armeabi-v7a" ]]; then
       local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
-      echo "$app_name (armeabi-v7a) version: ${version}"
-      echo "downloaded from: [APKMirror - $app_name (armeabi-v7a)]($dl_url)"
+      echo -e "${GREEN}$app_name (armeabi-v7a) version: ${version}${NC}"
+      echo -e "${GREEN}downloaded from: [APKMirror - $app_name (armeabi-v7a)]($dl_url)${NC}"
   elif [[ $arch == "x86" ]]; then
-       dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
+      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
-      echo "$app_name (x86) version: ${version}"
-      echo "downloaded from: [APKMirror - $app_name (x86
-      )]($dl_url)"
+      echo -e "${GREEN}$app_name (x86) version: ${version}${NC}"
+      echo -e "${GREEN}downloaded from: [APKMirror - $app_name (x86)]($dl_url)${NC}"
   elif [[ $arch == "x86_64" ]]; then
       local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
-      echo "$app_name (x86_64) version: ${version}"
-      echo "downloaded from: [APKMirror - $app_name (x86_64)]($dl_url)"
+      echo -e "${GREEN}$app_name (x86_64) version: ${version}${NC}"
+      echo -e "${GREEN}downloaded from: [APKMirror - $app_name (x86_64)]($dl_url)${NC}"
   fi
 }
 get_uptodown_resp() {
@@ -128,33 +156,38 @@ get_uptodown_vers() {
     sed -n 's;.*version">\(.*\)</span>$;\1;p' <<< "$1"
 }
 dl_uptodown() {
-    local uptwod_resp=$1 version=$2 output=$3
-    local url
-    url=$(grep -F "${version}</span>" -B 2 <<< "$uptwod_resp" | head -1 | sed -n 's;.*data-url="\(.*\)".*;\1;p') || return 1
-    url=$(req "$url" - | sed -n 's;.*data-url="\(.*\)".*;\1;p') || return 1
-    req "$url" "$output"
+  local resp=$1 ver=$2 output=$3
+  local url=$(echo "$resp" | sed -n "s/.*href=\"\(.*\/$ver\/download\)\".*/\1/p")
+  echo -e "${BLUE}Downloading ${CYAN}$output${BLUE} from ${CYAN}$url${NC}"
+  while ! req "$url" "$output"; do
+    printf "${spinner[i++]} "
+    ((i == 3)) && i=0
+    sleep 0.1
+    printf "\b\b\b"
+  done
+  printf "${GREEN}$output [DONE]\n${NC}" 
 }
 get_uptodown() {
     local apk_name="$1"
     local link_name="$2"
-    echo "Downloading $apk_name"
+    echo -e "${YELLOW}Downloading $apk_name${NC}"
     export version="$version"
     local out_name=$(echo "$apk_name" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
     local uptwod_resp
     uptwod_resp=$(get_uptodown_resp "https://${link_name}.en.uptodown.com/android")
     local available_versions=($(get_uptodown_vers "$uptwod_resp"))
     if [[ " ${available_versions[@]} " =~ " ${version} " ]]; then
-        echo "Downloading version $version"
+        echo -e "${YELLOW}Downloading version $version${NC}"
         dl_uptodown "$uptwod_resp" "$version" "$out_name"
     else
         version=${available_versions[0]}
-        echo "Downloading version $version"
+        echo -e "${YELLOW}Downloading version $version${NC}"
         uptwod_resp=$(get_uptodown_resp "https://${link_name}.en.uptodown.com/android")
         dl_uptodown "$uptwod_resp" "$version" "$out_name"
     fi
 }
 get_ver() {
-   export version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
+    export version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
     .[]
     | select(.name == $patch_name)
     | .compatiblePackages[]
@@ -165,25 +198,25 @@ get_ver() {
 patch() {
   local apk_name=$1
   local apk_out=$2
-  echo "Starting patch $apk_out..."
+  echo -e "${YELLOW}Starting patch $apk_out...${NC}"
   local base_apk=$(find -name "$apk_name.apk" -print -quit)
   if [[ ! -f "$base_apk" ]]; then
-    echo "Error: APK file not found"
+    echo -e "${RED}Error: APK file not found${NC}"
     exit 1
   fi
-  echo "Searching for patch files..."
+  echo -e "${YELLOW}Searching for patch files...${NC}"
   local patches_jar=$(find -name "revanced-patches*.jar" -print -quit)
   local integrations_apk=$(find -name "revanced-integrations*.apk" -print -quit)
   local cli_jar=$(find -name "revanced-cli*.jar" -print -quit)
   if [[ -z "$patches_jar" ]] || [[ -z "$integrations_apk" ]] || [[ -z "$cli_jar" ]]; then
-    echo "Error: patches files not found"
+    echo -e "${RED}Error: patches files not found${NC}"
     exit 1
   fi
-  echo "Running patch $apk_out with the following files:"
-  echo "$cli_jar"
-  echo "$integrations_apk"
-  echo "$patches_jar"
-  echo "$base_apk"
+  echo -e "${YELLOW}Running patch $apk_out with the following files:${NC}"
+  echo -e "${CYAN}$cli_jar${NC}"
+  echo -e "${CYAN}$integrations_apk${NC}"
+  echo -e "${CYAN}$patches_jar${NC}"
+  echo -e "${CYAN}$base_apk${NC}"
   java -jar "$cli_jar" \
     -m "$integrations_apk" \
     -b "$patches_jar" \
@@ -192,7 +225,7 @@ patch() {
     ${include_patches[@]} \
     --keystore=./src/ks.keystore \
     -o "build/$apk_out.apk"
-  echo "Patch $apk_out is finished!"
+  echo -e "${GREEN}Patch${NC} ${RED}$apk_out${NC} ${GREEN}is finished!${NC}"
   vars_to_unset=(
     "version"
     "exclude_patches"
