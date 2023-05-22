@@ -34,7 +34,7 @@ patch "youtube" "youtube-revanced-extended"
 get_patches_key "youtube-music-revanced-extended"
 get_apkmirror "youtube-music" "youtube-music" "google-inc/youtube-music/youtube-music" "arm64-v8a"
 #get_uptodown "youtube-music" "youtube-music" 
-patch "youtube-music" "youtube-music-revanced-extended"
+patch "youtube-music" "YT-RVE-$version-arm64-v8a"
 
 # Patch microG
 get_patches_key "mMicroG"
