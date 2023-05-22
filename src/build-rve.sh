@@ -28,13 +28,13 @@ get_patches_key "youtube-revanced-extended"
 get_ver "hide-general-ads" "com.google.android.youtube"
 get_apkmirror "youtube" "youtube" "google-inc/youtube/youtube"
 #get_uptodown "youtube" "youtube"
-patch "youtube" "youtube-revanced-extended-v$version"
+patch "youtube" "youtube-revanced-extended"
 
 # Patch YouTube Music Extended 
 get_patches_key "youtube-music-revanced-extended"
-get_apkmirror "youtube-music" "youtube-music" "google-inc/youtube-music/youtube-music" "arm64-v8a"
-#get_uptodown "youtube-music" "youtube-music" 
-patch "youtube-music" "YT-RVE-v$version-arm64-v8a"
+#get_apkmirror "youtube-music" "youtube-music" "google-inc/youtube-music/youtube-music" "arm64-v8a"
+get_uptodown "youtube-music" "youtube-music" 
+patch "youtube-music" "youtube-music-revanced-extended"
 
 # Patch microG
 get_patches_key "mMicroG"
