@@ -172,11 +172,11 @@ get_uptodown() {
     uptwod_resp=$(get_uptodown_resp "https://${link_name}.en.uptodown.com/android")
     local available_versions=($(get_uptodown_vers "$uptwod_resp"))
     if [[ " ${available_versions[@]} " =~ " ${version} " ]]; then
-        echo -e "${YELLOW}Downloading version $version${NC}"
+        echo -e "${YELLOW}Choosing version $version${NC}"
         dl_uptodown "$uptwod_resp" "$version" "$out_name"
     else
         version=${available_versions[0]}
-        echo -e "${YELLOW}Downloading version $version${NC}"
+        echo -e "${YELLOW}Choosing version $version${NC}"
         uptwod_resp=$(get_uptodown_resp "https://${link_name}.en.uptodown.com/android")
         dl_uptodown "$uptwod_resp" "$version" "$out_name"
     fi
