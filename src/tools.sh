@@ -266,4 +266,5 @@ patch() {
       unset "$varname"
     fi
   done
+  rm -f ./$base_apk
 }
