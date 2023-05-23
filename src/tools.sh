@@ -133,13 +133,13 @@ get_apkmirror() {
 			"APK</span>[^@]*@\([^#]*\)" \
 			"$base_apk")
 			echo -e "${GREEN}$app_name version: ${version}${NC}"
-      echo -e "${GREEN}downloaded from: [APKMirror - $app_name]($dl_url)${NC}"
+      echo -e "${GREEN}Download link $app_name: $dl_url${NC}"
   else
       local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
 			echo -e "${GREEN}$app_name ($arch) version: ${version}${NC}"
-      echo -e "${GREEN}downloaded from: [APKMirror - $app_name ($arch)]($dl_url)${NC}"
+      echo -e "${GREEN}Download link $app_name ($arch): $dl_url${NC}"
   fi
 }
 get_uptodown_resp() {
