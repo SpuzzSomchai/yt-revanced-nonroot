@@ -105,23 +105,22 @@ get_apkmirror() {
   local app_category=$2 
   local app_link_tail=$3
   local arch=$4
+  local arch_array=("arm64-v8a" "armeabi-v7a" "x86" "x86_64")
+  local url_regexp_array=('arm64-v8a</div>[^@]*@\([^"]*\)' 'armeabi-v7a</div>[^@]*@\([^"]*\)' 'x86</div>[^@]*@\([^"]*\)' 'x86_64</div>[^@]*@\([^"]*\)')
   if [[ -z $arch ]]; then
     echo -e "${YELLOW}Downloading $app_name${NC}"
-  elif [[ $arch == "arm64-v8a" ]]; then
-    echo -e "${YELLOW}Downloading $app_name (arm64-v8a)${NC}"
-    url_regexp='arm64-v8a</div>[^@]*@\([^"]*\)'
-  elif [[ $arch == "armeabi-v7a" ]]; then
-    echo -e "${YELLOW}Downloading $app_name (armeabi-v7a)${NC}"
-    url_regexp='armeabi-v7a</div>[^@]*@\([^"]*\)'
-  elif [[ $arch == "x86" ]]; then
-    echo -e "${YELLOW}Downloading $app_name (x86)${NC}"
-    url_regexp='x86</div>[^@]*@\([^"]*\)'
-  elif [[ $arch == "x86_64" ]]; then
-    echo -e "${YELLOW}Downloading $app_name (x86_64)${NC}"
-    url_regexp='x86_64</div>[^@]*@\([^"]*\)'
   else
-  echo -e "${RED}Architecture not exactly!!! Please check${NC}"
-  exit 1
+    for i in {0..3}; do
+      if [[ $arch == ${arch_array[i]} ]]; then
+        echo -e "${YELLOW}Downloading $app_name (${arch_array[i]})${NC}"
+        url_regexp=${url_regexp_array[i]}
+        break
+      fi
+    done
+    if [[ -z $url_regexp ]]; then
+      echo -e "${RED}Architecture not exactly!!! Please check${NC}"
+      exit 1
+    fi
   fi
   export version=$version
   if [[ -z $version ]]; then
@@ -135,30 +134,12 @@ get_apkmirror() {
 			"$base_apk")
 			echo -e "${GREEN}$app_name version: ${version}${NC}"
       echo -e "${GREEN}downloaded from: [APKMirror - $app_name]($dl_url)${NC}"
-  elif [[ $arch == "arm64-v8a" ]]; then
+  else
       local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
-			echo -e "${GREEN}$app_name (arm64-v8a) version: ${version}${NC}"
-      echo -e "${GREEN}downloaded from: [APKMirror - $app_name (arm64-v8a)]($dl_url)${NC}"
-  elif [[ $arch == "armeabi-v7a" ]]; then
-      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
-			"$url_regexp" \
-			"$base_apk")
-      echo -e "${GREEN}$app_name (armeabi-v7a) version: ${version}${NC}"
-      echo -e "${GREEN}downloaded from: [APKMirror - $app_name (armeabi-v7a)]($dl_url)${NC}"
-  elif [[ $arch == "x86" ]]; then
-      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
-			"$url_regexp" \
-			"$base_apk")
-      echo -e "${GREEN}$app_name (x86) version: ${version}${NC}"
-      echo -e "${GREEN}downloaded from: [APKMirror - $app_name (x86)]($dl_url)${NC}"
-  elif [[ $arch == "x86_64" ]]; then
-      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
-			"$url_regexp" \
-			"$base_apk")
-      echo -e "${GREEN}$app_name (x86_64) version: ${version}${NC}"
-      echo -e "${GREEN}downloaded from: [APKMirror - $app_name (x86_64)]($dl_url)${NC}"
+			echo -e "${GREEN}$app_name ($arch) version: ${version}${NC}"
+      echo -e "${GREEN}downloaded from: [APKMirror - $app_name ($arch)]($dl_url)${NC}"
   fi
 }
 get_uptodown_resp() {
