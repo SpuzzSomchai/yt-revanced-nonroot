@@ -5,7 +5,7 @@ source ./src/tools.sh
 release=$(curl -sL "https://api.github.com/repos/revanced/revanced-patches/releases/latest")
 asset=$(echo "$release" | jq -r '.assets[] | select(.name | test("revanced-patches.*\\.jar$")) | .browser_download_url')
 if [ -z "$asset" ]; then
-        echo -e "${RED}No URL found for revanced${NC}"
+        echo -e "${RED}No URL found ${NC}"
         return 1
     fi
 curl -sLO "$asset"
