@@ -61,6 +61,6 @@ patch "youtube-music" "youtube-music-revanced"
 ls revanced-patches*.jar >> revanced-version.txt
 for file in revanced-patches*.jar revanced-cli*.jar revanced-integrations*.apk patches.json options.toml 
 do
-    rm -f $file
+    rm -f "$file"
 done
 fi
