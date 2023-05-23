@@ -87,7 +87,8 @@ req() {
 
 get_apkmirror_vers() { 
     req "$1" - \
-    | sed -n 's;.*Version:</span><span class="infoSlide-value">\(.*\) </span>.*;\1;p'
+    | sed -n 's;.*Version:</span><span \
+    class="infoSlide-value">\(.*\) </span>.*;\1;p'
 }
 get_largest_ver() {
   local max=0
@@ -119,11 +120,18 @@ get_apkmirror() {
   local app_category=$2 
   local app_link_tail=$3
   local arch=$4
-  local arch_array=("arm64-v8a" "armeabi-v7a" "x86" "x86_64")
-  local url_regexp_array=('arm64-v8a</div>[^@]*@\([^"]*\)' 
-  'armeabi-v7a</div>[^@]*@\([^"]*\)' 
+  local arch_array=( 
+  "x86" 
+  "x86_64"
+  "arm64-v8a" 
+  "armeabi-v7a"
+  )
+  local url_regexp_array=( 
   'x86</div>[^@]*@\([^"]*\)' 
-  'x86_64</div>[^@]*@\([^"]*\)')
+  'x86_64</div>[^@]*@\([^"]*\)'
+  'arm64-v8a</div>[^@]*@\([^"]*\)' 
+  'armeabi-v7a</div>[^@]*@\([^"]*\)'
+  )
   if [[ -z $arch ]]; then
     echo -e "${YELLOW}Downloading $app_name${NC}"
   else
