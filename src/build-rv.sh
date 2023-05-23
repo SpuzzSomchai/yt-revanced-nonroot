@@ -4,6 +4,10 @@ source ./src/tools.sh
 
 release=$(curl -sL "https://api.github.com/repos/revanced/revanced-patches/releases/latest")
 asset=$(echo "$release" | jq -r '.assets[] | select(.name | test("revanced-patches.*\\.jar$")) | .browser_download_url')
+if [ -z "$asset" ]; then
+        echo -e "${RED}No URL found for revanced${NC}"
+        return 1
+    fi
 curl -sLO "$asset"
 
 ls revanced-patches*.jar >> new.txt
@@ -11,6 +15,10 @@ rm -f revanced-patches*.jar
 
 release=$(curl -s "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest")
 asset=$(echo "$release" | jq -r '.assets[] | select(.name == "revanced-version.txt") | .browser_download_url')
+if [ -z "$asset" ]; then
+        echo -e "${RED}No URL found for${NC}"
+        return 1
+    fi
 curl -sLO "$asset"
 
 if diff -q revanced-version.txt new.txt >/dev/null ; then
