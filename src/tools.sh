@@ -61,14 +61,14 @@ get_patches_key() {
     return 0
 }
 _req() {
-	if [ "$2" = - ]; then
-		wget -nv -O "$2" --header="$3" "$1"
-	else
-		local dlp
-		dlp="$(dirname "$2")/tmp.$(basename "$2")"
-		wget -nv -O "$dlp" --header="$3" "$1"
-		mv -f "$dlp" "$2"
-	fi
+    if [ "$2" = - ]; then
+	wget -nv -O "$2" --header="$3" "$1"
+    else
+	local dlp
+	dlp="$(dirname "$2")/tmp.$(basename "$2")"
+	wget -nv -O "$dlp" --header="$3" "$1"
+	mv -f "$dlp" "$2"
+    fi
 }
 
 req() {
