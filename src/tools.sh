@@ -29,6 +29,10 @@ fi
 for repo in $repos; do
     echo -e "${YELLOW}Getting asset URLs for $repo...${NC}"
     asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/$tag" | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')
+if [ -z "$asset_urls" ]; then
+        echo -e "${RED}No assets found for $repo${NC}"
+        return 1
+    fi
     while read -r url names; do
         echo -e "${BLUE}Downloading ${CYAN}$names${BLUE} from ${CYAN}$url${NC}"
         while ! wget -q -O "$names" "$url"; do
