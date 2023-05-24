@@ -59,15 +59,7 @@ get_apkmirror "youtube-music" "youtube-music" "google-inc/youtube-music/youtube-
 patch "youtube-music" "youtube-music-revanced"
 
 ls revanced-patches*.jar >> revanced-version.txt
-files_to_delete=(
-    "./*.jar" 
-    "./*.apk"
-    "patches.json" 
-    "options.toml"
-)
-for file in "${files_to_delete[@]}"; do
-    if [[ -v "$file" ]]; then
-       rm -f "$file"
-    fi 
+for file in ./*.jar ./*.apk ./*.json
+   do rm -f "$file"
 done
 fi
