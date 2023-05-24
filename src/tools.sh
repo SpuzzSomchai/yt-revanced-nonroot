@@ -56,20 +56,45 @@ dl_gh() {
     echo -e "${GREEN}All assets downloaded${NC}"
 }
 get_patches_key() {
-    local folder=$1
+    local folder="$1"
     local exclude_file="patches/${folder}/exclude-patches"
     local include_file="patches/${folder}/include-patches"
-    export exclude_patches=()
-    export include_patches=()
-    if [[ ! -d "patches/${folder}" ]]; then
-        echo -e "${RED}Folder not found: patches/${folder}${NC}"
+    local word
+    if [ ! -d "${exclude_file%/*}" ]; then
+        printf "${RED}Folder not found: %s\n${NC}" "${exclude_file%/*}"
         return 1
     fi
-    for word in $(< "${exclude_file}"); do
-        exclude_patches+=("-e ${word}")
-    done
-    for word in $(< "${include_file}"); do
-        include_patches+=("-i ${word}")
+    if [ ! -f "$exclude_file" ]; then
+        printf "${RED}File not found: %s\n${NC}" "$exclude_file"
+        return 1
+    fi
+    if [ ! -f "$include_file" ]; then
+        printf "${RED}File not found: %s\n${NC}" "$include_file"
+        return 1
+    fi
+    if [ ! -r "$exclude_file" ]; then
+        printf "${RED}Cannot read file: %s\n${NC}" "$exclude_file"
+        return 1
+    fi
+    if [ ! -r "$include_file" ]; then
+        printf "${RED}Cannot read file: %s\n${NC}" "$include_file"
+        return 1
+    fi
+    while IFS= read -r word; do
+        if [[ -n "$word" ]]; then
+            exclude_patches+=("-e" "$word")
+        fi
+    done < "$exclude_file"
+    while IFS= read -r word; do
+        if [[ -n "$word" ]]; then
+            include_patches+=("-i" "$word")
+        fi
+    done < "$include_file"
+    for word in "${exclude_patches[@]}"; do
+      if [[ " ${include_patches[*]} " =~ " $word " ]]; then
+        printf "${RED}Patch %s is specified both as exclude and include${NC}\n" "$word"
+        return 1
+      fi
     done
     return 0
 }
@@ -83,7 +108,6 @@ _req() {
 	mv -f "$dlp" "$2"
     fi
 }
-
 req() {
     _req \
      "$1" \
@@ -92,7 +116,6 @@ req() {
      (X11; Linux x86_64; rv:111.0) \
  Gecko/20100101 Firefox/111.0" 
 }
-
 get_apkmirror_vers() { 
     req "$1" - \
     | sed -n 's;.*Version:</span><span \
