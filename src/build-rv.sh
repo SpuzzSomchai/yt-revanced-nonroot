@@ -63,7 +63,7 @@ files_to_delete=(
     "./*.jar" 
     "./*.apk"
     "patches.json" 
-    "options.toml
+    "options.toml"
   )
 for file in "${files_to_delete[@]}"; do
     if [[ -v "$file" ]]; then
