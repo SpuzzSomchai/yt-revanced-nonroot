@@ -22,30 +22,38 @@ dl_gh() {
     local user=$1
     local repos=$2
     local tag=$3
-if [ -z "$user" ] || [ -z "$repos" ] || [ -z "$tag" ]; then
-    echo -e "${RED}Usage: dl_gh user repo tag${NC}"
-    return 1
-fi
-for repo in $repos; do
-    echo -e "${YELLOW}Getting asset URLs for $repo...${NC}"
-    asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/$tag" \
-                | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')
-if [ -z "$asset_urls" ]; then
-        echo -e "${RED}No assets found for $repo${NC}"
+    if [ -z "$user" ] || [ -z "$repos" ] || [ -z "$tag" ]; then
+        echo -e "${RED}Usage: dl_gh user repo tag${NC}"
         return 1
     fi
-    while read -r url names; do
-        echo -e "${BLUE}Downloading ${CYAN}$names${BLUE} from ${CYAN}$url${NC}"
-        while ! wget -q -O "$names" "$url"; do
-            printf "${spinner[i++]} "
-            ((i == 3)) && i=0
-            sleep 0.1
-            printf "\b\b\b"
-        done
-        printf "${GREEN}$names [DONE]\n${NC}" 
-    done <<<"$asset_urls"
-done
-echo -e "${GREEN}All assets downloaded${NC}"
+    for repo in $repos; do
+        echo -e "${YELLOW}Getting asset URLs for $repo...${NC}"
+        asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/$tag" \
+                    | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')        
+        if [ -z "$asset_urls" ]; then
+            echo -e "${RED}No assets found for $repo${NC}"
+            return 1
+        fi        
+        downloaded_files=()
+        while read -r url name; do
+            echo -e "${BLUE}-> ${CYAN}"$name"${BLUE} | ${CYAN}"$url"${NC}"
+            while ! wget -q -O "$name" "$url"; do
+                printf "${spinner[i++]} "
+                ((i == 3)) && i=0
+                sleep 0.1
+                printf "\b\b\b"
+            done
+            printf "${GREEN}-> ${CYAN}"$name"${NC} [${GREEN}$(date +%T)${NC}] [${GREEN}DONE${NC}]\n"
+            downloaded_files+=("$name")
+        done <<< "$asset_urls"
+        if [ ${#downloaded_files[@]} -gt 0 ]; then
+            echo -e "${GREEN}Finished downloading assets for $repo:${NC}"
+            for file in ${downloaded_files[@]}; do
+                echo -e " -> ${BLUE}$file${NC}"
+            done
+        fi
+    done
+    echo -e "${GREEN}All assets downloaded${NC}"
 }
 get_patches_key() {
     local folder=$1
