@@ -43,8 +43,14 @@ dl_gh "inotia00" "mMicroG" "latest"
 patch "microg" "mMicroG"
 
 ls revanced-patches*.jar >> revanced-extended-version.txt
-for file in revanced-patches*.jar ./*.jar revanced-integrations*.apk patches.json options.toml 
-do
-    rm -f "$file"
+files_to_delete=(
+    "./*.jar" 
+    "./*.apk"
+    "patches.json" 
+    "options.toml
+  )
+for file in "${files_to_delete[@]}"; do
+    if [[ -v "$file" ]]; then
+       rm -f "$file"
+    fi 
 done
-fi
