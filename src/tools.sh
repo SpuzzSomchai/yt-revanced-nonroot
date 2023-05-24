@@ -191,14 +191,12 @@ get_apkmirror() {
       "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
       "APK</span>[^@]*@\([^#]*\)" \
       "$base_apk")
-      echo -e "${RED}$app_name ${GREEN}version: ${version}${NC}"
       echo -e "${GREEN}Download link ${RED}$app_name${GREEN}: $dl_url${NC}"
   else
       local dl_url=$(dl_apkmirror \
       "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
       "$url_regexp" \
       "$base_apk")
-      echo -e "${RED}$app_name ($arch) ${GREEN}version: ${version}${NC}"
       echo -e "${GREEN}Download link ${RED}$app_name ($arch)${GREEN}: $dl_url${NC}"
   fi
 }
