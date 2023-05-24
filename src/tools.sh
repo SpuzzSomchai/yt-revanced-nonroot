@@ -247,14 +247,15 @@ get_ver() {
     if [[ ! -f patches.json ]]; then
        echo -e "${RED}Error: patches.json file not found.${NC}"
        return 1
+     else
+       export version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
+       .[]
+       | select(.name == $patch_name)
+       | .compatiblePackages[]
+       | select(.name == $pkg_name)
+       | .versions[-1]
+       ' patches.json)
     fi
-    export version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
-    .[]
-    | select(.name == $patch_name)
-    | .compatiblePackages[]
-    | select(.name == $pkg_name)
-    | .versions[-1]
-    ' patches.json)
     if [[ -z $version ]]; then
        echo -e "${RED}Error: Unable to find a compatible version.${NC}"
        return 1
@@ -278,21 +279,22 @@ patch() {
     then
       echo -e "${RED}Error: patches files not found${NC}"
     exit 1
+  else
+    echo -e "${YELLOW}Running patch ${RED}$apk_out ${YELLOW}with the following files:${NC}"
+    echo -e "${CYAN}$cli_jar${NC}"
+    echo -e "${CYAN}$integrations_apk${NC}"
+    echo -e "${CYAN}$patches_jar${NC}"
+    echo -e "${CYAN}$base_apk${NC}"
+    java -jar "$cli_jar" \
+      -m "$integrations_apk" \
+      -b "$patches_jar" \
+      -a "$base_apk" \
+      ${exclude_patches[@]} \
+      ${include_patches[@]} \
+      --keystore=./src/ks.keystore \
+      -o "build/$apk_out.apk"
+    echo -e "${GREEN}Patch ${RED}$apk_out ${GREEN}is finished!${NC}"
   fi
-  echo -e "${YELLOW}Running patch ${RED}$apk_out ${YELLOW}with the following files:${NC}"
-  echo -e "${CYAN}$cli_jar${NC}"
-  echo -e "${CYAN}$integrations_apk${NC}"
-  echo -e "${CYAN}$patches_jar${NC}"
-  echo -e "${CYAN}$base_apk${NC}"
-  java -jar "$cli_jar" \
-    -m "$integrations_apk" \
-    -b "$patches_jar" \
-    -a "$base_apk" \
-    ${exclude_patches[@]} \
-    ${include_patches[@]} \
-    --keystore=./src/ks.keystore \
-    -o "build/$apk_out.apk"
-  echo -e "${GREEN}Patch ${RED}$apk_out ${GREEN}is finished!${NC}"
   vars_to_unset=(
     "version"
     "exclude_patches"
