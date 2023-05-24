@@ -36,14 +36,14 @@ dl_gh() {
         fi        
         downloaded_files=()
         while read -r url name; do
-            echo -e "${BLUE}-> ${CYAN}"$name"${BLUE} | ${CYAN}"$url"${NC}"
+            echo -e "${BLUE}-> ${CYAN}\"$name\"${BLUE} | ${CYAN}\"$url\"${NC}"
             while ! wget -q -O "$name" "$url"; do
                 printf "${spinner[i++]} "
                 ((i == 3)) && i=0
                 sleep 0.1
                 printf "\b\b\b"
             done
-            printf "${GREEN}-> ${CYAN}"$name"${NC} [${GREEN}"$(date +%T)"${NC}] [${GREEN}DONE${NC}]\n"
+            printf "${GREEN}-> ${CYAN}\"$name\"${NC} [${GREEN}\"$(date +%T)\"${NC}] [${GREEN}DONE${NC}]\n"
             downloaded_files+=("$name")
         done <<< "$asset_urls"
         if [ ${#downloaded_files[@]} -gt 0 ]; then
