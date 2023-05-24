@@ -246,6 +246,10 @@ get_uptodown() {
     fi
 }
 get_ver() {
+    if [[ ! -f patches.json ]]; then
+       echo "Error: patches.json file not found."
+       return 1
+    fi
     export version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
     .[]
     | select(.name == $patch_name)
@@ -253,6 +257,11 @@ get_ver() {
     | select(.name == $pkg_name)
     | .versions[-1]
     ' patches.json)
+    if [[ -z $$version ]]; then
+       echo "Error: Unable to find a compatible version for package '$2' and patch '$1'."
+       return 1
+    fi
+
 }
 patch() {
   local apk_name=$1
