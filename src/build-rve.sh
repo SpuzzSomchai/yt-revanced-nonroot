@@ -43,7 +43,7 @@ dl_gh "inotia00" "mMicroG" "latest"
 patch "microg" "mMicroG"
 
 ls revanced-patches*.jar >> revanced-extended-version.txt
-for file in revanced-patches*.jar revanced-cli*.jar revanced-integrations*.apk patches.json options.toml 
+for file in revanced-patches*.jar ./*.jar revanced-integrations*.apk patches.json options.toml 
 do
     rm -f "$file"
 done
