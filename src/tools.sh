@@ -43,7 +43,7 @@ dl_gh() {
                 sleep 0.1
                 printf "\b\b\b"
             done
-            printf "${GREEN}-> ${CYAN}"$name"${NC} [${GREEN}$(date +%T)${NC}] [${GREEN}DONE${NC}]\n"
+            printf "${GREEN}-> ${CYAN}"$name"${NC} [${GREEN}"$(date +%T)"${NC}] [${GREEN}DONE${NC}]\n"
             downloaded_files+=("$name")
         done <<< "$asset_urls"
         if [ ${#downloaded_files[@]} -gt 0 ]; then
