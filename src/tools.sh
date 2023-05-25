@@ -236,11 +236,11 @@ get_ver() {
        | select(.name == $pkg_name)
        | .versions[-1]
        ' patches.json)
-    if [[ -z $version ]]; then
-       echo -e "${RED}Error: Unable to find a compatible version.${NC}"
-       return 1
+      if [[ -z $version ]]; then
+         echo -e "${RED}Error: Unable to find a compatible version.${NC}"
+         return 1
+      fi
     fi
-fi
 }
 patch() {
   local apk_name=$1
