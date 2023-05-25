@@ -1,23 +1,4 @@
 #!/bin/bash
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-CYAN='\033[0;36m'
-NC='\033[0m'
-spinner=(
-  "⠋"
-  "⠙"
-  "⠹"
-  "⠸"
-  "⠼"
-  "⠴"
-  "⠦"
-  "⠧"
-  "⠇"
-  "⠏"
-)
-i=0
 dl_gh() {
     local user=$1
     local repos=$2
@@ -255,11 +236,11 @@ get_ver() {
        | select(.name == $pkg_name)
        | .versions[-1]
        ' patches.json)
-    fi
     if [[ -z $version ]]; then
        echo -e "${RED}Error: Unable to find a compatible version.${NC}"
        return 1
     fi
+fi
 }
 patch() {
   local apk_name=$1
@@ -307,3 +288,22 @@ patch() {
   done
   rm -f ./"$base_apk"
 }
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+spinner=(
+  "⠋"
+  "⠙"
+  "⠹"
+  "⠸"
+  "⠼"
+  "⠴"
+  "⠦"
+  "⠧"
+  "⠇"
+  "⠏"
+)
+i=0
