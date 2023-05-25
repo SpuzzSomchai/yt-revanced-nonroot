@@ -39,7 +39,7 @@ patch "twitch" "twitch-revanced"
 
 # Patch Tiktok 
 get_patches_key "tiktok"
-get_ver "sim-spoof" "com.ss.android.ugc.trill"
+#get_ver "sim-spoof" "com.ss.android.ugc.trill"
 get_apkmirror "tiktok" "tik-tok-including-musical-ly" "tiktok-pte-ltd/tik-tok-including-musical-ly/tik-tok-including-musical-ly"
 #get_uptodown "tiktok" "tik-tok"
 patch "tiktok" "tiktok-revanced"
