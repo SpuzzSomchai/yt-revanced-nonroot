@@ -3,18 +3,6 @@ dl_gh() {
     local user=$1
     local repos=$2
     local tag=$3
-    local spinner=(
-             "⠋"
-             "⠙"
-             "⠹"
-             "⠸"
-             "⠼"
-             "⠴"
-             "⠦"
-             "⠧"
-             "⠇"
-             "⠏"
-           )
     if [ -z "$user" ] || [ -z "$repos" ] || [ -z "$tag" ]; then
         printf "\033[0;31mUsage: dl_gh user repo tag\033[0m\n"
         return 1
@@ -31,10 +19,7 @@ dl_gh() {
         while read -r url name; do
             printf "\033[0;34m-> \033[0;36m\"%s\"\033[0;34m | \033[0;36m\"%s\"\033[0m\n" "$name" "$url"
             while ! wget -q -O "$name" "$url"; do
-                printf "${spinner[i++]} "
-                ((i == 3)) && i=0
-                sleep 0.1
-                printf "\b\b\b"
+                sleep 1
             done
             printf "\033[0;32m-> \033[0;36m\"%s\"\033[0m [\033[0;32m\"$(date +%T)\"\033[0m] [\033[0;32mDONE\033[0m]\n" "$name"
             downloaded_files+=("$name")
