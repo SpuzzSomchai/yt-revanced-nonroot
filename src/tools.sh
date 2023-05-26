@@ -3,6 +3,18 @@ dl_gh() {
     local user=$1
     local repos=$2
     local tag=$3
+    local spinner=(
+             "⠋"
+             "⠙"
+             "⠹"
+             "⠸"
+             "⠼"
+             "⠴"
+             "⠦"
+             "⠧"
+             "⠇"
+             "⠏"
+           )
     if [ -z "$user" ] || [ -z "$repos" ] || [ -z "$tag" ]; then
         printf "\033[0;31mUsage: dl_gh user repo tag\033[0m\n"
         return 1
@@ -15,19 +27,6 @@ dl_gh() {
             printf "\033[0;31mNo assets found for %s\033[0m\n" "$repo"
             return 1
         fi     
-        spinner=(
-            "⠋"
-            "⠙"
-            "⠹"
-            "⠸"
-            "⠼"
-            "⠴"
-            "⠦"
-            "⠧"
-            "⠇"
-            "⠏"
-        )
-        i=0
         downloaded_files=()
         while read -r url name; do
             printf "\033[0;34m-> \033[0;36m\"%s\"\033[0;34m | \033[0;36m\"%s\"\033[0m\n" "$name" "$url"
