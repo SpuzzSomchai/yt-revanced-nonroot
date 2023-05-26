@@ -234,10 +234,6 @@ patch() {
     printf "\033[0;31mError: patches files not found\033[0m\n"
     exit 1
   else
-    printf "\033[1;33mRunning patch \033[0;31m%s \033[1;33mwith the following files:\033[0m\n" "$apk_out"
-    printf "\033[0;36m%s\033[0m\n" "$cli_jar"
-    printf "\033[0;36m%s\033[0m\n" "$integrations_apk"
-    printf "\033[0;36m%s\033[0m\n" "$patches_jar"
     printf "\033[0;36m%s\033[0m\n" "$base_apk"
     printf "\033[0;36m%s\033[0m\n" "$cli_jar"
     printf "\033[0;36m%s\033[0m\n" "$integrations_apk"
