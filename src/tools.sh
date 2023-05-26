@@ -31,6 +31,7 @@ dl_gh() {
             done
         fi
     done
+    return 0
 }
 get_patches_key() {
     local folder="$1"
