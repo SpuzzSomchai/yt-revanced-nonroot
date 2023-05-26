@@ -201,6 +201,7 @@ get_ver() {
          return 1
       fi
     fi
+    return 0
 }
 patch() {
   local apk_name=$1
