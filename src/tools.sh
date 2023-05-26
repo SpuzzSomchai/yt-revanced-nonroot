@@ -2,6 +2,7 @@
 
 #___________________________________________
 # Download Github 
+#
 dl_gh() {
     local user=$1
     local repos=$2
@@ -36,8 +37,10 @@ dl_gh() {
     done
     return 0
 }
+
 #___________________________________________
 #Prepare exclude patches and include patches
+#
 get_patches_key() {
     local folder="$1"
     local exclude_file="patches/${folder}/exclude-patches"
@@ -84,12 +87,14 @@ get_patches_key() {
 
 #___________________________________________
 #Download APK
+#
 req() {  
     wget -nv -O "$2" -U "Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0" "$1" 
 } 
 
 #___________________________________________
 #Apkmirror
+#
 get_apkmirror_vers() {  
     req "$1" - | sed -n 's;.*Version:</span><span class="infoSlide-value">\(.*\) </span>.*;\1;p' 
 } 
@@ -162,6 +167,7 @@ get_apkmirror() {
 
 #___________________________________________
 #Uptodown
+#
 get_uptodown_resp() {
     req "${1}/versions" -
 }
@@ -200,6 +206,7 @@ get_uptodown() {
 
 #___________________________________________
 #Get largest supported version
+#
 get_ver() {
     if [[ ! -f patches.json ]]; then
        printf "\033[0;31mError: patches.json file not found.\033[0m\n"
@@ -222,6 +229,7 @@ get_ver() {
 
 #___________________________________________
 # Patch APK 
+#
 patch() {
   local apk_name=$1
   local apk_out=$2
