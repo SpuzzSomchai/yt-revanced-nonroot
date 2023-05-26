@@ -15,10 +15,10 @@ curl -sLO "$asset"
 
 if diff -q revanced-version.txt new.txt >/dev/null ; then
 rm -f ./*.txt
-echo -e "${RED}Old patch!!! Not build${NC}"
+printf "\033[0;31mOld patch!!! Not build\033[0m\n"
 exit 0
 else
-echo -e "${GREEN}Build...${NC}"
+printf "\033[0;32mBuild...\033[0m\n"
 rm -f ./*.txt
 
 #Download Revanced patches
@@ -39,7 +39,7 @@ patch "twitch" "twitch-revanced"
 
 # Patch Tiktok 
 get_patches_key "tiktok"
-get_ver "feed-filter" "com.ss.android.ugc.trill"
+#get_ver "feed-filter" "com.ss.android.ugc.trill"
 get_apkmirror "tiktok" "tik-tok-including-musical-ly" "tiktok-pte-ltd/tik-tok-including-musical-ly/tik-tok-including-musical-ly"
 #get_uptodown "tiktok" "tik-tok"
 patch "tiktok" "tiktok-revanced"
