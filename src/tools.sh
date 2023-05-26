@@ -12,7 +12,7 @@ dl_gh() {
         return 1
     fi
     for repo in $repos; do
-        printf "\033[1;33mGetting asset URLs for %s...\033[0m\n" "$repo"
+        printf "\033[1;33mGetting asset URLs for \"%s\"...\033[0m\n" "$repo"
         asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/$tag" \
                     | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')        
         if [ -z "$asset_urls" ]; then
@@ -29,9 +29,9 @@ dl_gh() {
             downloaded_files+=("$name")
         done <<< "$asset_urls"
         if [ ${#downloaded_files[@]} -gt 0 ]; then
-            printf "\033[0;32mFinished \033[1;33mDownloading assets for %s:\033[0m\n" "$repo"
+            printf "\033[0;32mFinished \033[1;33mDownloading assets for \"%s\":\033[0m\n" "$repo"
             for file in ${downloaded_files[@]}; do
-                printf " -> \033[0;34m%s\033[0m\n" "$file"
+                printf " -> \033[0;34m\"%s\"\033[0m\n" "$file"
             done
         fi
     done
@@ -47,23 +47,23 @@ get_patches_key() {
     local include_file="patches/${folder}/include-patches"
     local word
     if [ ! -d "${exclude_file%/*}" ]; then
-        printf "\033[0;31mFolder not found: %s\n\033[0m" "${exclude_file%/*}"
+        printf "\033[0;31mFolder not found: \"%s\"\n\033[0m" "${exclude_file%/*}"
         return 1
     fi
     if [ ! -f "$exclude_file" ]; then
-        printf "\033[0;31mFile not found: %s\n\033[0m" "$exclude_file"
+        printf "\033[0;31mFile not found: \"%s\"\n\033[0m" "$exclude_file"
         return 1
     fi
     if [ ! -f "$include_file" ]; then
-        printf "\033[0;31mFile not found: %s\n\033[0m" "$include_file"
+        printf "\033[0;31mFile not found: \"%s\"\n\033[0m" "$include_file"
         return 1
     fi
     if [ ! -r "$exclude_file" ]; then
-        printf "\033[0;31mCannot read file: %s\n\033[0m" "$exclude_file"
+        printf "\033[0;31mCannot read file: \"%s\"\n\033[0m" "$exclude_file"
         return 1
     fi
     if [ ! -r "$include_file" ]; then
-        printf "\033[0;31mCannot read file: %s\n\033[0m" "$include_file"
+        printf "\033[0;31mCannot read file: \"%s\"\n\033[0m" "$include_file"
         return 1
     fi
     while IFS= read -r word; do
@@ -78,7 +78,7 @@ get_patches_key() {
     done < "$include_file"
     for word in "${exclude_patches[@]}"; do
       if [[ " ${include_patches[*]} " =~ " $word " ]]; then
-        printf "\033[0;31mPatch %s is specified both as exclude and include\033[0m\n" "$word"
+        printf "\033[0;31mPatch \"%s\" is specified both as exclude and include\033[0m\n" "$word"
         return 1
       fi
     done
@@ -119,18 +119,18 @@ get_apkmirror() {
   local app_link_tail=$3
   local arch=$4
   if [[ -z $arch ]]; then
-    printf "\033[1;33mDownloading \033[0;31m%s\033[0m\n" "$app_name"
+    printf "\033[1;33mDownloading \033[0;31m\"%s\"\033[0m\n" "$app_name"
   elif [[ $arch == "arm64-v8a" ]]; then
-    printf "\033[1;33mDownloading \033[0;31m%s (arm64-v8a)\033[0m\n" "$app_name"
+    printf "\033[1;33mDownloading \033[0;31m\"%s\" (arm64-v8a)\033[0m\n" "$app_name"
     url_regexp='arm64-v8a</div>[^@]*@\([^"]*\)'
   elif [[ $arch == "armeabi-v7a" ]]; then
-    printf "\033[1;33mDownloading \033[0;31m%s (armeabi-v7a)\033[0m\n" "$app_name"
+    printf "\033[1;33mDownloading \033[0;31m\"%s\" (armeabi-v7a)\033[0m\n" "$app_name"
     url_regexp='armeabi-v7a</div>[^@]*@\([^"]*\)'
   elif [[ $arch == "x86" ]]; then
-    printf "\033[1;33mDownloading \033[0;31m%s (x86)\033[0m\n" "$app_name"
+    printf "\033[1;33mDownloading \033[0;31m\"%s\" (x86)\033[0m\n" "$app_name"
     url_regexp='x86</div>[^@]*@\([^"]*\)'
   elif [[ $arch == "x86_64" ]]; then
-    printf "\033[1;33mDownloading \033[0;31m%s (x86_64)\033[0m\n" "$app_name"
+    printf "\033[1;33mDownloading \033[0;31m\"%s\" (x86_64)\033[0m\n" "$app_name"
     url_regexp='x86_64</div>[^@]*@\([^"]*\)'
   else
     printf "\033[0;31mArchitecture not exactly!!! Please check\033[0m\n"
@@ -140,7 +140,7 @@ get_apkmirror() {
   if [[ -z $version ]]; then
     version=${version:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}
   fi
-  printf "\033[1;33mChoosing version \033[0;36m'%s'\033[0m\n" "$version"
+  printf "\033[1;33mChoosing version \033[0;36m'\"%s\"'\033[0m\n" "$version"
   local base_apk="$app_name.apk"
   if [[ -z $arch ]]; then
       local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
@@ -184,7 +184,7 @@ dl_uptodown() {
 get_uptodown() {
     local apk_name="$1"
     local link_name="$2"
-    printf "\033[1;33mDownloading \033[0;31m%s\033[0m\n" "$apk_name"
+    printf "\033[1;33mDownloading \033[0;31m\"%s\"\033[0m\n" "$apk_name"
     export version="$version"
     local out_name=$(echo "$apk_name" \
     | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
@@ -193,11 +193,11 @@ get_uptodown() {
     "https://${link_name}.en.uptodown.com/android")
     local available_versions=($(get_uptodown_vers "$uptwod_resp"))
     if [[ " ${available_versions[@]} " =~ " ${version} " ]]; then
-        printf "\033[1;33mChoosing version \033[0;36m'%s'\033[0m\n" "$version"
+        printf "\033[1;33mChoosing version \033[0;36m'\"%s\"'\033[0m\n" "$version"
         dl_uptodown "$uptwod_resp" "$version" "$out_name"
     else
         version=${available_versions[0]}
-        printf "\033[1;33mChoosing version \033[0;36m'%s'\033[0m\n" "$version"
+        printf "\033[1;33mChoosing version \033[0;36m'\"%s\"'\033[0m\n" "$version"
         uptwod_resp=$(get_uptodown_resp \
 	"https://${link_name}.en.uptodown.com/android")
         dl_uptodown "$uptwod_resp" "$version" "$out_name"
@@ -233,7 +233,7 @@ get_ver() {
 patch() {
   local apk_name=$1
   local apk_out=$2
-  printf "\033[1;33mStarting patch \033[0;31m%s\033[1;33m...\033[0m\n" "$apk_out"
+  printf "\033[1;33mStarting patch \033[0;31m\"%s\"\033[1;33m...\033[0m\n" "$apk_out"
   local base_apk=$(find -name "$apk_name.apk" -print -quit)
   if [[ ! -f "$base_apk" ]]; then
     printf "\033[0;31mError: APK file not found\033[0m\n"
@@ -247,12 +247,12 @@ patch() {
     printf "\033[0;31mError: patches files not found\033[0m\n"
     exit 1
   else
-    printf "\033[1;33mRunning patch \033[0;31m%s \033[1;33mwith the following files:\033[0m\n" "$apk_out"
-    printf "\033[0;36m%s\033[0m\n" "$cli_jar"
-    printf "\033[0;36m%s\033[0m\n" "$integrations_apk"
-    printf "\033[0;36m%s\033[0m\n" "$patches_jar"
-    printf "\033[0;36m%s\033[0m\n" "$base_apk"
-    printf "\033[0;32mINCLUDE PATCHES :%s\033[0m\n\033[0;31mEXCLUDE PATCHES :%s\033[0m\n" "${include_patches[*]}" "${exclude_patches[*]}"
+    printf "\033[1;33mRunning patch \033[0;31m\"%s\" \033[1;33mwith the following files:\033[0m\n" "$apk_out"
+    printf "\033[0;36m\"%s\"\033[0m\n" "$cli_jar"
+    printf "\033[0;36m\"%s\"\033[0m\n" "$integrations_apk"
+    printf "\033[0;36m\"%s\"\033[0m\n" "$patches_jar"
+    printf "\033[0;36m\"%s\"\033[0m\n" "$base_apk"
+    printf "\033[0;32mINCLUDE PATCHES :\"%s\"\033[0m\n\033[0;31mEXCLUDE PATCHES :\"%s\"\033[0m\n" "${include_patches[*]}" "${exclude_patches[*]}"
     java -jar "$cli_jar" \
       -m "$integrations_apk" \
       -b "$patches_jar" \
@@ -261,7 +261,7 @@ patch() {
       ${include_patches[@]} \
       --keystore=./src/ks.keystore \
       -o "build/$apk_out.apk"
-    printf "\033[0;32mPatch \033[0;31m%s \033[0;32mis finished!\033[0m\n" "$apk_out"
+    printf "\033[0;32mPatch \033[0;31m\"%s\" \033[0;32mis finished!\033[0m\n" "$apk_out"
   fi
   vars_to_unset=(
     "version"
