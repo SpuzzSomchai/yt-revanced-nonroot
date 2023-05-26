@@ -15,10 +15,10 @@ curl -sLO "$asset"
 
 if diff -q revanced-extended-version.txt new.txt >/dev/null ; then
 rm -f ./*.txt
-echo -e "${RED}Old patch!!! Not build${NC}"
+printf "\033[0;31mOld patch!!! Not build\033[0m\n"
 exit 0
 else
-echo -e "${GREEN}Build...${NC}"
+printf "\033[0;32mBuild...\033[0m\n"
 rm -f ./*.txt
 
 #Download Revanced Extended patches 
