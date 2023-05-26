@@ -252,7 +252,7 @@ patch() {
     printf "\033[0;36m%s\033[0m\n" "$integrations_apk"
     printf "\033[0;36m%s\033[0m\n" "$patches_jar"
     printf "\033[0;36m%s\033[0m\n" "$base_apk"
-    printf "\033[0;32mINCLUDE PATCHES : -i %s\033[0m \033[0;31mEXCLUDE PATCHES : -e %s\033[0m\n" "${include_patches[*]}" "${exclude_patches[*]}"
+    printf "\033[0;32mINCLUDE PATCHES :%s\033[0m\n\033[0;31mEXCLUDE PATCHES :%s\033[0m\n" "${include_patches[*]}" "${exclude_patches[*]}"
     java -jar "$cli_jar" \
       -m "$integrations_apk" \
       -b "$patches_jar" \
