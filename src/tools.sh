@@ -1,4 +1,7 @@
 #!/bin/bash
+
+#______________________________________________________________________________________________________________________________
+# Download Github 
 dl_gh() {
     local user=$1
     local repos=$2
@@ -33,6 +36,8 @@ dl_gh() {
     done
     return 0
 }
+#______________________________________________________________________________________________________________________________
+#Prepare exclude patches and include patches
 get_patches_key() {
     local folder="$1"
     local exclude_file="patches/${folder}/exclude-patches"
@@ -76,20 +81,25 @@ get_patches_key() {
     done
     return 0
 }
+
+#______________________________________________________________________________________________________________________________
+#Download APK
 req() {  
-     wget -nv -O "$2" -U "Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0" "$1" 
- } 
-  
- get_apkmirror_vers() {  
-     req "$1" - | sed -n 's;.*Version:</span><span class="infoSlide-value">\(.*\) </span>.*;\1;p' 
- } 
+    wget -nv -O "$2" -U "Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0" "$1" 
+} 
+
+#______________________________________________________________________________________________________________________________
+#Apkmirror
+get_apkmirror_vers() {  
+    req "$1" - | sed -n 's;.*Version:</span><span class="infoSlide-value">\(.*\) </span>.*;\1;p' 
+} 
  get_largest_ver() { 
    local max=0 
    while read -r v || [ -n "$v" ]; do                    
          if [[ ${v//[!0-9]/} -gt ${max//[!0-9]/} ]]; then max=$v; fi 
            done 
-               if [[ $max = 0 ]]; then echo ""; else echo "$max"; fi 
- }
+               if [[ $max = 0 ]]; then echo ""; else echo "$max"; fi  
+}
 dl_apkmirror() {
   local url=$1 regexp=$2 output=$3
   url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n "s/href=\"/@/g; s;.*${regexp}.*;\1;p")"
@@ -149,6 +159,9 @@ get_apkmirror() {
 			"$base_apk")
   fi
 }
+
+#______________________________________________________________________________________________________________________________
+#Uptodown
 get_uptodown_resp() {
     req "${1}/versions" -
 }
@@ -184,6 +197,9 @@ get_uptodown() {
         dl_uptodown "$uptwod_resp" "$version" "$out_name"
     fi
 }
+
+#______________________________________________________________________________________________________________________________
+#Get largest supported version
 get_ver() {
     if [[ ! -f patches.json ]]; then
        printf "\033[0;31mError: patches.json file not found.\033[0m\n"
@@ -203,6 +219,9 @@ get_ver() {
     fi
     return 0
 }
+
+#______________________________________________________________________________________________________________________________
+# Patch APK 
 patch() {
   local apk_name=$1
   local apk_out=$2
