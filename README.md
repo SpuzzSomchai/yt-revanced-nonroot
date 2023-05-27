@@ -1,8 +1,7 @@
 <div align="center">
 
 [![](https://visitcount.itsvg.in/api?id=luxysiv&label=Visitors&color=0&icon=0&pretty=true)](https://visitcount.itsvg.in)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e47ae01e7dfc435bbe2e44444477b2e4)](https://app.codacy.com/gh/luxysiv/revanced-nonroot/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-
+  
 </div>
   
 # How to use
