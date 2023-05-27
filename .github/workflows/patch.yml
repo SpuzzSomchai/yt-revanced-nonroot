@@ -19,11 +19,12 @@ jobs:
           java-version: '17'
       
       - name: Patch apk
-        run: bash ./src/build-rv.sh  
+        run: |
+          bash ./src/build-rv.sh  
           mv revanced-version.txt ./build/
         shell: bash
         outputs:
-          rl_path: ./build/*
+          apk_path_rv: ./build/*.apk
 
   patch-rve:
     name: Patch Revanced Extended 
@@ -39,11 +40,12 @@ jobs:
           java-version: '17'
       
       - name: Patch apk
-        run: bash ./src/build-rve.sh  
+        run: |
+          bash ./src/build-rve.sh  
           mv revanced-extended-version.txt ./build/
         shell: bash
         outputs:
-          rl_path: ./build/*
+          apk_path_rve: ./build/*.apk
         
   release:
     name: Release 
@@ -67,8 +69,8 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           files: |
-            ${{ steps.build-rv.outputs.apk_path }}
-            ${{ steps.build-rve.outputs.apk_path }}
+            ${{ needs.patch-rv.outputs.apk_path_rv }}
+            ${{ needs.patch-rve.outputs.apk_path_rve }}
           name: Revanced & Revanced Extended
           tag_name: all
           body_path: ${{ github.workspace }}-CHANGELOG.txt
@@ -82,4 +84,3 @@ jobs:
           repository: ${{ github.repository }}
           retain_days: 0
           keep_minimum_runs: 1
-      
