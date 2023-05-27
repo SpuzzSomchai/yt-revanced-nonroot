@@ -1,62 +1,90 @@
-name: Patch and Release Revanced
-
+name: Patch Revanced 
 on:
-  push:
-    branches:
-      - main
-
+#  push:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 jobs:
-  patch_revanced:
+  patch1:
     name: Patch Revanced 
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up jdk
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v3.10.0
         with:
           distribution: 'zulu'
-          java-version: 17
+          java-version: '17'
+      
       - name: Patch apk
-        run: bash ./src/build-rv.sh
-
-  patch_revanced_extended:
-    name: Patch Revanced Extended
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up jdk
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: 17
-      - name: Patch apk
-        run: bash ./src/build-rve.sh
-
-  release:
-    name: Release
-    needs: [patch_revanced, patch_revanced_extended]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+        run: bash ./src/build-rv.sh  
+        
       - name: Generate release info
-        run: |
+        run: | 
           echo "
           **Patches Changelog:** :point_down:
           [Revanced](https://github.com/revanced/revanced-patches/releases/latest)
           [Revanced Extended](https://github.com/inotia00/revanced-patches/releases/latest)
           **IMPORTANT:** :point_down:
           mMicroG is necessary in order for YouTube to work. Install it first.
-          " > changelog.txt
-      - name: Release APKs
-        uses: softprops/action-gh-release@v1
-        if: github.ref == 'refs/heads/main'
+          "> ${{ github.workspace }}-CHANGELOG.txt
+          
+      - name: Release
+        uses: softprops/action-gh-release@v0.1.15
         with:
           files: |
             ./build/*
             revanced-version.txt
-            revanced-extended-version.txt
-          tag_name: ${{ github.sha }}
-          name: Release ${{ github.sha }}
-          body_path: changelog.txt
+          name: Revanced & Revanced Extended
+          tag_name: all
+          body_path: ${{ github.workspace }}-CHANGELOG.txt
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+          
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 0
+          keep_minimum_runs: 1
+
+  patch2:
+    name: Patch Revanced Extended 
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up jdk
+        uses: actions/setup-java@v3.10.0
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      
+      - name: Patch apk
+        run: bash ./src/build-rve.sh  
+        
+      - name: Generate release info
+        run: | 
+          echo "
+          **Patches Changelog:** :point_down:
+          [Revanced](https://github.com/revanced/revanced-patches/releases/latest)
+          [Revanced Extended](https://github.com/inotia00/revanced-patches/releases/latest)
+          **IMPORTANT:** :point_down:
+          mMicroG is necessary in order for YouTube to work. Install it first.
+          "> ${{ github.workspace }}-CHANGELOG.txt 
+          
+      - name: Release
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          files: |
+            ./build/*
+            revanced-extended-version.txt
+          name: Revanced & Revanced Extended
+          tag_name: all
+          body_path: ${{ github.workspace }}-CHANGELOG.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
