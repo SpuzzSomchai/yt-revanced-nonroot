@@ -140,7 +140,7 @@ get_apkmirror() {
   if [[ -z $version ]]; then
     version=${version:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | get_largest_ver)}
   fi
-  printf "\033[1;33mChoosing version \033[0;36m'\"%s\"'\033[0m\n" "$version"
+  printf "\033[1;33mChoosing version \033[0;36m'%s'\033[0m\n" "$version"
   local base_apk="$app_name.apk"
   if [[ -z $arch ]]; then
       local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
@@ -193,7 +193,7 @@ get_uptodown() {
     "https://${link_name}.en.uptodown.com/android")
     local available_versions=($(get_uptodown_vers "$uptwod_resp"))
     if [[ " ${available_versions[@]} " =~ " ${version} " ]]; then
-        printf "\033[1;33mChoosing version \033[0;36m'\"%s\"'\033[0m\n" "$version"
+        printf "\033[1;33mChoosing version \033[0;36m'%s'\033[0m\n" "$version"
         dl_uptodown "$uptwod_resp" "$version" "$out_name"
     else
         version=${available_versions[0]}
@@ -252,7 +252,7 @@ patch() {
     printf "\033[0;36m\"%s\"\033[0m\n" "$integrations_apk"
     printf "\033[0;36m\"%s\"\033[0m\n" "$patches_jar"
     printf "\033[0;36m\"%s\"\033[0m\n" "$base_apk"
-    printf "\033[0;32mINCLUDE PATCHES :\"%s\"\033[0m\n\033[0;31mEXCLUDE PATCHES :\"%s\"\033[0m\n" "${include_patches[*]}" "${exclude_patches[*]}"
+    printf "\033[0;32mINCLUDE PATCHES :%s\033[0m\n\033[0;31mEXCLUDE PATCHES :%s\033[0m\n" "${include_patches[*]}" "${exclude_patches[*]}"
     java -jar "$cli_jar" \
       -m "$integrations_apk" \
       -b "$patches_jar" \
