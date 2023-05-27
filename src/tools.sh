@@ -197,7 +197,7 @@ get_uptodown() {
         dl_uptodown "$uptwod_resp" "$version" "$out_name"
     else
         version=${available_versions[0]}
-        printf "\033[1;33mChoosing version \033[0;36m'\"%s\"'\033[0m\n" "$version"
+        printf "\033[1;33mChoosing version \033[0;36m'%s'\033[0m\n" "$version"
         uptwod_resp=$(get_uptodown_resp \
 	"https://${link_name}.en.uptodown.com/android")
         dl_uptodown "$uptwod_resp" "$version" "$out_name"
