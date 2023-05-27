@@ -155,7 +155,7 @@ get_apkmirror() {
 			"$url_regexp" \
 			"$base_apk")
   elif [[ $arch == "x86" ]]; then
-       dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
+      local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${version//./-}-release/" \
 			"$url_regexp" \
 			"$base_apk")
   elif [[ $arch == "x86_64" ]]; then
