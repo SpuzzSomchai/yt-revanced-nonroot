@@ -1,17 +1,17 @@
 #!/bin/bash
 
-#___________________________________________
-# Download Github 
-#___________________________________________
+#.................
+#Download Github :
+#................:
 dl_gh() {
     local user=$1
     local repos=$2
     local tag=$3
     if [ -z "$user" ] || [ -z "$repos" ] || [ -z "$tag" ]; then
         printf '%b\n' '\033[0;31mUsage: dl_gh user repo tag\033[0m' 
-        return 1 
-    fi 
-    trap 'rm -f "$name"; exit 1' INT TERM ERR
+         return 1 
+     fi 
+     trap 'rm -f "$name"; exit 1' INT TERM ERR
     for repo in $repos; do
         printf "\033[1;33mGetting asset URLs for \"%s\"...\033[0m\n" "$repo"
         asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/$tag" \
@@ -39,9 +39,9 @@ dl_gh() {
     return 0
 }
 
-#___________________________________________
-#Prepare exclude patches and include patches
-#___________________________________________
+#.............................................
+#Prepare exclude patches and include patches :
+#............................................:
 get_patches_key() {
     local folder="$1"
     local exclude_file="patches/${folder}/exclude-patches"
@@ -86,16 +86,16 @@ get_patches_key() {
     return 0
 }
 
-#___________________________________________
-#Download APK
-#___________________________________________
+#..............
+#Download APK :
+#.............:
 req() {  
     wget -nv -O "$2" -U "Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0" "$1" 
 } 
 
-#___________________________________________
-#Apkmirror
-#___________________________________________
+#...........
+#Apkmirror :
+#..........:
 get_apkmirror_vers() {  
     req "$1" - | sed -n 's;.*Version:</span><span class="infoSlide-value">\(.*\) </span>.*;\1;p' 
 } 
@@ -166,9 +166,9 @@ get_apkmirror() {
   fi
 }
 
-#___________________________________________
-#Uptodown
-#___________________________________________
+#..........
+#Uptodown :
+#.........:
 get_uptodown_resp() {
     req "${1}/versions" -
 }
@@ -205,9 +205,9 @@ get_uptodown() {
     fi
 }
 
-#___________________________________________
-#Get largest supported version
-#___________________________________________
+#...............................
+#Get largest supported version :
+#..............................:
 get_ver() {
     if [[ ! -f patches.json ]]; then
        printf "\033[0;31mError: patches.json file not found.\033[0m\n"
@@ -228,9 +228,9 @@ get_ver() {
     return 0
 }
 
-#___________________________________________
-# Patch APK 
-#___________________________________________
+#............
+# Patch APK :
+#...........:
 patch() {
   local apk_name=$1
   local apk_out=$2
