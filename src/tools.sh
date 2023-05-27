@@ -29,7 +29,7 @@ dl_gh() {
             downloaded_files+=("$name")
         done <<< "$asset_urls"
         if [ ${#downloaded_files[@]} -gt 0 ]; then
-            printf "\033[0;32mFinished \033[1;33mDownloading assets for \"%s\":\033[0m\n" "$repo"
+            printf "\033[0;32mFinished download assets for \033[1;33m\"%s\":\033[0m\n" "$repo"
             for file in ${downloaded_files[@]}; do
                 printf " -> \033[0;34m\"%s\"\033[0m\n" "$file"
             done
