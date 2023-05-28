@@ -187,8 +187,7 @@ get_uptodown() {
     local link_name="$2"
     printf "\033[1;33mDownloading \033[0;31m\"%s\"\033[0m\n" "$apk_name"
     export version="$version"
-    local out_name=$(echo "$apk_name" \
-    | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
+    local out_name=$(printf '%s' "$apk_name" | tr '.' '_' | tr '[:upper:]' '[:lower:]' && printf '%s' ".apk")
     local uptwod_resp
     uptwod_resp=$(get_uptodown_resp \
     "https://${link_name}.en.uptodown.com/android")
