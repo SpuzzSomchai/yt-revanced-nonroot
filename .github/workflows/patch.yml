@@ -1,4 +1,4 @@
-name: Patch Revanced 
+name: Patch Revanced
 on:
 #  push:
   schedule:
